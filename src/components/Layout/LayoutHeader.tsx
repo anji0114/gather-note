@@ -14,10 +14,10 @@ export const LayoutHeader = () => {
   };
 
   return (
-    <header className="py-5 border-b border-[#d0d7de]">
+    <header className="border-b border-[#d0d7de]">
       <div className="max-w-[1140px] w-full mx-auto px-7">
-        <div className="flex items-center justify-between">
-          <Link href={!user ? "/" : "/dashboard"} className="inline-block">
+        <div className="flex items-center justify-between h-20">
+          <Link href={!user ? "/" : "/dashboard"} className="inline-block pt-1">
             <Image src="/logo.svg" alt="Prompt Note" width={187} height={36} />
           </Link>
           <div className="flex items-center">

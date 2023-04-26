@@ -7,7 +7,38 @@
 ============================*/
 body {
   font-size: 16px;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   color: #222;
   background-color: #fdfeff;
+}
+
+.dashboard-item01:first-of-type {
+  border-radius: 8px 8px 0 0;
+}
+
+.dashboard-item01:last-of-type {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.menu-list {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: calc(100% + 6px);
+  width: 140px;
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #ebeef2;
+  border-radius: 3px;
+  transition: all 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
+}
+
+.menu-list.is--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
