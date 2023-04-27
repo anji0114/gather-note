@@ -4,14 +4,10 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { ListBulletIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
+import { Note } from "@/types";
+import { DateFns } from "../Common/Date/DateFns";
 
-type Props = {
-  id: string;
-  title: string;
-  created_at: string;
-};
-
-export const DashboardNotesItem: FC<Props> = ({ id, title, created_at }) => {
+export const DashboardNotesItem: FC<Note> = ({ id, title, created_at, description }) => {
   const supabase = useSupabaseClient();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,17 +26,17 @@ export const DashboardNotesItem: FC<Props> = ({ id, title, created_at }) => {
     <li className="dashboard-item01 flex gap-5 justify-between items-start py-5 px-7 bg-white border border-[#d0d7de]">
       <div className="w-full">
         <p className="pl-[2px] text-[#555] text-[12px]">
-          {format(new Date(created_at), "yyyy/MM/dd")}
+          <DateFns time={created_at!} />
         </p>
         <p className="mt-2.5">
           <Link
-            href={`/notes/${id}`}
+            href={`/note/${id}`}
             className="text-[#4e6bb4] font-medium underline-offset-2  hover:underline"
           >
             {title}
           </Link>
         </p>
-        <p className="mt-2 text-sm text-[#444]">ノートのディスクリプションが入ります。</p>
+        {description && <p className="mt-2 text-sm text-[#444] line-clamp-1">{description}</p>}
       </div>
       <div className="w-[40px] relative">
         <button
@@ -54,7 +50,7 @@ export const DashboardNotesItem: FC<Props> = ({ id, title, created_at }) => {
         <ul className={`menu-list ${menuOpen ? "is--open" : "is--close"}`}>
           <li className="w-full text-center">
             <Link
-              href={`note/${id}`}
+              href={`/note/${id}`}
               className="inline-block w-full p-2.5 text-[12px] font-medium hover:bg-[#f7f7f7]"
             >
               編集する

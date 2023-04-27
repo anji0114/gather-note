@@ -16,8 +16,6 @@ export const DashboardNotes: FC = () => {
 
   const { data, error, isLoading } = useSWR("/api/notes");
 
-  console.log(data);
-
   const handleCreateNote = async () => {
     const { data, error } = await supabase
       .from("notes")
@@ -34,7 +32,7 @@ export const DashboardNotes: FC = () => {
       return;
     }
 
-    router.push(`/notes/${data.id}`);
+    router.push(`/note/${data.id}`);
   };
 
   return (
@@ -50,7 +48,12 @@ export const DashboardNotes: FC = () => {
         ) : (
           <ul className="space-y-[1px]">
             {data.map((note: any) => (
-              <DashboardNotesItem id={note.id} title={note.title} created_at={note.created_at} />
+              <DashboardNotesItem
+                id={note.id}
+                title={note.title}
+                description={note.description}
+                created_at={note.created_at}
+              />
             ))}
           </ul>
         )}
