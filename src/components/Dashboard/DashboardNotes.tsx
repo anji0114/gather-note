@@ -49,6 +49,7 @@ export const DashboardNotes: FC = () => {
           <ul className="space-y-[1px]">
             {data.map((note: any) => (
               <DashboardNotesItem
+                key={note.id}
                 id={note.id}
                 title={note.title}
                 description={note.description}

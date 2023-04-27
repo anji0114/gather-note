@@ -18,7 +18,7 @@ const NoteIdPagesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .from("pages")
       .select("*")
       .eq("note_id", id)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: true });
     if (error) {
       return res.status(401).json({ message: error });
     }
