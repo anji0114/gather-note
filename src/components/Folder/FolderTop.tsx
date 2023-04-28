@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useStore } from "@/store";
 import TextareaAutosize from "react-textarea-autosize";
 
-export const FolderTop = () => {
+export const FolderTop: FC = () => {
   const folder = useStore((state) => state.editFolder);
   const setFolder = useStore((state) => state.setEditFolder);
   const supabase = useSupabaseClient();
   const [isEdit, setIsEdit] = useState(false);
 
   const handleUpdateFolder = async () => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("folders")
       .update({
         name: folder.name,

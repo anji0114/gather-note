@@ -8,11 +8,10 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { ButtonNew } from "@/components/Common/Button/ButtonNew";
 import { FolderTop } from "@/components/Folder/FolderTop";
 import { FolderNoteList } from "@/components/Folder/FolderNoteList";
-import { DashBoardLayout } from "@/components/Dashboard/DashboardLayout";
+import { NextPage } from "next";
 
-const FolderId = () => {
+const FolderId:NextPage = () => {
   const router = useRouter();
-  const user = useUser();
   const supabase = useSupabaseClient();
   const folder = useStore((state) => state.editFolder);
   const setFolder = useStore((state) => state.setEditFolder);

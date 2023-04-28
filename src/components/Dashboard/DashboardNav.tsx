@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FolderOpenIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { FC } from "react";
 
 const NAV_ITEM = [
   {
@@ -14,7 +15,7 @@ const NAV_ITEM = [
   // },
 ];
 
-export const DashboardNav = () => {
+export const DashboardNav:FC = () => {
   return (
     <nav>
       <ul className="space-y-[6px]">

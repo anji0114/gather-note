@@ -6,8 +6,9 @@ import { useStore } from "@/store";
 import TextareaAutosize from "react-textarea-autosize";
 import { Loading } from "@/components/Common/Loading";
 import { NoteHeader } from "@/components/Note/NoteHeader";
+import { NextPage } from "next";
 
-const NoteId = () => {
+const NoteId:NextPage = () => {
   const router = useRouter();
   const supabase = useSupabaseClient();
   const { data, isLoading } = useSWR(router.query.id ? `/api/notes/${router.query.id}` : null);

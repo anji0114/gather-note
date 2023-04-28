@@ -4,14 +4,13 @@ import useSWR from "swr";
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { DateFns } from "../Common/Date/DateFns";
 import { Loading } from "../Common/Loading";
+import { FC } from "react";
 
-export const FolderNoteList = () => {
+export const FolderNoteList:FC = () => {
   const router = useRouter();
   const { data, isLoading } = useSWR(
     router.query.id ? `/api/folders/${router.query.id}/notes` : null
   );
-
-  console.log(data);
 
   if (isLoading) {
     return <Loading />;

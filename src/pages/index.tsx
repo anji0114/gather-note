@@ -1,8 +1,9 @@
-import Head from 'next/head'
-import { Layout } from '@/components/Layout'
-import { HomeMv } from '@/components/Home/HomeMv'
+import Head from "next/head";
+import { Layout } from "@/components/Layout";
+import { HomeMv } from "@/components/Home/HomeMv";
+import { NextPage } from "next";
 
-const Home = () => {
+const Home: NextPage = () => {
   return (
     <>
       <Head>
@@ -16,6 +17,6 @@ const Home = () => {
       </Layout>
     </>
   );
-}
+};
 
-export default Home
+export default Home;

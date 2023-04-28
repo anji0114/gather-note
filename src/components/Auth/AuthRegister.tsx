@@ -1,9 +1,9 @@
-import { FormEvent, useRef } from "react";
+import { FC, FormEvent, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 
-export const AuthRegister = () => {
+export const AuthRegister:FC = () => {
   const supabase = useSupabaseClient();
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
