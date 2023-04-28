@@ -29,10 +29,6 @@ export const AuthRegister = () => {
       .eq("id", signUpData.user!.id)
       .select();
 
-    console.log(nameRef);
-
-    console.log(signUpData);
-
     if (profileError) {
       alert(profileError.message);
       return;
