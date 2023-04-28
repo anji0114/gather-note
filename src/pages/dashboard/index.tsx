@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import { Layout } from "@/components/Layout";
 import { DashBoardLayout } from "@/components/Dashboard/DashboardLayout";
-import { DashboardNotes } from "@/components/Dashboard/DashboardNotes";
+import { DashboardFolder } from "@/components/Dashboard/DashboardFolder";
 
 const Dashboard: NextPage = () => {
   return (
     <Layout>
       <DashBoardLayout>
-        <DashboardNotes />
+        <DashboardFolder />
       </DashBoardLayout>
     </Layout>
   );

@@ -1,13 +1,20 @@
-export type Note = {
+export type Folder = {
   id: string;
-  title: string;
+  name: string;
   description: string;
   created_at?: string;
 };
 
-export type Page = {
+export type Note = {
   id: string;
-  title: string;
+  name: string;
   content: string;
   created_at?: string;
 };
+
+// export type Note = {
+//   id: string;
+//   title: string;
+//   content: string;
+//   created_at?: string;
+// };

@@ -1,62 +1,77 @@
-import { useRouter } from "next/router";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useStore } from "@/store";
-import { Layout } from "@/components/Layout";
+import TextareaAutosize from "react-textarea-autosize";
 import { Loading } from "@/components/Common/Loading";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { ButtonNew } from "@/components/Common/Button/ButtonNew";
-import { NoteTop } from "@/components/Note/NoteTop";
-import { NotePages } from "@/components/Note/NotePages";
+import { NoteHeader } from "@/components/Note/NoteHeader";
 
 const NoteId = () => {
   const router = useRouter();
-  const user = useUser();
   const supabase = useSupabaseClient();
+  const { data, isLoading } = useSWR(router.query.id ? `/api/notes/${router.query.id}` : null);
   const note = useStore((state) => state.editNote);
   const setNote = useStore((state) => state.setEditNote);
-  const { data, isLoading } = useSWR(router.query.id ? `/api/notes/${router.query.id}` : null);
 
-  useEffect(() => {
-    setNote({
-      id: data?.id,
-      title: data?.title,
-      description: data?.description,
-    });
-  }, [data]);
-
-  const handleCreatePage = async () => {
+  const handleNoteUpdate = async () => {
     const { data, error } = await supabase
-      .from("pages")
-      .insert({
-        note_id: note.id,
-        user_id: user!.id,
-        title: "新規ページ",
-        content: "",
+      .from("notes")
+      .update({
+        name: note.name,
+        content: note.content,
       })
+      .eq("id", note.id)
       .select()
       .single();
 
     if (error) {
-      alert(error.message);
-      return;
+      alert(error);
     }
 
-    router.push(`/page/${data.id}`);
+    router.push(`/folder/${data?.folder_id}`);
   };
+
+  useEffect(() => {
+    setNote({
+      id: data?.id,
+      name: data?.name,
+      content: data?.content,
+    });
+  }, [data]);
 
   if (isLoading) return <Loading />;
 
   return (
-    <Layout>
-      <div className=" max-w-[800px] mx-auto">
-        <NoteTop />
-        <NotePages />
-        <div className="w-fit mx-auto mt-12">
-          <ButtonNew text="ページ新規作成" handleCreate={handleCreatePage} />
+    <>
+      <NoteHeader handleUpdate={handleNoteUpdate} />
+      <div>
+        <div className="max-w-[660px] mx-auto mt-16">
+          <h1>
+            <TextareaAutosize
+              value={note.name}
+              minRows={1}
+              placeholder="タイトル"
+              className="w-full text-4xl font-bold outline-none resize-none"
+              onChange={(e) => {
+                setNote({ ...note, name: e.target.value });
+              }}
+            />
+          </h1>
+          <p className="mt-10">
+            <TextareaAutosize
+              value={note.content}
+              minRows={6}
+              placeholder="内容を入力してください"
+              className="w-full outline-none resize-none px-1 leading-8"
+              onChange={(e) => {
+                setNote({ ...note, content: e.target.value });
+              }}
+            />
+          </p>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

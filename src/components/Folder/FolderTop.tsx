@@ -3,20 +3,20 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useStore } from "@/store";
 import TextareaAutosize from "react-textarea-autosize";
 
-export const NoteTop = () => {
-  const note = useStore((state) => state.editNote);
-  const setNote = useStore((state) => state.setEditNote);
+export const FolderTop = () => {
+  const folder = useStore((state) => state.editFolder);
+  const setFolder = useStore((state) => state.setEditFolder);
   const supabase = useSupabaseClient();
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleUpdateNote = async () => {
+  const handleUpdateFolder = async () => {
     const { data, error } = await supabase
-      .from("notes")
+      .from("folders")
       .update({
-        title: note.title,
-        description: note.description,
+        name: folder.name,
+        description: folder.description,
       })
-      .eq("id", note.id);
+      .eq("id", folder.id);
 
     if (error) {
       alert(error.message);
@@ -30,15 +30,15 @@ export const NoteTop = () => {
       <div className=" relative pr-24">
         <h1 className="text-4xl font-bold leading-tight">
           {!isEdit ? (
-            note?.title
+            folder?.name
           ) : (
             <TextareaAutosize
-              value={note?.title}
+              value={folder?.name}
               minRows={1}
               placeholder="タイトル"
               className="pb-4 w-full outline-none resize-none border-b border-[#d0d7de]"
               onChange={(e) => {
-                setNote({ ...note, title: e.target.value });
+                setFolder({ ...folder, name: e.target.value });
               }}
             ></TextareaAutosize>
           )}
@@ -46,24 +46,24 @@ export const NoteTop = () => {
         <div className="absolute right-0 top-2">
           <button
             className="border border-[#222] rounded py-1 px-4 text-[12px] hover:bg-[#eee]"
-            onClick={isEdit ? handleUpdateNote : () => setIsEdit(true)}
+            onClick={isEdit ? handleUpdateFolder : () => setIsEdit(true)}
           >
             {isEdit ? "保存する" : "編集する"}
           </button>
         </div>
       </div>
-      {(note?.description || isEdit) && (
+      {(folder?.description || isEdit) && (
         <p className="mt-5">
           {!isEdit ? (
-            <span className="inline-block w-full px-1">{note?.description}</span>
+            <span className="inline-block w-full px-1">{folder?.description}</span>
           ) : (
             <TextareaAutosize
-              value={note?.description}
+              value={folder?.description}
               minRows={1}
               placeholder="説明が入ります"
               className="w-full p-3 outline-none leading-7 resize-none border border-[#d0d7de] rounded-sm"
               onChange={(e) => {
-                setNote({ ...note, description: e.target.value });
+                setFolder({ ...folder, description: e.target.value });
               }}
             ></TextareaAutosize>
           )}

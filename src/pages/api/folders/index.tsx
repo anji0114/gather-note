@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const NotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
+const FoldersApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const supabase = createServerSupabaseClient({ req, res })
 
   const {
@@ -14,7 +14,7 @@ const NotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const { data, error } = await supabase
-      .from('notes')
+      .from('folders')
       .select('*')
       .eq('user_id', user!.id)
       .order('created_at', { ascending: false })
@@ -27,4 +27,4 @@ const NotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default NotesApi
+export default FoldersApi

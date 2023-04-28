@@ -1,17 +1,17 @@
 import Link from "next/link";
-import { DocumentTextIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { FolderOpenIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 const NAV_ITEM = [
   {
-    title: "ノート",
+    title: "フォルダ",
     href: "/dashboard",
-    icon: <DocumentTextIcon className="w-[22px]" />,
+    icon: <FolderOpenIcon className="w-[22px]" />,
   },
-  {
-    title: "スレッド",
-    href: "/dashboard/template",
-    icon: <SquaresPlusIcon className="w-[22px]" />,
-  },
+  // {
+  //   title: "スレッド",
+  //   href: "/dashboard/template",
+  //   icon: <SquaresPlusIcon className="w-[22px]" />,
+  // },
 ];
 
 export const DashboardNav = () => {

@@ -1,17 +1,17 @@
-import { useStore } from "@/store";
-import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { DateFns } from "../Common/Date/DateFns";
 import { Loading } from "../Common/Loading";
 
-export const NotePages = () => {
+export const FolderNoteList = () => {
   const router = useRouter();
-  const note = useStore((state) => state.editNote);
   const { data, isLoading } = useSWR(
-    router.query.id ? `/api/notes/${router.query.id}/pages` : null
+    router.query.id ? `/api/folders/${router.query.id}/notes` : null
   );
+
+  console.log(data);
 
   if (isLoading) {
     return <Loading />;
@@ -21,20 +21,20 @@ export const NotePages = () => {
     <>
       {data?.length > 0 ? (
         <ul className="mt-8 space-y-4">
-          {data?.map((page: any) => (
+          {data?.map((note: any) => (
             <li
-              key={page.id}
+              key={note.id}
               className="flex justify-between w-full pb-4 border-b border-[#d0d7de]"
             >
               <Link
-                href={`/page/${page.id}`}
-                className="relative inline-block pl-7 text-sm font-medium underline-offset-3 hover:underline"
+                href={`/note/${note.id}`}
+                className="relative inline-block pl-7 text-[#4e6bb4] text-sm font-medium underline-offset-3 hover:underline"
               >
                 <DocumentTextIcon className="absolute left-0 top-1/2 translate-y-[-50%] w-6" />
-                {page.title}
+                <span className="">{note.name}</span>
               </Link>
               <p className="text-sm">
-                <DateFns time={page.created_at} />
+                <DateFns time={note.created_at} />
               </p>
             </li>
           ))}

@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const PagesIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
+const FoldersIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const supabase = createServerSupabaseClient({ req, res });
   const {
     data: { user },
@@ -12,8 +12,8 @@ const PagesIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === "GET") {
-    const pageId = req.query.id;
-    const { data, error } = await supabase.from("pages").select("*").eq("id", pageId).single();
+    const noteId = req.query.id;
+    const { data, error } = await supabase.from("folders").select("*").eq("id", noteId).single();
 
     if (error) {
       return res.status(401).json({ message: error });
@@ -23,4 +23,4 @@ const PagesIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default PagesIdApi;
+export default FoldersIdApi;

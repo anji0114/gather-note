@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 
-export const PageHeader: FC<{ handleUpdate: () => void }> = ({ handleUpdate }) => {
+export const NoteHeader: FC<{ handleUpdate: () => void }> = ({ handleUpdate }) => {
   const router = useRouter();
 
   return (

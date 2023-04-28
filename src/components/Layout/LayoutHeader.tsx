@@ -31,7 +31,7 @@ export const LayoutHeader = () => {
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="text-sm font-medium inline-block ml-5 py-2.5 px-6 bg-[#222] text-white rounded hover:bg-[#555]"
+                  className="text-sm inline-block ml-5 py-2.5 px-6 bg-[#222] text-white rounded hover:bg-[#555]"
                 >
                   ユーザー登録
                 </Link>
