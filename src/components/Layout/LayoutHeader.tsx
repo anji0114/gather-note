@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { FC } from "react";
 
-export const LayoutHeader = () => {
+export const LayoutHeader:FC = () => {
   const user = useUser();
   const supbase = useSupabaseClient();
   const router = useRouter();

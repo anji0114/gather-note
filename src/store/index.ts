@@ -6,7 +6,6 @@ type State = {
   editFolder: Folder;
   setEditFolder: (payload: Folder) => void;
   resetEditFolder: () => void;
-
   editNote: Note;
   setEditNote: (payload: Note) => void;
   resetEditNote: () => void;

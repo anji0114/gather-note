@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { FolderOpenIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { FolderOpenIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { FC } from "react";
 
 const NAV_ITEM = [
   {
@@ -7,14 +8,14 @@ const NAV_ITEM = [
     href: "/dashboard",
     icon: <FolderOpenIcon className="w-[22px]" />,
   },
-  // {
-  //   title: "スレッド",
-  //   href: "/dashboard/template",
-  //   icon: <SquaresPlusIcon className="w-[22px]" />,
-  // },
+  {
+    title: "グループ",
+    href: "/dashboard/group",
+    icon: <UserGroupIcon className="w-[22px]" />,
+  },
 ];
 
-export const DashboardNav = () => {
+export const DashboardNav: FC = () => {
   return (
     <nav>
       <ul className="space-y-[6px]">

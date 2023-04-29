@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { DashBoardLayout } from "@/components/Dashboard/DashboardLayout";
 import { DashboardFolder } from "@/components/Dashboard/DashboardFolder";
 
-const Dashboard: NextPage = () => {
+const DashboardPage: NextPage = () => {
   return (
     <Layout>
       <DashBoardLayout>
@@ -13,4 +13,4 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
