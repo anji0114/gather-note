@@ -5,7 +5,8 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { FolderOpenIcon } from "@heroicons/react/24/outline";
 
 import { ButtonNew } from "@/components/Common/Button/ButtonNew";
-import { LoadingCircle } from "@/components/Common/Loading/LoadingCircle";
+import { LoadingBlock } from "../Common/Loading/LoadingBlock";
+
 import { DashboardHeading } from "@/components/Dashboard/DashboardHeading";
 import { DashboardFolderItem } from "@/components/Dashboard/DashboardFolderItem";
 
@@ -42,9 +43,7 @@ export const DashboardFolder: FC = () => {
       </DashboardHeading>
       <div className="relative min-h-[100px] mt-8">
         {isLoading ? (
-          <div className=" absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
-            <LoadingCircle />
-          </div>
+          <LoadingBlock />
         ) : error ? (
           <p className="text-center text-red-400">エラーが発生しました</p>
         ) : (
