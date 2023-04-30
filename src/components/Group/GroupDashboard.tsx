@@ -35,7 +35,10 @@ export const GroupDashboard: FC<{ group: any }> = ({ group }) => {
         </div>
       </div>
 
-      <div className="mt-8 p-5 bg-gray-100">ボードを表示</div>
+      <div className="mt-8 p-5 bg-gray-100">
+        <p>ボードを表示</p>
+        <button className="mt-3 bg-blue-500 text-white py-2 px-4">ボード作成</button>
+      </div>
 
       <div className="mt-8 p-5 bg-green-100">メンバーを表示</div>
     </>

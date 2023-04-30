@@ -68,7 +68,7 @@ export const DashboardGroup: FC = () => {
                 id={group.id}
                 name={group.name}
                 description={group.description}
-                created_at={group.description}
+                created_at={group.created_at}
               />
             ))}
           </ul>

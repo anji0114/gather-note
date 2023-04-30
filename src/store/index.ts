@@ -1,4 +1,4 @@
-import { Folder, Note } from "@/types";
+import { Folder, Note, Profile } from "@/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -6,9 +6,14 @@ type State = {
   editFolder: Folder;
   setEditFolder: (payload: Folder) => void;
   resetEditFolder: () => void;
+
   editNote: Note;
   setEditNote: (payload: Note) => void;
   resetEditNote: () => void;
+
+  editProfile: Profile;
+  setEditProfile: (payload: Profile) => void;
+  resetEditProfile: () => void;
 };
 
 export const useStore = create<State>()(
@@ -50,6 +55,24 @@ export const useStore = create<State>()(
           id: "",
           name: "",
           content: "",
+        },
+      });
+    },
+
+    editProfile: { name: "", avatar_url: "" },
+    setEditProfile: (payload) => {
+      set({
+        editProfile: {
+          name: payload.name,
+          avatar_url: payload.avatar_url,
+        },
+      });
+    },
+    resetEditProfile: () => {
+      set({
+        editProfile: {
+          name: "",
+          avatar_url: "",
         },
       });
     },

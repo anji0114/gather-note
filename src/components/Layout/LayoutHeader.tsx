@@ -3,11 +3,21 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { FC } from "react";
+import { useEffect } from "react";
+import useSWR from "swr";
+import { useStore } from "@/store";
 
-export const LayoutHeader:FC = () => {
+const LayoutHeader: FC = () => {
   const user = useUser();
   const supbase = useSupabaseClient();
   const router = useRouter();
+
+  const { data, error, isLoading } = useSWR("/api/profile");
+  const setProfile = useStore((state) => state.setEditProfile);
+
+  useEffect(() => {
+    setProfile({ name: data?.name, avatar_url: data?.avatar_rul });
+  }, [data]);
 
   const logout = async () => {
     await supbase.auth.signOut();
@@ -51,3 +61,5 @@ export const LayoutHeader:FC = () => {
     </header>
   );
 };
+
+export default LayoutHeader;

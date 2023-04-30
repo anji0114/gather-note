@@ -12,9 +12,19 @@ export type Note = {
   created_at?: string;
 };
 
+export type Board = {
+  id: string;
+};
+
 export type Group = {
   id: string;
   name: string;
   description: string;
   created_at?: string;
+};
+
+export type Profile = {
+  name: string;
+  avatar_url: string;
+  updated_at?: string;
 };

@@ -17,8 +17,6 @@ const GroupId: NextPage = () => {
 
   const { isMember, isLoading: isMembershipLoading } = useGroupMembership(data?.id);
 
-  console.log(isMember, isMembershipLoading);
-
   if (isLoading) return <Loading />;
 
   return (
