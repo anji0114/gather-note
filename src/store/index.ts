@@ -1,4 +1,4 @@
-import { Folder, Note, Profile } from "@/types";
+import { Folder, Group, Note, Profile } from "@/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -10,6 +10,10 @@ type State = {
   editNote: Note;
   setEditNote: (payload: Note) => void;
   resetEditNote: () => void;
+
+  editGroup: Group;
+  setEditGroup: (payload: Group) => void;
+  resetEditGroup: () => void;
 
   editProfile: Profile;
   setEditProfile: (payload: Profile) => void;
@@ -59,6 +63,25 @@ export const useStore = create<State>()(
       });
     },
 
+    // group
+    editGroup: { id: "", name: "", description: "" },
+    setEditGroup: (payload) => {
+      set({
+        editGroup: {
+          id: payload.id,
+
+          name: payload.name,
+          description: payload.description,
+        },
+      });
+    },
+    resetEditGroup: () => {
+      set({
+        editGroup: { id: "", name: "", description: "" },
+      });
+    },
+
+    // profile
     editProfile: { name: "", avatar_url: "" },
     setEditProfile: (payload) => {
       set({

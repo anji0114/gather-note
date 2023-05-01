@@ -3,21 +3,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { FC } from "react";
-import { useEffect } from "react";
 import useSWR from "swr";
-import { useStore } from "@/store";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 
-const LayoutHeader: FC = () => {
+export const LayoutHeader: FC = () => {
   const user = useUser();
   const supbase = useSupabaseClient();
   const router = useRouter();
 
-  const { data, error, isLoading } = useSWR("/api/profile");
-  const setProfile = useStore((state) => state.setEditProfile);
-
-  useEffect(() => {
-    setProfile({ name: data?.name, avatar_url: data?.avatar_rul });
-  }, [data]);
+  const { data, error, isLoading } = useSWR(user ? "/api/profile" : null);
 
   const logout = async () => {
     await supbase.auth.signOut();
@@ -48,11 +42,18 @@ const LayoutHeader: FC = () => {
                 </Link>
               </>
             ) : (
-              <button
-                className="text-sm font-medium underline-offset-2 hover:underline"
-                onClick={logout}
-              >
-                ログアウト
+              <button className="w-12 h-12" onClick={logout}>
+                {data?.avatar_url ? (
+                  <Image
+                    src={data.avatar_url}
+                    alt="ユーザーアバター"
+                    className="w-full h-full object-cover rounded-full"
+                    width={150}
+                    height={150}
+                  />
+                ) : (
+                  <UserCircleIcon className="w-full text-[#777]" />
+                )}
               </button>
             )}
           </div>
@@ -61,5 +62,3 @@ const LayoutHeader: FC = () => {
     </header>
   );
 };
-
-export default LayoutHeader;

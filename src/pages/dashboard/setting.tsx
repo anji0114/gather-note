@@ -1,19 +1,18 @@
 import { NextPage } from "next";
-import { DashBoardLayout } from "@/components/Dashboard/DashboardLayout";
+import useSWR from "swr";
+
 import { DashboardSetting } from "@/components/Dashboard/DashboardSetting";
 import { Layout } from "@/components/Layout";
+import { DashboardLayout } from "@/components/Dashboard/DashboardLayout";
+
 
 const DashboardSettingPage: NextPage = () => {
- 
-
   return (
-    <div>
-      <Layout>
-        <DashBoardLayout>
-          <DashboardSetting />
-        </DashBoardLayout>
-      </Layout>
-    </div>
+    <Layout>
+      <DashboardLayout>
+        <DashboardSetting />
+      </DashboardLayout>
+    </Layout>
   );
 };
 

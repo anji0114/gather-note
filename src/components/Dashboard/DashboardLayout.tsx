@@ -1,17 +1,25 @@
-import { FC, ReactNode } from 'react'
-import { DashboardNav } from '@/components/Dashboard/DashboardNav'
+import { FC, ReactNode } from "react";
+import { FolderOpenIcon, UserGroupIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
+import { GridLayout } from "@/components/Common/Grid/GridLayout";
 
-type Props = {
-  children: ReactNode
-}
+const NAV_ITEMS = [
+  {
+    title: "フォルダ",
+    href: "/dashboard",
+    icon: <FolderOpenIcon className="w-[22px]" />,
+  },
+  {
+    title: "グループ",
+    href: "/dashboard/group",
+    icon: <UserGroupIcon className="w-[22px]" />,
+  },
+  {
+    title: "設定",
+    href: "/dashboard/setting",
+    icon: <Cog8ToothIcon className="w-[22px]" />,
+  },
+];
 
-export const DashBoardLayout: FC<Props> = ({ children }) => {
-  return (
-    <div className="flex justify-between items-start relative gap-12">
-      <aside className="sticky top-3 left-0 w-[200px]">
-        <DashboardNav />
-      </aside>
-      <main className="w-full">{children}</main>
-    </div>
-  )
-}
+export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
+  return <GridLayout items={NAV_ITEMS}>{children}</GridLayout>;
+};

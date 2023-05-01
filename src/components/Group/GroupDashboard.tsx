@@ -1,11 +1,13 @@
+import { useStore } from "@/store";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { FC } from "react";
 
-export const GroupDashboard: FC<{ group: any }> = ({ group }) => {
+export const GroupDashboard: FC = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
   const router = useRouter();
+  const group = useStore((state) => state.editGroup);
 
   const handleUnregisterGroup = async () => {
     const { data, error } = await supabase
@@ -21,6 +23,24 @@ export const GroupDashboard: FC<{ group: any }> = ({ group }) => {
     router.reload();
   };
 
+  const handleCreateBoard = async () => {
+    const { data, error } = await supabase
+      .from("boards")
+      .insert({
+        group_id: group.id,
+        name: "新規ボード",
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    router.push(`/board/${data.id}`);
+  };
+
   return (
     <>
       <div className="mt-8 p-5 bg-blue-100">
@@ -31,7 +51,9 @@ export const GroupDashboard: FC<{ group: any }> = ({ group }) => {
           >
             脱退する
           </button>
-          <button className="bg-blue-500 text-white py-2 px-5">ボード作成</button>
+          <button className="bg-blue-500 text-white py-2 px-5" onClick={handleCreateBoard}>
+            ボード作成
+          </button>
         </div>
       </div>
 
@@ -39,8 +61,6 @@ export const GroupDashboard: FC<{ group: any }> = ({ group }) => {
         <p>ボードを表示</p>
         <button className="mt-3 bg-blue-500 text-white py-2 px-4">ボード作成</button>
       </div>
-
-      <div className="mt-8 p-5 bg-green-100">メンバーを表示</div>
     </>
   );
 };

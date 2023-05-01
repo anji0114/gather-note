@@ -1,20 +1,69 @@
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import useSWR from "swr";
+import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/router";
 import { DashboardHeading } from "./DashboardHeading";
 import { Cog8ToothIcon } from "@heroicons/react/24/outline";
-import { useStore } from "@/store";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 export const DashboardSetting: FC = () => {
+  const router = useRouter();
   const supabase = useSupabaseClient();
   const user = useUser();
-  const editProfile = useStore((state) => state.editProfile);
-  const setEditProfile = useStore((state) => state.setEditProfile);
+  const { data, error, isLoading } = useSWR(user ? "/api/profile" : null);
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (data) {
+      setName(data.name);
+      setAvatarUrl(data.avatar_url);
+    }
+  }, [data]);
+
+  const onUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (!files || files?.length == 0) {
+      return;
+    }
+
+    setAvatar(files[0]);
+  }, []);
 
   const handleProfileUpdate = async () => {
-    const { data, error } = await supabase
+    let avatar_url = avatarUrl;
+
+    if (avatar) {
+      // supabaseストレージに画像アップロード
+      const { data: storageData, error: storageError } = await supabase.storage
+        .from("profile")
+        .upload(`${user!.id}/${uuidv4()}`, avatar);
+
+      if (storageError) {
+        alert(storageError.message);
+        return;
+      }
+
+      if (avatar_url) {
+        const fileName = avatar_url.split("/").slice(-1)[0];
+
+        // 古い画像を削除
+        await supabase.storage.from("profile").remove([`${user!.id}/${fileName}`]);
+      }
+
+      // 画像のURLを取得
+      const { data: urlData } = supabase.storage.from("profile").getPublicUrl(storageData.path);
+
+      avatar_url = urlData.publicUrl;
+    }
+
+    const { error } = await supabase
       .from("profiles")
       .update({
-        name: editProfile.name,
+        name: name,
+        avatar_url: avatar_url,
       })
       .eq("id", user!.id);
 
@@ -22,6 +71,7 @@ export const DashboardSetting: FC = () => {
       alert(error.message);
       return;
     }
+    router.reload();
   };
 
   return (
@@ -30,14 +80,16 @@ export const DashboardSetting: FC = () => {
       <div className="mt-8">
         <div className="py-10 px-16 border border-[#d0d7de] rounded-md space-y-7">
           <p className=" font-bold text-xl">プロフィール編集</p>
-          <div>{/* <input type="file" /> */}</div>
+          <div className="w-[150px]">
+            <input type="file" accept="image/*" onChange={(e) => onUploadImage(e)} />
+          </div>
           <div>
             <p className="pl-1 text-sm font-medium">ユーザーネーム</p>
             <input
               type="text"
-              value={editProfile.name ? editProfile.name : ""}
+              value={name}
               onChange={(e) => {
-                setEditProfile({ ...editProfile, name: e.target.value });
+                setName(e.target.value);
               }}
               className="mt-2.5 px-4 py-3 w-full max-w-[400px] text-sm border border-[#d0d7de] rounded"
               placeholder="Font Developer"
