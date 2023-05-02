@@ -24,6 +24,7 @@ export type Group = {
 };
 
 export type Profile = {
+  id: string,
   name: string;
   avatar_url: string;
   updated_at?: string;
