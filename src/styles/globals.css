@@ -42,3 +42,10 @@ body {
   visibility: visible;
   transform: translateY(0);
 }
+
+
+/* animation */
+.DropdownMenuContent {
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
