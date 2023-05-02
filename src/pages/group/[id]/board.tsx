@@ -13,8 +13,6 @@ const GroupBoardPage = () => {
     router.query.id ? `/api/groups/${router.query.id}/boards` : null
   );
 
-  console.log(data);
-
   return (
     <Layout>
       <GroupLayout>
@@ -26,7 +24,10 @@ const GroupBoardPage = () => {
         </div>
         <ul className="mt-8">
           {data?.map((board: any) => (
-            <li className="dashboard-item01 py-5 px-7 bg-white border border-[#d0d7de]">
+            <li
+              className="dashboard-item01 py-5 px-7 bg-white border border-[#d0d7de]"
+              key={board.id}
+            >
               <p className="pl-[2px] text-[#555] text-[12px]">
                 <DateFns time={board.created_at} />
               </p>
