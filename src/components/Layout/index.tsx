@@ -10,8 +10,8 @@ export const Layout: FC<Props> = ({ children }) => {
   return (
     <>
       <LayoutHeader />
-      <div className="py-24 min-h-[calc(100vh_-_150px)]">
-        <div className="max-w-[1140px] w-full mx-auto px-7">{children}</div>
+      <div className="py-20 sm:py-24 min-h-[calc(100vh_-_150px)]">
+        <div className="max-w-[1140px] w-full mx-auto px-5 sm:px-7">{children}</div>
       </div>
       <LayoutFooter />
     </>

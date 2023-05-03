@@ -3,9 +3,9 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 type State = {
-  editFolder: Folder;
-  setEditFolder: (payload: Folder) => void;
-  resetEditFolder: () => void;
+  folder: Folder;
+  setFolder: (payload: Folder) => void;
+  resetFolder: () => void;
 
   editNote: Note;
   setEditNote: (payload: Note) => void;
@@ -22,19 +22,19 @@ type State = {
 
 export const useStore = create<State>()(
   devtools((set) => ({
-    editFolder: { id: "", name: "", description: "" },
-    setEditFolder: (payload) => {
+    folder: { id: "", name: "", description: "" },
+    setFolder: (payload) => {
       set({
-        editFolder: {
+        folder: {
           id: payload.id,
           name: payload.name,
           description: payload.description,
         },
       });
     },
-    resetEditFolder: () => {
+    resetFolder: () => {
       set({
-        editFolder: {
+        folder: {
           id: "",
           name: "",
           description: "",

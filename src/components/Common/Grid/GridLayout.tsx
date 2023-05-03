@@ -17,8 +17,8 @@ export const GridLayout: FC<Props> = ({ items, children }) => {
   const router = useRouter();
 
   return (
-    <div className="flex justify-between items-start relative gap-12">
-      <aside className="sticky top-3 left-0 w-[200px]">
+    <div className="sm:flex sm:justify-between items-start relative gap-12">
+      <aside className="sticky top-3 left-0 w-[200px] hidden sm:block">
         <nav>
           <ul className="space-y-[6px]">
             {items.map((item) => (
