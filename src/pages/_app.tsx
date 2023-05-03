@@ -7,6 +7,7 @@ import { SWRConfig } from "swr";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
   const fetcher = async (url: string): Promise<any> => {
     const response = await fetch(url);
     if (!response.ok) {

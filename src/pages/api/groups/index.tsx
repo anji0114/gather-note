@@ -28,7 +28,7 @@ const GroupsApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .select("*")
       .in(
         "id",
-        groupIds?.map((id) => id.group_id)
+        groupIds.map((id) => id.group_id)
       );
 
     return res.status(200).json(groupsData);

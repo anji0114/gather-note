@@ -9,20 +9,32 @@ import { ButtonNew } from "@/components/Common/Button/ButtonNew";
 import { FolderTop } from "@/components/Folder/FolderTop";
 import { FolderNoteList } from "@/components/Folder/FolderNoteList";
 import { NextPage } from "next";
+import { Folder } from "@/types";
 
-const FolderId:NextPage = () => {
+const FolderId: NextPage = () => {
+  const user = useUser();
   const router = useRouter();
   const supabase = useSupabaseClient();
-  const folder = useStore((state) => state.editFolder);
-  const setFolder = useStore((state) => state.setEditFolder);
-  const { data, isLoading } = useSWR(router.query.id ? `/api/folders/${router.query.id}` : null);
+  const folder = useStore((state) => state.folder);
+  const setFolder = useStore((state) => state.setFolder);
+  const { data, error, isLoading } = useSWR<Folder, Error>(
+    router.query.id ? `/api/folders/${router.query.id}` : null
+  );
 
   useEffect(() => {
-    setFolder({
-      id: data?.id,
-      name: data?.name,
-      description: data?.description,
-    });
+    if (user?.id && data?.user_id) {
+      if (user.id !== data.user_id) router.push("/dashboard");
+    }
+  }, [user, data]);
+
+  useEffect(() => {
+    if (data) {
+      setFolder({
+        id: data?.id,
+        name: data?.name,
+        description: data?.description,
+      });
+    }
   }, [data]);
 
   const handleCreateNotes = async () => {
@@ -44,16 +56,22 @@ const FolderId:NextPage = () => {
     router.push(`/note/${data.id}`);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading || !user?.id) return <Loading />;
 
   return (
     <Layout>
       <div className=" max-w-[800px] mx-auto">
-        <FolderTop />
-        <FolderNoteList />
-        <div className="w-fit mx-auto mt-12">
-          <ButtonNew text="新規ノート作成" handleCreate={handleCreateNotes} />
-        </div>
+        {!error ? (
+          <>
+            <FolderTop />
+            <FolderNoteList />
+            <div className="w-fit mx-auto mt-12">
+              <ButtonNew text="新規ノート作成" handleCreate={handleCreateNotes} />
+            </div>
+          </>
+        ) : (
+          <p className=" text-center text-red-500">{error.message}</p>
+        )}
       </div>
     </Layout>
   );

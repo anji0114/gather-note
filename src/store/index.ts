@@ -1,31 +1,40 @@
-import { Folder, Note } from "@/types";
+import { Folder, Group, Note, Profile } from "@/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 type State = {
-  editFolder: Folder;
-  setEditFolder: (payload: Folder) => void;
-  resetEditFolder: () => void;
+  folder: Folder;
+  setFolder: (payload: Folder) => void;
+  resetFolder: () => void;
+
   editNote: Note;
   setEditNote: (payload: Note) => void;
   resetEditNote: () => void;
+
+  editGroup: Group;
+  setEditGroup: (payload: Group) => void;
+  resetEditGroup: () => void;
+
+  editProfile: Profile;
+  setEditProfile: (payload: Profile) => void;
+  resetEditProfile: () => void;
 };
 
 export const useStore = create<State>()(
   devtools((set) => ({
-    editFolder: { id: "", name: "", description: "" },
-    setEditFolder: (payload) => {
+    folder: { id: "", name: "", description: "" },
+    setFolder: (payload) => {
       set({
-        editFolder: {
+        folder: {
           id: payload.id,
           name: payload.name,
           description: payload.description,
         },
       });
     },
-    resetEditFolder: () => {
+    resetFolder: () => {
       set({
-        editFolder: {
+        folder: {
           id: "",
           name: "",
           description: "",
@@ -50,6 +59,43 @@ export const useStore = create<State>()(
           id: "",
           name: "",
           content: "",
+        },
+      });
+    },
+
+    // group
+    editGroup: { id: "", name: "", description: "" },
+    setEditGroup: (payload) => {
+      set({
+        editGroup: {
+          id: payload.id,
+
+          name: payload.name,
+          description: payload.description,
+        },
+      });
+    },
+    resetEditGroup: () => {
+      set({
+        editGroup: { id: "", name: "", description: "" },
+      });
+    },
+
+    // profile
+    editProfile: { name: "", avatar_url: "" },
+    setEditProfile: (payload) => {
+      set({
+        editProfile: {
+          name: payload.name,
+          avatar_url: payload.avatar_url,
+        },
+      });
+    },
+    resetEditProfile: () => {
+      set({
+        editProfile: {
+          name: "",
+          avatar_url: "",
         },
       });
     },
