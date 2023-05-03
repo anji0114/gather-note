@@ -5,8 +5,9 @@ import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { DateFns } from "../Common/Date/DateFns";
 import { Loading } from "../Common/Loading";
 import { FC } from "react";
+import { Note } from "@/types";
 
-export const FolderNoteList:FC = () => {
+export const FolderNoteList: FC = () => {
   const router = useRouter();
   const { data, isLoading } = useSWR(
     router.query.id ? `/api/folders/${router.query.id}/notes` : null
@@ -20,7 +21,7 @@ export const FolderNoteList:FC = () => {
     <>
       {data?.length > 0 ? (
         <ul className="mt-8 space-y-4">
-          {data?.map((note: any) => (
+          {data?.map((note: Note) => (
             <li
               key={note.id}
               className="flex justify-between w-full pb-4 border-b border-[#d0d7de]"
@@ -33,7 +34,7 @@ export const FolderNoteList:FC = () => {
                 <span className="">{note.name}</span>
               </Link>
               <p className="text-sm">
-                <DateFns time={note.created_at} />
+                <DateFns time={note.updated_at!} />
               </p>
             </li>
           ))}

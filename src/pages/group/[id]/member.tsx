@@ -16,12 +16,11 @@ const GroupMemberPage = () => {
   return (
     <Layout>
       <GroupLayout>
-        <div className="flex items-center justify-between py-[14px] px-5 border border-[#d0d7de] rounded-md bg-white min-h-[72px]">
-          <h1 className="flex items-center gap-2.5">
-            <UsersIcon className="w-[30px]" />
-            <span className="inline-block whitespace-nowrap font-medium">メンバー一覧</span>
-          </h1>
-        </div>
+        <h1 className="flex items-center gap-2.5">
+          <UsersIcon className="w-[30px]" />
+          <span className="inline-block whitespace-nowrap font-medium">メンバー一覧</span>
+        </h1>
+
         <ul className="mt-8 border-b border-[#d0d7de]">
           {data?.map((member) => (
             <li key={member.id} className="flex items-center gap-4 p-3 border-t border-[#d0d7de]">

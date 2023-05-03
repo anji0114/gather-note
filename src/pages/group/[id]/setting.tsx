@@ -9,7 +9,7 @@ const GroupSettingPage = () => {
   return (
     <Layout>
       <GroupLayout>
-        <div>設定</div>
+        <div className="border border-[#d0d7de]">設定</div>
       </GroupLayout>
     </Layout>
   );

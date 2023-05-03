@@ -26,7 +26,7 @@ export const NoteContent = ({ isAuthor }: { isAuthor: boolean }) => {
         <TextareaAutosize
           value={note.content}
           minRows={6}
-          placeholder="内容を入力してください"
+          placeholder={`${isAuthor ? "内容を入力してください" : ""}`}
           className="w-full outline-none resize-none px-1 leading-8"
           onChange={(e) => {
             isAuthor ? setNote({ ...note, content: e.target.value }) : null;
