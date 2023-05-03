@@ -13,7 +13,7 @@ export const useGroupMembership = (groupId: string): Hooks => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkMembership = async (groupId: string) => {
+    const checkMembership = async () => {
       const { data: memberData, error } = await supabase
         .from("group_members")
         .select("user_id")
@@ -27,7 +27,7 @@ export const useGroupMembership = (groupId: string): Hooks => {
     };
 
     if (groupId && user?.id) {
-      checkMembership(groupId);
+      checkMembership();
     }
   }, [groupId, user]);
 

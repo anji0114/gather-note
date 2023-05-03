@@ -7,58 +7,60 @@ import {
   Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 
 export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const group = useStore((state) => state.editGroup);
+  const router = useRouter();
+  const { id } = router.query;
   const [navItems, setNavItems] = useState([
     {
       title: "ホーム",
-      href: `/`,
+      href: "",
       icon: <HomeIcon className="w-[22px]" />,
     },
     {
       title: "ボード",
-      href: `/`,
+      href: "",
       icon: <ClipboardDocumentListIcon className="w-[22px]" />,
     },
     {
       title: "メンバー",
-      href: `/`,
+      href: "",
       icon: <UsersIcon className="w-[22px]" />,
     },
     {
       title: "設定",
-      href: `/`,
+      href: "",
       icon: <Cog8ToothIcon className="w-[22px]" />,
     },
   ]);
 
   useEffect(() => {
-    if (group?.id) {
+    if (id) {
       setNavItems([
         {
           title: "ホーム",
-          href: `/group/${group.id}`,
+          href: `/group/${id}`,
           icon: <HomeIcon className="w-[22px]" />,
         },
         {
           title: "ボード",
-          href: `/group/${group.id}/board`,
+          href: `/group/${id}/board`,
           icon: <ClipboardDocumentListIcon className="w-[22px]" />,
         },
         {
           title: "メンバー",
-          href: `/group/${group.id}/member`,
+          href: `/group/${id}/member`,
           icon: <UsersIcon className="w-[22px]" />,
         },
         {
           title: "設定",
-          href: `/group/${group.id}/setting`,
+          href: `/group/${id}/setting`,
           icon: <Cog8ToothIcon className="w-[22px]" />,
         },
       ]);
     }
-  }, [group]);
+  }, [id]);
 
   return <GridLayout items={navItems}>{children}</GridLayout>;
 };
