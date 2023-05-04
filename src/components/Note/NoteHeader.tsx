@@ -28,7 +28,7 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
       alert(error);
     }
 
-    router.push(`/folder/${data?.folder_id}`);
+    router.reload();
   };
 
   return (
