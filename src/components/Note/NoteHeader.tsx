@@ -32,9 +32,9 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
   };
 
   return (
-    <header className="py-5 border-b border-[#d0d7de]">
+    <header className="border-b border-[#d0d7de]">
       <div className="max-w-[1140px] w-full mx-auto px-7">
-        <div className="flex items-center justify-between">
+        <div className="h-20 flex items-center justify-between">
           <button onClick={router.back} className="flex items-center gap-1 hover:opacity-75">
             <ChevronLeftIcon className="w-5" />
             <span className="text-sm font-medium pb-[1px]">前に戻る</span>

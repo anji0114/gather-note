@@ -9,6 +9,7 @@ import { NextPage } from "next";
 import { Folder } from "@/types";
 import { LayoutHeader } from "@/components/Layout/Header";
 import { FolderContent } from "@/components/Folder/FolderContent";
+import { LayoutFooter } from "@/components/Layout/LayoutFooter";
 
 const FolderId: NextPage = () => {
   const user = useUser();
@@ -39,16 +40,26 @@ const FolderId: NextPage = () => {
   return (
     <>
       <LayoutHeader />
-      <FolderTop />
-      <div className="mt-14 mx-auto max-w-[1140px] w-full px-5 sm:px-7">
-        <div className="max-w-[800px] mx-auto">
-          {!error ? (
-            <FolderContent />
-          ) : (
-            <p className=" text-center text-red-500">{error.message}</p>
-          )}
-        </div>
+      <div className="min-h-[calc(100vh_-_190px)]">
+        {!data?.deleted_flag ? (
+          <>
+            {" "}
+            <FolderTop />
+            <div className="mt-14 mx-auto max-w-[1140px] w-full px-5 sm:px-7">
+              <div className="max-w-[800px] mx-auto">
+                {!error ? (
+                  <FolderContent />
+                ) : (
+                  <p className=" text-center text-red-500">{error.message}</p>
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <p className="text-center mt-10">このフォルダーは削除されました</p>
+        )}
       </div>
+      <LayoutFooter />
     </>
   );
 };
