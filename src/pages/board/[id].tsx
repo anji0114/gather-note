@@ -14,6 +14,7 @@ const BoardId = () => {
   const { data, error, isLoading } = useSWR(
     router.query.id ? `/api/boards/${router.query.id}` : null
   );
+
   const { data: notesData, error: notesError } = useSWR(`/api/notes`);
 
   const handleAddNoteToBoard = async (id: string) => {
@@ -35,7 +36,7 @@ const BoardId = () => {
   return (
     <Layout>
       <div className=" max-w-[800px] mx-auto">
-        <h1 className="text-4xl font-bold leading-tight">{data?.name}</h1>
+        <h1 className="text-4xl font-bold leading-tight">/{data?.name}</h1>
 
         <div>
           <button onClick={() => setIsNotesOpen((prevState) => !prevState)}>ノートを表示</button>

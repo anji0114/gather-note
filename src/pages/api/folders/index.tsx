@@ -1,30 +1,31 @@
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const FoldersApi = async (req: NextApiRequest, res: NextApiResponse) => {
-  const supabase = createServerSupabaseClient({ req, res })
+  const supabase = createServerSupabaseClient({ req, res });
 
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getUser();
 
   if (!user?.id) {
-    return res.status(403).json({ message: '403: User is not logged in' })
+    return res.status(403).json({ message: "403: User is not logged in" });
   }
 
-  if (req.method === 'GET') {
+  if (req.method === "GET") {
     const { data, error } = await supabase
-      .from('folders')
-      .select('*')
-      .eq('user_id', user!.id)
-      .order('created_at', { ascending: false })
+      .from("folders")
+      .select("*")
+      .eq("user_id", user!.id)
+      .eq("deleted_flag", false)
+      .order("created_at", { ascending: false });
 
     if (error) {
-      return res.status(401).json({ message: error })
+      return res.status(401).json({ message: error });
     }
 
-    return res.status(200).json(data)
+    return res.status(200).json(data);
   }
-}
+};
 
-export default FoldersApi
+export default FoldersApi;

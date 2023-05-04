@@ -7,12 +7,14 @@ import { Loading } from "@/components/Common/Loading";
 import { NoteHeader } from "@/components/Note/NoteHeader";
 import { useNoteAuthor } from "@/hooks/useNoteAuthor";
 import { NoteContent } from "@/components/Note/NoteContent";
+import { useNoteInBoard } from "@/hooks/useNoteInBoard";
 
 const NoteId: NextPage = () => {
   const router = useRouter();
   const { data, isLoading } = useSWR(router.query.id ? `/api/notes/${router.query.id}` : null);
   const setNote = useStore((state) => state.setEditNote);
   const { isAuthor, isLoading: isAuthorLoading } = useNoteAuthor(data?.folder_id);
+  const { isInBoard, isLoading: isInBoardLoading } = useNoteInBoard(data?.id);
 
   useEffect(() => {
     setNote({
@@ -22,7 +24,15 @@ const NoteId: NextPage = () => {
     });
   }, [data]);
 
-  if (isLoading) return <Loading />;
+  useEffect(() => {
+    if (!isAuthorLoading && !isInBoardLoading) {
+      if (!isAuthor && !isInBoard) {
+        router.push(`/dashboard`);
+      }
+    }
+  }, [isAuthorLoading, isInBoardLoading]);
+
+  if (isLoading || isAuthorLoading || isInBoardLoading) return <Loading />;
 
   return (
     <>

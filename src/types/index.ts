@@ -5,6 +5,7 @@ export type Folder = {
   description: string;
   created_at?: string;
   updated_at?: string;
+  deleted_flag?: boolean;
 };
 
 export type Note = {
@@ -12,6 +13,7 @@ export type Note = {
   name: string;
   content: string;
   created_at?: string;
+  updated_at?: string;
 };
 
 export type Board = {

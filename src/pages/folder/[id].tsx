@@ -2,20 +2,18 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useEffect } from "react";
 import { useStore } from "@/store";
-import { Layout } from "@/components/Layout";
 import { Loading } from "@/components/Common/Loading";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { ButtonNew } from "@/components/Common/Button/ButtonNew";
+import { useUser } from "@supabase/auth-helpers-react";
 import { FolderTop } from "@/components/Folder/FolderTop";
-import { FolderNoteList } from "@/components/Folder/FolderNoteList";
 import { NextPage } from "next";
 import { Folder } from "@/types";
+import { LayoutHeader } from "@/components/Layout/Header";
+import { FolderContent } from "@/components/Folder/FolderContent";
+import { LayoutFooter } from "@/components/Layout/LayoutFooter";
 
 const FolderId: NextPage = () => {
   const user = useUser();
   const router = useRouter();
-  const supabase = useSupabaseClient();
-  const folder = useStore((state) => state.folder);
   const setFolder = useStore((state) => state.setFolder);
   const { data, error, isLoading } = useSWR<Folder, Error>(
     router.query.id ? `/api/folders/${router.query.id}` : null
@@ -37,43 +35,32 @@ const FolderId: NextPage = () => {
     }
   }, [data]);
 
-  const handleCreateNotes = async () => {
-    const { data, error } = await supabase
-      .from("notes")
-      .insert({
-        folder_id: folder.id,
-        name: "新規ページ",
-        content: "",
-      })
-      .select()
-      .single();
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push(`/note/${data.id}`);
-  };
-
   if (isLoading || !user?.id) return <Loading />;
 
   return (
-    <Layout>
-      <div className=" max-w-[800px] mx-auto">
-        {!error ? (
+    <>
+      <LayoutHeader />
+      <div className="min-h-[calc(100vh_-_190px)]">
+        {!data?.deleted_flag ? (
           <>
+            {" "}
             <FolderTop />
-            <FolderNoteList />
-            <div className="w-fit mx-auto mt-12">
-              <ButtonNew text="新規ノート作成" handleCreate={handleCreateNotes} />
+            <div className="mt-14 mx-auto max-w-[1140px] w-full px-5 sm:px-7">
+              <div className="max-w-[800px] mx-auto">
+                {!error ? (
+                  <FolderContent />
+                ) : (
+                  <p className=" text-center text-red-500">{error.message}</p>
+                )}
+              </div>
             </div>
           </>
         ) : (
-          <p className=" text-center text-red-500">{error.message}</p>
+          <p className="text-center mt-10">このフォルダーは削除されました</p>
         )}
       </div>
-    </Layout>
+      <LayoutFooter />
+    </>
   );
 };
 

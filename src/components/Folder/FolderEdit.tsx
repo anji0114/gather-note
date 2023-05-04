@@ -43,7 +43,7 @@ export const FolderEdit = () => {
     <>
       <Dialog.Root>
         <Dialog.Trigger asChild>
-          <button className="border border-[#222] rounded py-1 px-3 sm:px-4 text-[10px] sm:text-[12px] hover:bg-[#eee]">
+          <button className="bg-white border border-[#D0D7DE] rounded py-1 px-3 sm:px-4 text-[10px] sm:text-[12px] hover:bg-[#fafafa]">
             編集する
           </button>
         </Dialog.Trigger>
@@ -67,7 +67,7 @@ export const FolderEdit = () => {
                 minRows={2}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="mt-2 text-sm p-2 border border-[#d0d7de] rounded w-full min-w-[300px] outline-none"
+                className="mt-2 text-sm p-2 border border-[#d0d7de] rounded w-full min-w-[300px] outline-none resize-none"
               />
             </fieldset>
             <div className="mt-4 text-center">
