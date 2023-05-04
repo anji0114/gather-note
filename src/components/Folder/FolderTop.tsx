@@ -19,7 +19,7 @@ export const FolderTop: FC = () => {
               <FolderDelete />
             </div>
           </div>
-          {folder?.description && <p className="mt-7">{folder?.description}</p>}
+          {folder?.description && <p className="mt-7">{folder.description}</p>}
         </div>
       </div>
     </div>

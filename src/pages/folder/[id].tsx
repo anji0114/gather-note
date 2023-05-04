@@ -43,7 +43,6 @@ const FolderId: NextPage = () => {
       <div className="min-h-[calc(100vh_-_190px)]">
         {!data?.deleted_flag ? (
           <>
-            {" "}
             <FolderTop />
             <div className="mt-14 mx-auto max-w-[1140px] w-full px-5 sm:px-7">
               <div className="max-w-[800px] mx-auto">

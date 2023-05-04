@@ -14,14 +14,14 @@ export const useNoteInBoard = (noteId: string) => {
         alert(error.message);
       }
 
-      if (data) {
+      if (data && data.length > 0) {
         setIsInBoard(true);
       }
+      setIsLoading(false);
     };
 
     if (noteId) {
       checkInBoard();
-      setIsLoading(false);
     }
   }, [noteId]);
 
