@@ -1,6 +1,8 @@
 import { FC, ReactNode } from "react";
 import { FolderOpenIcon, UserGroupIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 import { GridLayout } from "@/components/Common/Grid/GridLayout";
+import { Layout } from "@/components/Layout";
+import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 
 const NAV_ITEMS = [
   {
@@ -21,5 +23,11 @@ const NAV_ITEMS = [
 ];
 
 export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  return <GridLayout items={NAV_ITEMS}>{children}</GridLayout>;
+  return (
+    <Layout classes="py-20 sm:py-24">
+      <LayoutContainer>
+        <GridLayout items={NAV_ITEMS}>{children}</GridLayout>
+      </LayoutContainer>
+    </Layout>
+  );
 };

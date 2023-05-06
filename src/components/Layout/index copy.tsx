@@ -4,14 +4,15 @@ import { LayoutFooter } from "@/components/Layout/LayoutFooter";
 
 type Props = {
   children: ReactNode;
-  classes?: string;
 };
 
-export const Layout: FC<Props> = ({ children, classes }) => {
+export const Layout: FC<Props> = ({ children }) => {
   return (
     <>
       <LayoutHeader />
-      <div className={`min-h-[calc(100vh_-_150px)] ${classes}`}>{children}</div>
+      <div className="py-20 sm:py-24 min-h-[calc(100vh_-_150px)]">
+        <div className="max-w-[1140px] w-full mx-auto px-5 sm:px-7">{children}</div>
+      </div>
       <LayoutFooter />
     </>
   );

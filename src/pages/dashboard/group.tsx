@@ -5,11 +5,9 @@ import { NextPage } from "next";
 
 const DashboardGroupPage: NextPage = () => {
   return (
-    <Layout>
-      <DashboardLayout>
-        <DashboardGroup />
-      </DashboardLayout>
-    </Layout>
+    <DashboardLayout>
+      <DashboardGroup />
+    </DashboardLayout>
   );
 };
 

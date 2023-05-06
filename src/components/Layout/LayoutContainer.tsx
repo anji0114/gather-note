@@ -1,5 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { FC, ReactNode } from "react";
 
-export const LayoutContainer = ({ children }: { children: ReactNode }) => {
-  return <div>{children}</div>;
+type Props = {
+  children: ReactNode;
+  classes?: string;
+};
+
+export const LayoutContainer: FC<Props> = ({ children, classes }) => {
+  return <div className={`max-w-[1140px] w-full mx-auto px-5 sm:px-7 ${classes}`}>{children}</div>;
 };
