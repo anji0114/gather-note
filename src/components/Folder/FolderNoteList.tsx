@@ -31,7 +31,7 @@ export const FolderNoteList: FC = () => {
                 className="relative inline-block pl-7 text-[#4e6bb4] text-sm font-medium underline-offset-3 hover:underline"
               >
                 <DocumentTextIcon className="absolute left-0 top-1/2 translate-y-[-50%] w-6" />
-                <span className="">{note.name}</span>
+                <span>{note.name}</span>
               </Link>
               <p className="text-sm">
                 <DateFns time={note.updated_at!} />

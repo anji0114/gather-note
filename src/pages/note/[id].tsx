@@ -22,6 +22,11 @@ const NoteId: NextPage = () => {
       name: data?.name,
       content: data?.content,
     });
+
+    // 論理削除されてアクセスされた場合
+    if (data?.id && data.deleted_flag) {
+      router.push(`/dashboard`);
+    }
   }, [data]);
 
   useEffect(() => {

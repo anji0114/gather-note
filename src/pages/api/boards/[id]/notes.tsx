@@ -21,7 +21,8 @@ const BoardNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .in(
         "id",
         idData.map((id) => id.note_id)
-      );
+      )
+      .eq("deleted_flag", false);
 
     return res.status(200).json(notesData);
   }

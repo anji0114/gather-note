@@ -14,6 +14,7 @@ export type Note = {
   content: string;
   created_at?: string;
   updated_at?: string;
+  deleted_flag?: boolean;
 };
 
 export type Board = {
