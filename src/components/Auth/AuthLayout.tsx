@@ -1,6 +1,8 @@
 import { FC, ReactNode } from "react";
 import { LayoutHeader } from "@/components/Layout/Header";
 import { LayoutFooter } from "@/components/Layout/LayoutFooter";
+import { Layout } from "../Layout";
+import { LayoutContainer } from "../Layout/LayoutContainer";
 
 type Props = {
   children: ReactNode;
@@ -9,17 +11,15 @@ type Props = {
 
 export const AuthLayout: FC<Props> = ({ children, title }) => {
   return (
-    <>
-      <LayoutHeader />
-      <div className="max-w-[1140px] w-full mx-auto px-7">
-        <div className="flex items-center justify-center py-20 min-h-[calc(100vh_-_140px)]">
+    <Layout classes="py-20">
+      <LayoutContainer>
+        <div className="flex  justify-center">
           <div className="max-w-[350px] w-full">
             <h2 className="text-center text-xl font-bold">{title}</h2>
             {children}
           </div>
         </div>
-      </div>
-      <LayoutFooter />
-    </>
+      </LayoutContainer>
+    </Layout>
   );
 };

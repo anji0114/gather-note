@@ -11,7 +11,7 @@ export const Layout: FC<Props> = ({ children, classes }) => {
   return (
     <>
       <LayoutHeader />
-      <div className={`min-h-[calc(100vh_-_150px)] ${classes}`}>{children}</div>
+      <div className={`min-h-[calc(100vh_-_150px)] ${classes ? classes : ""}`}>{children}</div>
       <LayoutFooter />
     </>
   );

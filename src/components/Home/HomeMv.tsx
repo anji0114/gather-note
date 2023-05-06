@@ -3,11 +3,11 @@ import Image from "next/image";
 import { useUser } from "@supabase/auth-helpers-react";
 import { FC } from "react";
 
-export const HomeMv:FC = () => {
+export const HomeMv: FC = () => {
   const user = useUser();
 
   return (
-    <div className="min-h-[calc(100vh_-_12rem_-_150px)] flex items-center justify-center">
+    <div className="min-h-[calc(100vh_-_150px)] py-10 flex items-center justify-center">
       <div>
         <div className="text-center">
           <Image
