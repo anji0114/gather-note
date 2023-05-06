@@ -2,9 +2,8 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { NoteMenu } from "@/components/Note/NoteMenu";
 import { useStore } from "@/store";
-import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
-import { NoteMenu } from "./NoteMenu";
 
 type Props = {
   isAuthor: boolean;

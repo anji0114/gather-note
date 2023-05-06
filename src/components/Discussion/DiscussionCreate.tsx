@@ -1,6 +1,6 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
-import { DiscussionList } from "./DiscussionList";
+import { DiscussionList } from "@/components/Discussion/DiscussionList";
 
 export const DiscussionCreate = ({ boardId }: { boardId: string | undefined | string[] }) => {
   const supabase = useSupabaseClient();

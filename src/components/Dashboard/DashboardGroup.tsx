@@ -1,14 +1,13 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { DashboardHeading } from "@/components/Dashboard/DashboardHeading";
 import { ButtonNew } from "@/components/Common/Button/ButtonNew";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { Group } from "@/types";
-import { DashboardGroupItem } from "./DashboardGroupItem";
+import { DashboardGroupItem } from "@/components/Dashboard/DashboardGroupItem";
 
 export const DashboardGroup: FC = () => {
   const supabase = useSupabaseClient();

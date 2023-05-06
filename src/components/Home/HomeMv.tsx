@@ -1,7 +1,7 @@
+import { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser } from "@supabase/auth-helpers-react";
-import { FC } from "react";
 
 export const HomeMv: FC = () => {
   const user = useUser();

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { Loading } from "../Common/Loading";
+import { Loading } from "@/components/Common/Loading";
 
 export const DiscussionList = () => {
   const router = useRouter();

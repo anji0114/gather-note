@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { FolderNoteList } from "./FolderNoteList";
-import { ButtonNew } from "../Common/Button/ButtonNew";
+import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
+import { ButtonNew } from "@/components/Common/Button/ButtonNew";
+import { FolderNoteList } from "@/components/Folder/FolderNoteList";
 
 export const FolderContent: FC = () => {
   const supabase = useSupabaseClient();

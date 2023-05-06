@@ -1,10 +1,7 @@
 import { BoardHeading } from "@/components/Board/BoardHeaidng";
 import { DiscussionCreate } from "@/components/Discussion/DiscussionCreate";
 import { Layout } from "@/components/Layout";
-
-import { LayoutHeader } from "@/components/Layout/Header";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
-import { LayoutFooter } from "@/components/Layout/LayoutFooter";
 import { useRouter } from "next/router";
 
 const BoardDiscussion = () => {

@@ -1,10 +1,10 @@
-import Link from "next/link";
+import { FC } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import useSWR from "swr";
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
-import { DateFns } from "../Common/Date/DateFns";
-import { Loading } from "../Common/Loading";
-import { FC } from "react";
+import { DateFns } from "@/components/Common/Date/DateFns";
+import { Loading } from "@/components/Common/Loading";
 import { Note } from "@/types";
 
 export const FolderNoteList: FC = () => {
