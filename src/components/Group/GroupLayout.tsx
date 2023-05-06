@@ -1,13 +1,14 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { GridLayout } from "@/components/Common/Grid/GridLayout";
 import {
   HomeIcon,
   ClipboardDocumentListIcon,
   UsersIcon,
   Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
-import { useStore } from "@/store";
 import { useRouter } from "next/router";
+import { Layout } from "@/components/Layout";
+import { GridLayout } from "@/components/Common/Grid/GridLayout";
+import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 
 export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -62,5 +63,11 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [id]);
 
-  return <GridLayout items={navItems}>{children}</GridLayout>;
+  return (
+    <Layout classes="py-20 sm:py-24">
+      <LayoutContainer>
+        <GridLayout items={navItems}>{children}</GridLayout>
+      </LayoutContainer>
+    </Layout>
+  );
 };

@@ -30,23 +30,21 @@ const GroupId: NextPage = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <Layout>
-      <GroupLayout>
-        <div className="bg-red-100 p-5 space-y-3">
-          <p className="font-bold text-2xl">情報</p>
-          <p>{data?.name}</p>
-        </div>
-        <div className="relative min-h-[100px]">
-          {isMembershipLoading ? (
-            <LoadingBlock />
-          ) : isMember ? (
-            <GroupDashboard />
-          ) : (
-            <GroupRegister groupId={data.id} />
-          )}
-        </div>
-      </GroupLayout>
-    </Layout>
+    <GroupLayout>
+      <div className="bg-red-100 p-5 space-y-3">
+        <p className="font-bold text-2xl">情報</p>
+        <p>{data?.name}</p>
+      </div>
+      <div className="relative min-h-[100px]">
+        {isMembershipLoading ? (
+          <LoadingBlock />
+        ) : isMember ? (
+          <GroupDashboard />
+        ) : (
+          <GroupRegister groupId={data.id} />
+        )}
+      </div>
+    </GroupLayout>
   );
 };
 
