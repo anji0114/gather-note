@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useStore } from "@/store";
+import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
+import { NoteMenu } from "./NoteMenu";
 
 type Props = {
   isAuthor: boolean;
@@ -39,14 +41,17 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
             <ChevronLeftIcon className="w-5" />
             <span className="text-sm font-medium pb-[1px]">前に戻る</span>
           </button>
-          {isAuthor && (
-            <button
-              className="py-2 px-8 text-sm font-medium rounded bg-[#222] text-white hover:bg-[#555]"
-              onClick={handleNoteUpdate}
-            >
-              保存する
-            </button>
-          )}
+          <div className="flex items-center gap-4">
+            {isAuthor && (
+              <button
+                className="py-2 px-8 text-sm font-medium rounded bg-[#222] text-white hover:bg-[#555]"
+                onClick={handleNoteUpdate}
+              >
+                保存する
+              </button>
+            )}
+            <NoteMenu />
+          </div>
         </div>
       </div>
     </header>
