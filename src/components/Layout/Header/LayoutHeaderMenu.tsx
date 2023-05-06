@@ -43,52 +43,50 @@ export const LayoutHeaderMenu: FC = () => {
   };
 
   return (
-    <>
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <button className="w-12 h-12">
-            {data?.avatar_url ? (
-              <Image
-                src={data.avatar_url}
-                alt="ユーザーアバター"
-                className="w-full h-full object-cover rounded-full"
-                width={150}
-                height={150}
-              />
-            ) : (
-              <UserCircleIcon className="w-full text-[#777]" />
-            )}
-          </button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content
-            className="bg-white shadow-md border border-[#F4F6F8] rounded w-48"
-            sideOffset={7}
-          >
-            {NAV_ITEMS.map((item) => (
-              <DropdownMenu.Item key={item.text} className="">
-                <Link
-                  href={item.href}
-                  className="flex gap-2 items-center w-full py-3 px-5 hover:bg-[#F4F6F8]"
-                >
-                  {item.icon}
-                  <span className="text-sm">{item.text}</span>
-                </Link>
-              </DropdownMenu.Item>
-            ))}
-
-            <DropdownMenu.Item className="border-t border-[#F4F6F8]">
-              <button
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
+        <button className="w-12 h-12">
+          {data?.avatar_url ? (
+            <Image
+              src={data.avatar_url}
+              alt="ユーザーアバター"
+              className="w-full h-full object-cover rounded-full"
+              width={150}
+              height={150}
+            />
+          ) : (
+            <UserCircleIcon className="w-full text-[#777]" />
+          )}
+        </button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          className="bg-white shadow-md border border-[#F4F6F8] rounded w-48"
+          sideOffset={7}
+        >
+          {NAV_ITEMS.map((item) => (
+            <DropdownMenu.Item key={item.text} className="">
+              <Link
+                href={item.href}
                 className="flex gap-2 items-center w-full py-3 px-5 hover:bg-[#F4F6F8]"
-                onClick={logout}
               >
-                <ArrowLeftOnRectangleIcon className="w-5 text-[#465667]" />
-                <span className="text-sm">ログアウト</span>
-              </button>
+                {item.icon}
+                <span className="text-sm">{item.text}</span>
+              </Link>
             </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu.Root>
-    </>
+          ))}
+
+          <DropdownMenu.Item className="border-t border-[#F4F6F8]">
+            <button
+              className="flex gap-2 items-center w-full py-3 px-5 hover:bg-[#F4F6F8]"
+              onClick={logout}
+            >
+              <ArrowLeftOnRectangleIcon className="w-5 text-[#465667]" />
+              <span className="text-sm">ログアウト</span>
+            </button>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 };

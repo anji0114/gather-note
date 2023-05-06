@@ -18,6 +18,7 @@ const FolderIdNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .from("notes")
       .select("*")
       .eq("folder_id", id)
+      .eq("deleted_flag", false)
       .order("created_at", { ascending: true });
     if (error) {
       return res.status(401).json({ message: error });
