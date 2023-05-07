@@ -7,15 +7,15 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 export const BoardAddNote = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-  const [isNotesOpen, setIsNotesOpen] = useState(false);
+  const [noteId, setNoteId] = useState("");
   const { data: notesData, error: notesError } = useSWR(`/api/notes`);
 
-  const handleAddNoteToBoard = async (id: string) => {
+  const handleAddNoteToBoard = async () => {
     const { data, error } = await supabase
       .from("board_notes")
       .insert({
         board_id: router.query.id,
-        note_id: id,
+        note_id: noteId,
       })
       .select("*");
     if (error) {
@@ -27,25 +27,17 @@ export const BoardAddNote = () => {
   };
 
   return (
-    <>
-      <button onClick={() => setIsNotesOpen((prevState) => !prevState)}>ノートを追加</button>
-      {isNotesOpen && (
-        <ul className="mt-5 border-b border-[#eee]">
-          {notesData?.map((note: Note) => (
-            <li
-              key={note.id}
-              className="py-4 border-t border-[#eee
-                  ]"
-              onClick={() => handleAddNoteToBoard(note.id)}
-            >
-              <span>{note.name}</span>
-              <button className=" py-2 px-3 text-[12px] text-white bg-[#222] rounded-sm">
-                ボードに追加する
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
+    <div className="flex gap-5">
+      <select
+        value={noteId}
+        onChange={(e) => setNoteId(e.target.value)}
+        className="p-2 w-full max-w-[400px] border border-[#D0D7DE] rounded outline-none"
+      >
+        {notesData?.map((note: Note) => (
+          <option value={note.id}>{note.name}</option>
+        ))}
+      </select>
+      <button onClick={handleAddNoteToBoard}>ノートを追加する</button>
+    </div>
   );
 };
