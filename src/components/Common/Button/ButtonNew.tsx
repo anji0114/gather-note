@@ -1,8 +1,6 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { FC } from "react";
 
-type HandleCreate = () => void;
-
 type Props = {
   text?: string;
   handleCreate: () => void;

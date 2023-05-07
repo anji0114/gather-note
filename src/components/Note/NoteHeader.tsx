@@ -42,14 +42,16 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
           </button>
           <div className="flex items-center gap-4">
             {isAuthor && (
-              <button
-                className="py-2 px-8 text-sm font-medium rounded bg-[#222] text-white hover:bg-[#555]"
-                onClick={handleNoteUpdate}
-              >
-                保存する
-              </button>
+              <>
+                <button
+                  className="py-2 px-8 text-sm font-medium rounded bg-[#222] text-white hover:bg-[#555]"
+                  onClick={handleNoteUpdate}
+                >
+                  保存する
+                </button>
+                <NoteMenu />
+              </>
             )}
-            <NoteMenu />
           </div>
         </div>
       </div>
