@@ -34,7 +34,7 @@ export const BoardAddNote = () => {
         className="p-2 w-full max-w-[400px] border border-[#D0D7DE] rounded outline-none"
       >
         {notesData?.map((note: Note) => (
-          <option value={note.id}>{note.name}</option>
+          <option key={note.id} value={note.id}>{note.name}</option>
         ))}
       </select>
       <button onClick={handleAddNoteToBoard}>ノートを追加する</button>
