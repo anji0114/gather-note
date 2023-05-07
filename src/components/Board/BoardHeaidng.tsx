@@ -9,7 +9,6 @@ export const BoardHeading = () => {
   const { id } = router.query;
   const [isDiscussion, setIsDiscussion] = useState(false);
   const { data, error, isLoading } = useSWR(id ? `/api/boards/${id}` : null); //ボード詳細のapi
-  // const {data: groupData, error: GroupError} = useSWR()
 
   useEffect(() => {
     // urlからDiscussionページか判定

@@ -1,6 +1,5 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
-import { DiscussionList } from "@/components/Discussion/DiscussionList";
 
 export const DiscussionCreate = ({ boardId }: { boardId: string | undefined | string[] }) => {
   const supabase = useSupabaseClient();
@@ -33,27 +32,23 @@ export const DiscussionCreate = ({ boardId }: { boardId: string | undefined | st
 
   return (
     <div>
-      <p>ディスカッション</p>
-      <div>
+      <input
+        type="text"
+        className="border"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <div className="my-2">
         <input
           type="text"
-          className="border"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          className="border border-black"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
         />
-        <div className="my-2">
-          <input
-            type="text"
-            className="border border-black"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          />
-        </div>
-        <button onClick={createDiscussion} className="border border-black px-4 py-1">
-          質問する
-        </button>
       </div>
-      <DiscussionList />
+      <button onClick={createDiscussion} className="border border-black px-4 py-1">
+        質問する
+      </button>
     </div>
   );
 };

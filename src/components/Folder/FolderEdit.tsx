@@ -4,11 +4,9 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
 export const FolderEdit = () => {
   const supabase = useSupabaseClient();
-  const router = useRouter();
   const folder = useStore((state) => state.folder);
   const setFolder = useStore((state) => state.setFolder);
   const [name, setName] = useState("");

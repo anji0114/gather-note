@@ -1,7 +1,8 @@
 import { BoardHeading } from "@/components/Board/BoardHeaidng";
-import { DiscussionCreate } from "@/components/Discussion/DiscussionCreate";
+import { DiscussionList } from "@/components/Discussion/DiscussionList";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 const BoardDiscussion = () => {
@@ -13,7 +14,8 @@ const BoardDiscussion = () => {
       <BoardHeading />
       <LayoutContainer classes="mt-14">
         <div className=" max-w-[800px] mx-auto">
-          <DiscussionCreate boardId={id} />
+          <DiscussionList />
+          <Link href={`/board/${id}/discussion/new`}>新規ディスカッション</Link>
         </div>
       </LayoutContainer>
     </Layout>
