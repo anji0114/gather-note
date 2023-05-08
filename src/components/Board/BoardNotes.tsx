@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
 import { Note } from "@/types";
-import { DateFns } from "../Common/Date/DateFns";
+import { DateFns } from "../Common/DateFns";
 
 export const BoardNotes = () => {
   const router = useRouter();

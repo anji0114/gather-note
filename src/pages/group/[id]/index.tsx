@@ -1,16 +1,16 @@
+import { NextPage } from "next";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Loading } from "@/components/Common/Loading";
-import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { GroupDashboard } from "@/components/Group/GroupDashboard";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { GroupRegister } from "@/components/Group/GroupRegister";
-import { Layout } from "@/components/Layout";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { useStore } from "@/store";
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 import useSWR from "swr";
+import { DateFns } from "@/components/Common/DateFns";
 
 const GroupId: NextPage = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const GroupId: NextPage = () => {
   );
   const setGroup = useStore((state) => state.setEditGroup);
 
-  const { isMember, isLoading: isMembershipLoading } = useGroupMembership(data?.id);
+  const { isMember } = useGroupMembership(data?.id);
 
   useEffect(() => {
     if (data?.id) {
@@ -31,19 +31,38 @@ const GroupId: NextPage = () => {
 
   return (
     <GroupLayout>
-      <div className="bg-red-100 p-5 space-y-3">
-        <p className="font-bold text-2xl">情報</p>
-        <p>{data?.name}</p>
+      <div className="bg-[#FCFCFC] px-5 py-7 border border-[#e2e7ed] rounded">
+        <div className="flex gap-10">
+          <div className="text-center w-[300px] h-[200px]">
+            <Image
+              src="/test.jpg"
+              alt="グループサムネイル"
+              width={600}
+              height={400}
+              className="inline-block rounded-lg max-w-[600px] object-cover w-full h-full"
+            />
+          </div>
+          <div className="w-[calc(100%_-_300px_-_40px)]">
+            <p className="font-bold text-xl">{data?.name}</p>
+            <p className="mt-3">{data?.description}</p>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li className="flex">
+                <span className="w-[100px] font-medium">作成日:</span>
+                <DateFns time={data?.created_at} />
+              </li>
+              <li className="flex">
+                <span className="w-[100px] font-medium">メンバー数:</span>
+                <span>12名</span>
+              </li>
+              <li className="flex">
+                <span className="w-[100px] font-medium">ボード数:</span>
+                <span>5個</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div className="relative min-h-[100px]">
-        {isMembershipLoading ? (
-          <LoadingBlock />
-        ) : isMember ? (
-          <GroupDashboard />
-        ) : (
-          <GroupRegister groupId={data.id} />
-        )}
-      </div>
+      {isMember ? <GroupDashboard /> : <GroupRegister groupId={data?.id} />}
     </GroupLayout>
   );
 };

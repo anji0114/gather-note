@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Loading } from "@/components/Common/Loading";
 import Link from "next/link";
-import { DateFns } from "../Common/Date/DateFns";
+import { DateFns } from "../Common/DateFns";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 
 export const DiscussionList = () => {

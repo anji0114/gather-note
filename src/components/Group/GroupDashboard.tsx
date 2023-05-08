@@ -1,66 +1,43 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
-import { useStore } from "@/store";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import useSWR from "swr";
+import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
+import { DateFns } from "../Common/DateFns";
+import Link from "next/link";
 
 export const GroupDashboard: FC = () => {
-  const supabase = useSupabaseClient();
-  const user = useUser();
   const router = useRouter();
-  const group = useStore((state) => state.editGroup);
 
-  const handleUnregisterGroup = async () => {
-    const { data, error } = await supabase
-      .from("group_members")
-      .delete()
-      .eq("group_id", group.id)
-      .eq("user_id", user?.id);
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-    router.reload();
-  };
-
-  const handleCreateBoard = async () => {
-    const { data, error } = await supabase
-      .from("boards")
-      .insert({
-        group_id: group.id,
-        name: "新規ボード",
-      })
-      .select("id")
-      .single();
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push(`/board/${data.id}`);
-  };
+  const { data, error, isLoading } = useSWR(
+    router.query.id ? `/api/groups/${router.query.id}/boards` : null
+  );
 
   return (
-    <>
-      <div className="mt-8 p-5 bg-blue-100">
-        <div className="flex gap-5">
-          <button
-            className="border border-gray-300 bg-white py-2 px-5"
-            onClick={handleUnregisterGroup}
+    <div className="mt-10">
+      <p className="flex items-center gap-2.5">
+        <ClipboardDocumentListIcon className="w-[30px]" />
+        <span className="text-lg inline-block whitespace-nowrap font-medium">新着ボード</span>
+      </p>
+      <ul className="mt-5 space-y-[1px]">
+        {data?.map((board: any) => (
+          <li
+            className="dashboard-item01 py-5 px-7 bg-white border border-[#d0d7de]"
+            key={board.id}
           >
-            脱退する
-          </button>
-          <button className="bg-blue-500 text-white py-2 px-5" onClick={handleCreateBoard}>
-            ボード作成
-          </button>
-        </div>
-      </div>
-
-      <div className="mt-8 p-5 bg-gray-100">
-        <p>ボードを表示</p>
-        <button className="mt-3 bg-blue-500 text-white py-2 px-4">ボード作成</button>
-      </div>
-    </>
+            <p className="pl-[2px] text-[#555] text-[12px]">
+              <DateFns time={board.created_at} />
+            </p>
+            <p className="mt-2.5">
+              <Link
+                href={`/board/${board.id}`}
+                className="text-[#4e6bb4] font-medium underline-offset-2  hover:underline"
+              >
+                {board.name}
+              </Link>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
