@@ -8,7 +8,7 @@ const BoardId = () => {
   return (
     <Layout>
       <BoardHeading />
-      <LayoutContainer classes="mt-14">
+      <LayoutContainer classes="py-14">
         <div className=" max-w-[800px] mx-auto">
           <BoardNotes />
           <div className="mt-5">

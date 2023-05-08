@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useStore } from "@/store";
-import { FolderEdit } from "./FolderEdit";
-import { FolderDelete } from "./FolderDelete";
+import { FolderEdit } from "@/components/Folder/FolderEdit";
+import { FolderDelete } from "@/components/Folder/FolderDelete";
 
 export const FolderTop: FC = () => {
   const folder = useStore((state) => state.folder);

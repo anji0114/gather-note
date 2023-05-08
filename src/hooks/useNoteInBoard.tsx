@@ -1,4 +1,4 @@
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 
 export const useNoteInBoard = (noteId: string) => {

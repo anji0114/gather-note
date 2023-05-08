@@ -3,12 +3,11 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { FolderOpenIcon } from "@heroicons/react/24/outline";
-
-import { ButtonNew } from "@/components/Common/Button/ButtonNew";
-import { LoadingBlock } from "../Common/Loading/LoadingBlock";
-
+import { ButtonNew } from "@/components/Common/Buttons";
+import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { DashboardHeading } from "@/components/Dashboard/DashboardHeading";
 import { DashboardFolderItem } from "@/components/Dashboard/DashboardFolderItem";
+import { FolderCreate } from "../Folder/FolderCreate";
 
 export const DashboardFolder: FC = () => {
   const supabase = useSupabaseClient();
@@ -39,7 +38,7 @@ export const DashboardFolder: FC = () => {
   return (
     <>
       <DashboardHeading title="フォルダ管理" icon={<FolderOpenIcon className="w-[30px]" />}>
-        <ButtonNew handleCreate={handleCreateNote} />
+        <FolderCreate />
       </DashboardHeading>
       <div className="relative min-h-[100px] mt-8">
         {isLoading ? (

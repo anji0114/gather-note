@@ -1,6 +1,4 @@
 import { FC, ReactNode } from "react";
-import { LayoutHeader } from "@/components/Layout/Header";
-import { LayoutFooter } from "@/components/Layout/LayoutFooter";
 import { Layout } from "../Layout";
 import { LayoutContainer } from "../Layout/LayoutContainer";
 

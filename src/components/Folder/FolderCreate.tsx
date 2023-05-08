@@ -1,60 +1,59 @@
-import { useStore } from "@/store";
 import TextareaAutosize from "react-textarea-autosize";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useEffect, useState } from "react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
-export const FolderEdit = () => {
+export const FolderCreate = () => {
+  const router = useRouter();
+  const user = useUser();
   const supabase = useSupabaseClient();
-  const folder = useStore((state) => state.folder);
-  const setFolder = useStore((state) => state.setFolder);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleUpdateFolder = async () => {
+  const handleCreateFolder = async () => {
     if (!name) {
       return;
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("folders")
-      .update({
+      .insert({
+        user_id: user?.id,
         name: name,
         description: description,
       })
-      .eq("id", folder.id);
+      .select("id")
+      .single();
 
     if (error) {
       alert(error.message);
+      return;
     }
 
-    setFolder({ ...folder, name: name, description: description });
+    router.push(`/folder/${data.id}`);
   };
-
-  useEffect(() => {
-    setName(folder.name);
-    setDescription(folder.description);
-  }, [folder]);
 
   return (
     <>
       <Dialog.Root>
         <Dialog.Trigger asChild>
-          <button className="bg-white border border-[#D0D7DE] rounded py-1 px-3 sm:px-4 text-[10px] sm:text-[12px] hover:bg-[#fafafa]">
-            編集する
+          <button className="flex items-center py-2.5 px-5 gap-2 rounded bg-[#222] text-white hover:bg-[#555]">
+            <PlusIcon className="w-[18px] translate-y-[1px] " />
+            <span className="text-sm inline-block">新規作成</span>
           </button>
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay className="bg-black opacity-10 fixed inset-0 transition" />
           <Dialog.Content className="fixed p-6 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] shadow-md bg-white rounded max-h-[90vh] overflow-auto w-[420px] max-w-[95vw]">
-            <Dialog.Title className="font-bold text-[#555]">編集</Dialog.Title>
+            <Dialog.Title className="font-bold text-[#555]">フォルダの作成</Dialog.Title>
             <fieldset className="mt-4">
               <label className="text-sm font-medium ">フォルダ名</label>
               <input
                 type="text"
                 value={name}
-                placeholder="フォルダ名は必須です"
+                placeholder="数学のフォルダ"
                 onChange={(e) => setName(e.target.value)}
                 className="mt-2 text-sm p-2 border border-[#d0d7de] rounded w-full min-w-[300px] outline-none"
               />
@@ -74,10 +73,10 @@ export const FolderEdit = () => {
                   className={`py-1.5 px-6 text-sm text-white bg-[#222] rounded ${
                     !name ? "bg-[#888] cursor-not-allowed" : "hover:bg-[#555]"
                   }`}
-                  onClick={handleUpdateFolder}
+                  onClick={handleCreateFolder}
                   disabled={!name ? true : false}
                 >
-                  保存する
+                  フォルダ作成
                 </button>
               </Dialog.Close>
             </div>
