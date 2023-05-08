@@ -9,10 +9,16 @@ import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
 import { GridLayout } from "@/components/Common/Grid/GridLayout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import { useStore } from "@/store";
+import useSWR from "swr";
 
 export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
   const { id } = router.query;
+  const { data, error, isLoading } = useSWR(id ? `/api/groups/${id}` : null);
+  const setGroup = useStore((state) => state.setGroup);
+  const group = useStore((state) => state.group);
+
   const [navItems, setNavItems] = useState([
     {
       title: "ホーム",
@@ -62,6 +68,18 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
       ]);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (data) {
+      setGroup({
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        owner_id: data.owner_id,
+        thumbnail_url: data.thumbnail_url,
+      });
+    }
+  }, [data]);
 
   return (
     <Layout classes="py-20 sm:py-24">

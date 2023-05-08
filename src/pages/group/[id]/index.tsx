@@ -7,7 +7,6 @@ import { GroupDashboard } from "@/components/Group/GroupDashboard";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { GroupRegister } from "@/components/Group/GroupRegister";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
-import { useStore } from "@/store";
 
 import useSWR from "swr";
 import { DateFns } from "@/components/Common/DateFns";
@@ -17,15 +16,7 @@ const GroupId: NextPage = () => {
   const { data, error, isLoading } = useSWR(
     router.query.id ? `/api/groups/${router.query.id}` : null
   );
-  const setGroup = useStore((state) => state.setEditGroup);
-
-  const { isMember } = useGroupMembership(data?.id);
-
-  useEffect(() => {
-    if (data?.id) {
-      setGroup({ id: data.id, name: data.name, description: data.description });
-    }
-  }, [data]);
+  const { isMember, isLoading: isMemberLoading } = useGroupMembership(data?.id);
 
   if (isLoading) return <Loading />;
 
@@ -62,7 +53,13 @@ const GroupId: NextPage = () => {
           </div>
         </div>
       </div>
-      {isMember ? <GroupDashboard /> : <GroupRegister groupId={data?.id} />}
+      {isMemberLoading ? (
+        <></>
+      ) : isMember ? (
+        <GroupDashboard />
+      ) : (
+        <GroupRegister groupId={data?.id} />
+      )}
     </GroupLayout>
   );
 };

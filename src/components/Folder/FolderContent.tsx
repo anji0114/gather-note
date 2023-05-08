@@ -33,7 +33,7 @@ export const FolderContent: FC = () => {
     <>
       <FolderNoteList />
       <div className="w-fit mx-auto mt-12">
-        <ButtonNew text="新規ノート作成" handleCreate={handleCreateNotes} />
+        <ButtonNew text="新規ノート作成" onClick={handleCreateNotes} />
       </div>
     </>
   );

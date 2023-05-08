@@ -11,9 +11,9 @@ type State = {
   setEditNote: (payload: Note) => void;
   resetEditNote: () => void;
 
-  editGroup: Group;
-  setEditGroup: (payload: Group) => void;
-  resetEditGroup: () => void;
+  group: Group;
+  setGroup: (payload: Group) => void;
+  resetGroup: () => void;
 
   editProfile: Profile;
   setEditProfile: (payload: Profile) => void;
@@ -64,20 +64,21 @@ export const useStore = create<State>()(
     },
 
     // group
-    editGroup: { id: "", name: "", description: "" },
-    setEditGroup: (payload) => {
+    group: { id: "", name: "", description: "", owner_id: "", thumbnail_url: "" },
+    setGroup: (payload) => {
       set({
-        editGroup: {
+        group: {
           id: payload.id,
-
           name: payload.name,
           description: payload.description,
+          owner_id: payload.owner_id,
+          thumbnail_url: payload.thumbnail_url,
         },
       });
     },
-    resetEditGroup: () => {
+    resetGroup: () => {
       set({
-        editGroup: { id: "", name: "", description: "" },
+        group: { id: "", name: "", description: "", owner_id: "", thumbnail_url: "" },
       });
     },
 

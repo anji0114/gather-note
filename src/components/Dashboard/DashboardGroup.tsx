@@ -2,17 +2,18 @@ import { FC } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { PlusIcon, UserGroupIcon } from "@heroicons/react/24/outline";
-import { DashboardHeading } from "@/components/Dashboard/DashboardHeading";
+
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { DashboardGroupItem } from "@/components/Dashboard/DashboardGroupItem";
 import { Group } from "@/types";
+import { DashboardHeading } from "@/components/Common/Heading";
 
 export const DashboardGroup: FC = () => {
   const { data, error, isLoading } = useSWR("/api/groups");
 
   return (
     <>
-      <DashboardHeading title="グループ管理" icon={<UserGroupIcon className="w-[30px]" />}>
+      <DashboardHeading text="グループ管理" icon={<UserGroupIcon />}>
         <Link
           className="flex items-center py-2.5 px-5 gap-2 rounded bg-[#222] text-white hover:bg-[#555]"
           href={"/group/new"}
@@ -28,7 +29,7 @@ export const DashboardGroup: FC = () => {
         ) : error ? (
           <p className="text-center text-red-400">エラーが発生しました</p>
         ) : (
-          <ul className="space-y-[1px]">
+          <ul className="flex justify-between flex-wrap gap-5">
             {data?.map((group: Group) => (
               <DashboardGroupItem
                 key={group.id}

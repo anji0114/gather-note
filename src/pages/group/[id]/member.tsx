@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { Profile } from "@/types";
 import { UserCircleIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { DashboardHeading } from "@/components/Common/Heading";
 
 const GroupMemberPage = () => {
   const router = useRouter();
@@ -14,10 +15,7 @@ const GroupMemberPage = () => {
 
   return (
     <GroupLayout>
-      <h1 className="flex items-center gap-2.5">
-        <UsersIcon className="w-[30px]" />
-        <span className="inline-block whitespace-nowrap font-medium">メンバー一覧</span>
-      </h1>
+      <DashboardHeading text="メンバー" icon={<UsersIcon />} />
 
       <ul className="mt-8 border-b border-[#d0d7de]">
         {data?.map((member) => (
