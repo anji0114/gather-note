@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Link from "next/link";
 import { Folder } from "@/types";
-import { DateFns } from "@/components/Common/Date/DateFns";
+import { DateFns } from "@/components/Common/DateFns";
 
 export const DashboardFolderItem: FC<Folder> = ({ id, name, created_at, description }) => {
   return (

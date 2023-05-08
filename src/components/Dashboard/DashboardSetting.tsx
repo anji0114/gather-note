@@ -3,8 +3,8 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
-import { DashboardHeading } from "./DashboardHeading";
 import { Cog8ToothIcon } from "@heroicons/react/24/outline";
+import { DashboardHeading } from "@/components/Common/Heading";
 
 export const DashboardSetting: FC = () => {
   const router = useRouter();
@@ -76,33 +76,31 @@ export const DashboardSetting: FC = () => {
 
   return (
     <>
-      <DashboardHeading title="設定" icon={<Cog8ToothIcon className="w-[30px]" />} />
-      <div className="mt-8">
-        <div className="py-10 px-16 border border-[#d0d7de] rounded-md space-y-7">
-          <p className=" font-bold text-xl">プロフィール編集</p>
-          <div className="w-[150px]">
-            <input type="file" accept="image/*" onChange={(e) => onUploadImage(e)} />
-          </div>
-          <div>
-            <p className="pl-1 text-sm font-medium">ユーザーネーム</p>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              className="mt-2.5 px-4 py-3 w-full max-w-[400px] text-sm border border-[#d0d7de] rounded"
-              placeholder="Font Developer"
-            />
-          </div>
-          <div>
-            <button
-              className="py-2 px-8 text-sm text-white bg-[#222] rounded hover:bg-[#555]"
-              onClick={handleProfileUpdate}
-            >
-              保存する
-            </button>
-          </div>
+      <DashboardHeading text="設定" icon={<Cog8ToothIcon />} />
+      <div className="mt-8 py-10 px-16 border border-[#d0d7de] rounded-md space-y-7">
+        <p className=" font-bold text-xl">プロフィール編集</p>
+        <div className="w-[150px]">
+          <input type="file" accept="image/*" onChange={(e) => onUploadImage(e)} />
+        </div>
+        <div>
+          <p className="pl-1 text-sm font-medium">ユーザーネーム</p>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            className="mt-2.5 px-4 py-3 w-full max-w-[400px] text-sm border border-[#d0d7de] rounded"
+            placeholder="Font Developer"
+          />
+        </div>
+        <div>
+          <button
+            className="py-2 px-8 text-sm text-white bg-[#222] rounded hover:bg-[#555]"
+            onClick={handleProfileUpdate}
+          >
+            保存する
+          </button>
         </div>
       </div>
     </>

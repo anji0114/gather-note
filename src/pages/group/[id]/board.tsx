@@ -1,12 +1,35 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useStore } from "@/store";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import useSWR from "swr";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
-import { DateFns } from "@/components/Common/Date/DateFns";
+import { DateFns } from "@/components/Common/DateFns";
 import { GroupLayout } from "@/components/Group/GroupLayout";
+import { DashboardHeading } from "@/components/Common/Heading";
 
 const GroupBoardPage = () => {
+  const supabase = useSupabaseClient();
   const router = useRouter();
+  const group = useStore((state) => state.group);
+
+  const handleCreateBoard = async () => {
+    const { data, error } = await supabase
+      .from("boards")
+      .insert({
+        group_id: group.id,
+        name: "新規ボード",
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    router.push(`/board/${data.id}`);
+  };
 
   const { data, error, isLoading } = useSWR(
     router.query.id ? `/api/groups/${router.query.id}/boards` : null
@@ -14,10 +37,12 @@ const GroupBoardPage = () => {
 
   return (
     <GroupLayout>
-      <h1 className="flex items-center gap-2.5">
-        <ClipboardDocumentListIcon className="w-[30px]" />
-        <span className="inline-block whitespace-nowrap font-medium">ボード一覧</span>
-      </h1>
+      <DashboardHeading text="ボード一覧" icon={<ClipboardDocumentListIcon />}>
+        <button className="bg-blue-500 text-white py-2 px-5" onClick={handleCreateBoard}>
+          ボード作成
+        </button>
+      </DashboardHeading>
+
       <ul className="mt-8 space-y-[1px]">
         {data?.map((board: any) => (
           <li

@@ -1,3 +1,4 @@
+import { FlagIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { FC } from "react";
@@ -22,13 +23,15 @@ export const GroupRegister: FC<{ groupId: string }> = ({ groupId }) => {
   };
 
   return (
-    <div className="text-center mt-8">
-      このグループに
+    <div className="text-center mt-6">
       <button
-        className="ml-5 inline-block text-sm py-2 px-6 text-white bg-[#222] rounded-sm"
+        className="w-full inline-block text-sm font-medium p-3 text-white bg-[#222] rounded-md hover:bg-[#555]"
         onClick={handleRegisterGroup}
       >
-        参加する
+        <span className="flex justify-center items-center gap-3 pr-9">
+          <FlagIcon className="w-6" />
+          このグループに参加する
+        </span>
       </button>
     </div>
   );

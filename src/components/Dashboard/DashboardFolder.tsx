@@ -1,43 +1,17 @@
 import { FC } from "react";
-import { useRouter } from "next/router";
 import useSWR from "swr";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { FolderOpenIcon } from "@heroicons/react/24/outline";
-import { ButtonNew } from "@/components/Common/Buttons";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
-import { DashboardHeading } from "@/components/Dashboard/DashboardHeading";
 import { DashboardFolderItem } from "@/components/Dashboard/DashboardFolderItem";
-import { FolderCreate } from "../Folder/FolderCreate";
+import { FolderCreate } from "@/components/Folder/FolderCreate";
+import { DashboardHeading } from "@/components/Common/Heading";
 
 export const DashboardFolder: FC = () => {
-  const supabase = useSupabaseClient();
-  const user = useUser();
-  const router = useRouter();
-
   const { data, error, isLoading } = useSWR("/api/folders");
-
-  const handleCreateNote = async () => {
-    const { data, error } = await supabase
-      .from("folders")
-      .insert({
-        name: "新規フォルダ",
-        description: "",
-        user_id: user!.id,
-      })
-      .select()
-      .single();
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push(`/folder/${data.id}`);
-  };
 
   return (
     <>
-      <DashboardHeading title="フォルダ管理" icon={<FolderOpenIcon className="w-[30px]" />}>
+      <DashboardHeading text="フォルダ管理" icon={<FolderOpenIcon />}>
         <FolderCreate />
       </DashboardHeading>
       <div className="relative min-h-[100px] mt-8">

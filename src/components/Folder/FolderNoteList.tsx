@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import useSWR from "swr";
 import { DocumentTextIcon } from "@heroicons/react/24/outline";
-import { DateFns } from "@/components/Common/Date/DateFns";
+import { DateFns } from "@/components/Common/DateFns";
 import { Loading } from "@/components/Common/Loading";
 import { Note } from "@/types";
 
