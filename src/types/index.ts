@@ -25,7 +25,7 @@ export type Group = {
   id: string;
   name: string;
   owner_id?: string;
-  thumbnail_url: string;
+  thumbnail_url?: string;
   description: string;
   created_at?: string;
 };
