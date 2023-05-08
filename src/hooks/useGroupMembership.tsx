@@ -29,7 +29,7 @@ export const useGroupMembership = (groupId: string): Hooks => {
     if (groupId && user?.id) {
       checkMembership();
     }
-  }, [groupId, user]);
+  }, [groupId, user, supabase]);
 
   return { isMember, isLoading };
 };

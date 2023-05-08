@@ -7,13 +7,13 @@ import useSWR from "swr";
 export const BoardHeading = () => {
   const router = useRouter();
   const { id } = router.query;
+  const asPath = router.asPath;
   const [isDiscussion, setIsDiscussion] = useState(false);
   const { data, error, isLoading } = useSWR(id ? `/api/boards/${id}` : null); //ボード詳細のapi
 
   useEffect(() => {
     // urlからDiscussionページか判定
-    if (id) {
-      const asPath = router.asPath;
+    if (id && asPath) {
       const pathSegments = asPath.split("/");
       const lastSegment = pathSegments[pathSegments.length - 1];
 
@@ -21,7 +21,7 @@ export const BoardHeading = () => {
         setIsDiscussion(true);
       }
     }
-  }, [router]);
+  }, [id, asPath]);
 
   return (
     <div className="pt-12 bg-[#FCFCFC] border-b border-[#f0f0f0]">

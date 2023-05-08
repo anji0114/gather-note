@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { FolderOpenIcon } from "@heroicons/react/24/outline";
-import { ButtonNew } from "@/components/Common/Button/ButtonNew";
+import { ButtonNew } from "@/components/Common/Buttons";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { DashboardHeading } from "@/components/Dashboard/DashboardHeading";
 import { DashboardFolderItem } from "@/components/Dashboard/DashboardFolderItem";

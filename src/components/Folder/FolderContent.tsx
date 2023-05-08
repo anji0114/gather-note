@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { ButtonNew } from "@/components/Common/Button/ButtonNew";
+import { ButtonNew } from "@/components/Common/Buttons";
 import { FolderNoteList } from "@/components/Folder/FolderNoteList";
 
 export const FolderContent: FC = () => {

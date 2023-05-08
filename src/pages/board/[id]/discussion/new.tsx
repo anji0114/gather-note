@@ -95,7 +95,7 @@ const BoardDiscussionNew = () => {
   return (
     <Layout classes="py-20">
       <LayoutContainer>
-        <div className="max-w-[800px] mx-auto">
+        <div className="max-w-[700px] mx-auto">
           <h2 className="text-xl font-bold">新しいディスカッションを作成する</h2>
           <p className="mt-2">ボードのノートを元に新しいディスカッションを作成する</p>
           <div className="mt-5 pt-5 border-t border-[#eee]">

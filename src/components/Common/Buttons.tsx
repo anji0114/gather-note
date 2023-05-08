@@ -13,7 +13,7 @@ export const ButtonNew: FC<Props> = ({ text, handleCreate }) => {
       onClick={handleCreate}
     >
       <PlusIcon className="w-[18px] translate-y-[1px] " />
-      <span className="text-sm inline-block">{text ? text : "新規作成"}</span>
+      <span className="">{text ? text : "新規作成"}</span>
     </button>
   );
 };
