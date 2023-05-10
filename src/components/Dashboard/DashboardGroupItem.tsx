@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Group } from "@/types";
 
-export const DashboardGroupItem: FC<Group> = ({ id, name, created_at, description }) => {
+export const DashboardGroupItem: FC<Group> = ({ id, name, description, thumbnail_url }) => {
   return (
     <li className="p-5 pb-6 bg-white border border-[#d0d7de] rounded w-[calc((100%_-_20px)_/_2)]">
       <Link
@@ -11,7 +11,7 @@ export const DashboardGroupItem: FC<Group> = ({ id, name, created_at, descriptio
         href={`/group/${id}`}
       >
         <Image
-          src="/test.jpg"
+          src={thumbnail_url ? thumbnail_url : "/no-image.jpg"}
           alt="グループサムネイル"
           width={600}
           height={600}

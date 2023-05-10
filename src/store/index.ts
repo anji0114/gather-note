@@ -64,7 +64,7 @@ export const useStore = create<State>()(
     },
 
     // group
-    group: { id: "", name: "", description: "", owner_id: "", thumbnail_url: "" },
+    group: { id: "", name: "", description: "", owner_id: "", thumbnail_url: "", created_at: "" },
     setGroup: (payload) => {
       set({
         group: {
@@ -73,12 +73,20 @@ export const useStore = create<State>()(
           description: payload.description,
           owner_id: payload.owner_id,
           thumbnail_url: payload.thumbnail_url,
+          created_at: payload.created_at,
         },
       });
     },
     resetGroup: () => {
       set({
-        group: { id: "", name: "", description: "", owner_id: "", thumbnail_url: "" },
+        group: {
+          id: "",
+          name: "",
+          description: "",
+          owner_id: "",
+          thumbnail_url: "",
+          created_at: "",
+        },
       });
     },
 

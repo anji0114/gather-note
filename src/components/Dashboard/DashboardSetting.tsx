@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
@@ -22,7 +22,7 @@ export const DashboardSetting: FC = () => {
     }
   }, [data]);
 
-  const onUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onUploadImage = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (!files || files?.length == 0) {
