@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { Note } from "@/types";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { LoadingCircle } from "@/components/Common/Loading/LoadingCircle";
+import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 const BoardDiscussionNew = () => {
   const router = useRouter();
@@ -119,33 +120,50 @@ const BoardDiscussionNew = () => {
           <div className="mt-5">
             <p className="font-medium">ノート1の選択</p>
             <div className="mt-2 flex gap-4">
-              <select
-                className="pl-4 pr-5 py-2 rounded border border-[#D0D7DE]"
-                value={mainNoteId}
-                onChange={(e) => setMainNoteId(e.target.value)}
-              >
-                {data?.map((note: Note) => (
-                  <option value={note.id} key={note.id}>
-                    {note.name}
+              <div className="relative">
+                <select
+                  className="pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
+                  value={mainNoteId}
+                  onChange={(e) => setMainNoteId(e.target.value)}
+                >
+                  <option value="" selected disabled>
+                    ---
                   </option>
-                ))}
-              </select>
-              <select
-                className="pl-4 pr-5 py-2 rounded border border-[#D0D7DE]"
-                value={subNoteId}
-                onChange={(e) => setSubNoteId(e.target.value)}
-              >
-                {data?.map((note: Note) => (
-                  <option value={note.id} key={note.id}>
-                    {note.name}
+                  {data?.map((note: Note) => (
+                    <option value={note.id} key={note.id}>
+                      {note.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
+              </div>
+              <div className="relative">
+                <select
+                  className="pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
+                  value={subNoteId}
+                  onChange={(e) => setSubNoteId(e.target.value)}
+                >
+                  <option value="" selected disabled>
+                    ---
                   </option>
-                ))}
-              </select>
+                  {data?.map((note: Note) => (
+                    <option value={note.id} key={note.id}>
+                      {note.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
+              </div>
             </div>
           </div>
           <div className="pt-5 mt-5 text-right border-t border-[#D0D7DE] ">
             <button
-              className="px-4 py-2.5 rounded text-sm font-medium text-white bg-[#4e6bb4] hover:opacity-75"
+              className={`px-4 py-2.5 rounded text-sm font-medium text-white bg-[#4e6bb4]  ${
+                !name || !command || !mainNoteId
+                  ? "bg-[#888] cursor-not-allowed"
+                  : "hover:opacity-75"
+              }`}
+              disabled={!name || !command || !mainNoteId ? true : false}
               onClick={handleCreateDiscussion}
             >
               ディスカッションを作成

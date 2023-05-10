@@ -28,7 +28,8 @@ const NotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .in(
         "folder_id",
         foldersData?.map((folder) => folder.id)
-      );
+      )
+      .eq("deleted_flag", false);
 
     return res.status(200).json(notesData);
   }

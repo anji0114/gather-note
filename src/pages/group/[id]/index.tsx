@@ -1,24 +1,16 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { Loading } from "@/components/Common/Loading";
 import { GroupDashboard } from "@/components/Group/GroupDashboard";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { GroupRegister } from "@/components/Group/GroupRegister";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
 
-import useSWR from "swr";
 import { DateFns } from "@/components/Common/DateFns";
+import { useStore } from "@/store";
 
 const GroupId: NextPage = () => {
-  const router = useRouter();
-  const { data, error, isLoading } = useSWR(
-    router.query.id ? `/api/groups/${router.query.id}` : null
-  );
-  const { isMember, isLoading: isMemberLoading } = useGroupMembership(data?.id);
-
-  if (isLoading) return <Loading />;
+  const group = useStore((state) => state.group);
+  const { isMember, isLoading: isMemberLoading } = useGroupMembership(group.id);
 
   return (
     <GroupLayout>
@@ -26,7 +18,7 @@ const GroupId: NextPage = () => {
         <div className="flex gap-10">
           <div className="text-center w-[300px] h-[200px]">
             <Image
-              src="/test.jpg"
+              src={group.thumbnail_url ? group.thumbnail_url : "/no-image.jpg"}
               alt="グループサムネイル"
               width={600}
               height={400}
@@ -34,12 +26,12 @@ const GroupId: NextPage = () => {
             />
           </div>
           <div className="w-[calc(100%_-_300px_-_40px)]">
-            <p className="font-bold text-xl">{data?.name}</p>
-            <p className="mt-3">{data?.description}</p>
+            <p className="font-bold text-xl">{group.name}</p>
+            <p className="mt-3">{group.description}</p>
             <ul className="mt-4 space-y-2 text-sm">
               <li className="flex">
                 <span className="w-[100px] font-medium">作成日:</span>
-                <DateFns time={data?.created_at} />
+                <DateFns time={group.created_at} />
               </li>
               <li className="flex">
                 <span className="w-[100px] font-medium">メンバー数:</span>
@@ -58,7 +50,7 @@ const GroupId: NextPage = () => {
       ) : isMember ? (
         <GroupDashboard />
       ) : (
-        <GroupRegister groupId={data?.id} />
+        <GroupRegister groupId={group.id} />
       )}
     </GroupLayout>
   );

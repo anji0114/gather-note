@@ -11,13 +11,13 @@ import { GridLayout } from "@/components/Common/Grid/GridLayout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { useStore } from "@/store";
 import useSWR from "swr";
+import { Loading } from "../Common/Loading";
 
 export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error, isLoading } = useSWR(id ? `/api/groups/${id}` : null);
   const setGroup = useStore((state) => state.setGroup);
-  const group = useStore((state) => state.group);
 
   const [navItems, setNavItems] = useState([
     {
@@ -77,6 +77,7 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
         description: data.description,
         owner_id: data.owner_id,
         thumbnail_url: data.thumbnail_url,
+        created_at: data.created_at,
       });
     }
   }, [data]);
@@ -84,7 +85,7 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <Layout classes="py-20 sm:py-24">
       <LayoutContainer>
-        <GridLayout items={navItems}>{children}</GridLayout>
+        <GridLayout items={navItems}>{isLoading ? <Loading /> : <>{children}</>}</GridLayout>
       </LayoutContainer>
     </Layout>
   );

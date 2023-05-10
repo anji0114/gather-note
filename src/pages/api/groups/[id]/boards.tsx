@@ -9,7 +9,8 @@ const GroupBoardsApi = async (req: NextApiRequest, res: NextApiResponse) => {
     const { data: boardData, error: boardError } = await supabase
       .from("boards")
       .select("*")
-      .eq("group_id", groupId);
+      .eq("group_id", groupId)
+      .order("created_at", { ascending: false });
 
     if (boardError) {
       return res.status(401).json({ message: boardError });
