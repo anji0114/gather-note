@@ -3,6 +3,7 @@ import { Note } from "@/types";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 export const BoardAddNote = () => {
   const supabase = useSupabaseClient();
@@ -28,16 +29,32 @@ export const BoardAddNote = () => {
 
   return (
     <div className="flex gap-5">
-      <select
-        value={noteId}
-        onChange={(e) => setNoteId(e.target.value)}
-        className="p-2 w-full max-w-[400px] border border-[#D0D7DE] rounded outline-none"
+      <div className="max-w-[400px] w-full relative ">
+        <select
+          value={noteId}
+          onChange={(e) => setNoteId(e.target.value)}
+          className="py-3 px-4 w-full  border border-[#D0D7DE] rounded outline-none appearance-none cursor-pointer"
+        >
+          <option value="" selected disabled>
+            ---
+          </option>
+          {notesData?.map((note: Note) => (
+            <option key={note.id} value={note.id}>
+              {note.name}
+            </option>
+          ))}
+        </select>
+        <ChevronUpDownIcon className="w-5 absolute right-3 top-1/2 translate-y-[calc(-50%_+_2px)] pointer-events-none" />
+      </div>
+      <button
+        className={`py-1 px-5 rounded text-sm text-white bg-[#222] ${
+          !noteId ? "bg-[#888] cursor-not-allowed" : "hover:bg-[#555]"
+        }`}
+        onClick={handleAddNoteToBoard}
+        disabled={!noteId ? true : false}
       >
-        {notesData?.map((note: Note) => (
-          <option key={note.id} value={note.id}>{note.name}</option>
-        ))}
-      </select>
-      <button onClick={handleAddNoteToBoard}>ノートを追加する</button>
+        ノートを追加する
+      </button>
     </div>
   );
 };
