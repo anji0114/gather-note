@@ -31,11 +31,11 @@ export const BoardAddNote = () => {
     <div className="flex gap-5">
       <div className="max-w-[400px] w-full relative ">
         <select
-          value={noteId}
+          defaultValue={noteId}
           onChange={(e) => setNoteId(e.target.value)}
           className="py-3 px-4 w-full  border border-[#D0D7DE] rounded outline-none appearance-none cursor-pointer"
         >
-          <option value="" selected disabled>
+          <option value="" disabled>
             ---
           </option>
           {notesData?.map((note: Note) => (

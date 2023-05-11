@@ -1,4 +1,4 @@
-import { Folder, Group, Note, Profile } from "@/types";
+import { Board, Folder, Group, Note, Profile } from "@/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -18,6 +18,9 @@ type State = {
   editProfile: Profile;
   setEditProfile: (payload: Profile) => void;
   resetEditProfile: () => void;
+
+  board: Board;
+  setBoard: (payload: Board) => void;
 };
 
 export const useStore = create<State>()(
@@ -105,6 +108,20 @@ export const useStore = create<State>()(
         editProfile: {
           name: "",
           avatar_url: "",
+        },
+      });
+    },
+
+    // board
+    board: { id: "", name: "", description: "", group_id: "", created_at: "" },
+    setBoard: (payload) => {
+      set({
+        board: {
+          id: payload.id,
+          name: payload.name,
+          description: payload.description,
+          group_id: payload.group_id,
+          created_at: payload.created_at,
         },
       });
     },

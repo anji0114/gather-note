@@ -3,13 +3,19 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { BoardEdit } from "./BoardEdit";
+import { useStore } from "@/store";
 
 export const BoardHeading = () => {
+  const board = useStore((state) => state.board);
   const router = useRouter();
   const { id } = router.query;
   const asPath = router.asPath;
   const [isDiscussion, setIsDiscussion] = useState(false);
-  const { data, error, isLoading } = useSWR(id ? `/api/boards/${id}` : null); //ボード詳細のapi
+
+  const { data: groupData, error: groupError } = useSWR(
+    board?.group_id ? `/api/groups/${board.group_id}` : null
+  );
 
   useEffect(() => {
     // urlからDiscussionページか判定
@@ -29,16 +35,17 @@ export const BoardHeading = () => {
         <div className="max-w-[1000px] mx-auto">
           <div className="flex justify-between">
             <h1 className="text-lg sm:text-xl font-bold leading-tight w-[calc(100%_-_150px)]">
-              <Link href={"/"} className="text-[#4E6BB4] hover:underline">
-                グループ名が入ります
+              <Link href={`/group/${groupData?.id}`} className="text-[#4E6BB4] hover:underline">
+                {groupData?.name}
               </Link>
               <span className="text-black inline-block mx-1.5 translate-y-[-1px] ">/</span>
-              {data?.name}
+              {board.name}
             </h1>
+            <div className="flex gap-2.5 h-[30px] mt-1">
+              <BoardEdit />
+            </div>
           </div>
-          <p className="mt-7 text-[15px] leading-7">
-            ノートの説明書きが入ります。ノートの説明書きが入ります。ノートの説明書きが入ります。ノートの説明書きが入ります。ノートの説明書きが入ります。ノートの説明書きが入ります。
-          </p>
+          {board.description && <p className="mt-7 text-[15px] leading-7">{board.description}</p>}
           <div className="flex gap-10 mt-10 translate-y-[1px]">
             <Link
               href={`/board/${router.query.id}`}
