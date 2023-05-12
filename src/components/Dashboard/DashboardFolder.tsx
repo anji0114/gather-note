@@ -2,9 +2,10 @@ import { FC } from "react";
 import useSWR from "swr";
 import { FolderOpenIcon } from "@heroicons/react/24/outline";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
-import { DashboardFolderItem } from "@/components/Dashboard/DashboardFolderItem";
 import { FolderCreate } from "@/components/Folder/FolderCreate";
 import { DashboardHeading } from "@/components/Common/Heading";
+import { PostItem } from "@/components/Common/PostItem";
+import { Folder } from "@/types";
 
 export const DashboardFolder: FC = () => {
   const { data, error, isLoading } = useSWR("/api/folders");
@@ -21,13 +22,14 @@ export const DashboardFolder: FC = () => {
           <p className="text-center text-red-400">エラーが発生しました</p>
         ) : (
           <ul className="space-y-[1px]">
-            {data.map((note: any) => (
-              <DashboardFolderItem
-                key={note.id}
-                id={note.id}
-                name={note.name}
-                description={note.description}
-                created_at={note.created_at}
+            {data.map((folder: Folder) => (
+              <PostItem
+                key={folder.id}
+                id={folder.id}
+                name={folder.name}
+                description={folder.description}
+                created_at={folder.created_at!}
+                postName="folder"
               />
             ))}
           </ul>

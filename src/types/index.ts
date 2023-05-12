@@ -19,6 +19,10 @@ export type Note = {
 
 export type Board = {
   id: string;
+  name: string;
+  description: string;
+  group_id: string;
+  created_at?: string;
 };
 
 export type Group = {

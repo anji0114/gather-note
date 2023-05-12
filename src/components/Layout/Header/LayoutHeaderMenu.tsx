@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import useSWR from "swr";
 import Image from "next/image";
+import Link from "next/link";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   ArrowLeftOnRectangleIcon,
   Cog8ToothIcon,
@@ -10,8 +12,6 @@ import {
   UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import Link from "next/link";
 
 const NAV_ITEMS = [
   {

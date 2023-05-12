@@ -2,8 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
-import { DateFns } from "../Common/DateFns";
-import Link from "next/link";
+import { PostItem } from "@/components/Common/PostItem";
 
 export const GroupDashboard: FC = () => {
   const router = useRouter();
@@ -20,22 +19,14 @@ export const GroupDashboard: FC = () => {
       </p>
       <ul className="mt-5 space-y-[1px]">
         {data?.map((board: any) => (
-          <li
-            className="dashboard-item01 py-5 px-7 bg-white border border-[#d0d7de]"
+          <PostItem
             key={board.id}
-          >
-            <p className="pl-[2px] text-[#555] text-[12px]">
-              <DateFns time={board.created_at} />
-            </p>
-            <p className="mt-2.5">
-              <Link
-                href={`/board/${board.id}`}
-                className="text-[#4e6bb4] font-medium underline-offset-2  hover:underline"
-              >
-                {board.name}
-              </Link>
-            </p>
-          </li>
+            id={board.id}
+            name={board.name}
+            description={board.description}
+            created_at={board.created_at}
+            postName="board"
+          />
         ))}
       </ul>
     </div>

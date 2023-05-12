@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const BoardsIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
+const BoardIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const supabase = createServerSupabaseClient({ req, res });
 
   if (req.method === "GET") {
@@ -21,4 +21,4 @@ const BoardsIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default BoardsIdApi;
+export default BoardIdApi;

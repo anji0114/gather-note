@@ -3,6 +3,7 @@ import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
@@ -32,7 +33,9 @@ const DiscussionIdPage = () => {
 
   return (
     <Layout>
-      <LayoutContainer>{content}</LayoutContainer>
+      <LayoutContainer>
+        <TextareaAutosize className="w-full leading-8" value={content} />
+      </LayoutContainer>
     </Layout>
   );
 };
