@@ -20,6 +20,7 @@ export const GroupDashboard: FC = () => {
       <ul className="mt-5 space-y-[1px]">
         {data?.map((board: any) => (
           <PostItem
+            key={board.id}
             id={board.id}
             name={board.name}
             description={board.description}

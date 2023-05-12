@@ -26,6 +26,7 @@ const GroupBoardPage = () => {
         <ul className="mt-8 space-y-[1px]">
           {data?.map((board: any) => (
             <PostItem
+              key={board.key}
               id={board.id}
               name={board.name}
               description={board.description}
