@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { NoteMenu } from "@/components/Note/NoteMenu";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useStore } from "@/store";
+import { NoteMenu } from "@/components/Note/NoteMenu";
 
 type Props = {
   isAuthor: boolean;
@@ -15,6 +15,10 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
   const note = useStore((state) => state.editNote);
 
   const handleNoteUpdate = async () => {
+    if (!note.name) {
+      return;
+    }
+
     const { data, error } = await supabase
       .from("notes")
       .update({
@@ -44,8 +48,11 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
             {isAuthor && (
               <>
                 <button
-                  className="py-2 px-8 text-sm font-medium rounded bg-[#222] text-white hover:bg-[#555]"
+                  className={`py-2 px-8 text-sm font-medium rounded text-white ${
+                    !note.name ? " cursor-not-allowed bg-[#888]" : "bg-[#222] hover:bg-[#555]"
+                  }`}
                   onClick={handleNoteUpdate}
+                  disabled={!note.name}
                 >
                   保存する
                 </button>

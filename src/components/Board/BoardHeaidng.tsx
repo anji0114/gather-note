@@ -1,21 +1,34 @@
-import { DocumentTextIcon, Square3Stack3DIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { BoardEdit } from "./BoardEdit";
+import { DocumentTextIcon, Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { useStore } from "@/store";
+import { BoardEdit } from "@/components/Board/BoardEdit";
+import { BoardDelete } from "@/components/Board/BoardDelete";
 
 export const BoardHeading = () => {
-  const board = useStore((state) => state.board);
   const router = useRouter();
   const { id } = router.query;
   const asPath = router.asPath;
-  const [isDiscussion, setIsDiscussion] = useState(false);
-
+  const board = useStore((state) => state.board);
+  const setBoard = useStore((state) => state.setBoard);
+  const { data: boardData, error, isLoading } = useSWR(id ? `/api/boards/${id}` : null); //ボード詳細のapi
   const { data: groupData, error: groupError } = useSWR(
     board?.group_id ? `/api/groups/${board.group_id}` : null
   );
+  const [isDiscussion, setIsDiscussion] = useState(false);
+
+  useEffect(() => {
+    if (boardData && !isLoading) {
+      setBoard({
+        id: boardData.id,
+        name: boardData.name,
+        description: boardData.description,
+        group_id: boardData.group_id,
+      });
+    }
+  }, [boardData, id]);
 
   useEffect(() => {
     // urlからDiscussionページか判定
@@ -43,6 +56,7 @@ export const BoardHeading = () => {
             </h1>
             <div className="flex gap-2.5 h-[30px] mt-1">
               <BoardEdit />
+              <BoardDelete />
             </div>
           </div>
           {board.description && <p className="mt-7 text-[15px] leading-7">{board.description}</p>}
