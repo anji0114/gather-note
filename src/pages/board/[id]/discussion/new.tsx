@@ -1,28 +1,31 @@
 import { useRouter } from "next/router";
-import TextareaAutosize from "react-textarea-autosize";
-import { Layout } from "@/components/Layout";
-import { LayoutContainer } from "@/components/Layout/LayoutContainer";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import useSWR from "swr";
-import { Note } from "@/types";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { LoadingCircle } from "@/components/Common/Loading/LoadingCircle";
+import TextareaAutosize from "react-textarea-autosize";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { Layout } from "@/components/Layout";
+import { LoadingCircle } from "@/components/Common/Loading/LoadingCircle";
+import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import { Note } from "@/types";
 
 const BoardDiscussionNew = () => {
-  const router = useRouter();
   const supabase = useSupabaseClient();
-  const [name, setName] = useState("");
-  const [command, setCommand] = useState("");
-  const [mainNoteId, setMainNoteId] = useState("");
-  const [subNoteId, setSubNoteId] = useState("");
-  const [prompt, setPrompt] = useState("");
+  const router = useRouter();
   const { id } = router.query;
   const { data, error, isLoading } = useSWR(
     router.query.id ? `/api/boards/${router.query.id}/notes` : null
   );
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [name, setName] = useState("");
+  const [command, setCommand] = useState("下記のノートをまとめてください。");
+  const [mainNoteId, setMainNoteId] = useState("");
+  const [subNoteId, setSubNoteId] = useState("");
+  const [discussion, setDisCussion] = useState("");
+  const [isShowDiscussion, setIsShowDiscussion] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
 
+  // プロンプトの作成
   const handleCreatePrompt = async () => {
     const { data: mainNoteData, error: mainNoteError } = await supabase
       .from("notes")
@@ -36,16 +39,22 @@ const BoardDiscussionNew = () => {
       .eq("id", subNoteId)
       .single();
 
-    setPrompt(`
-    ${command}。ノート1: ${mainNoteData?.content} ノート2: ${subNoteData?.content}
-    `);
+    return {
+      prompt: `${command}
+      出力形式は下記の仕様のようにしてください。
+      1.出力形式はHTML5のtextareaに入るように、改行などをいれわかりやすいように形で出力ください。
+      2.htmlタグなどは含めないでください。
+      ノート1: ${mainNoteData?.content}
+      ノート2: ${subNoteData?.content}`,
+    };
   };
 
+  // ディスカッションの作成関数
   const handleCreateDiscussion = async () => {
     setCreateLoading(true);
 
-    await handleCreatePrompt();
-
+    const { prompt } = await handleCreatePrompt();
+    setIsShowDiscussion(true);
     const OpenAiResponse = await fetch("/api/openai", {
       method: "POST",
       headers: {
@@ -63,14 +72,26 @@ const BoardDiscussionNew = () => {
 
     const OpenAiData = await OpenAiResponse.json();
 
+    setDisCussion(OpenAiData.content); // ディスカッションをtextareaに
+    setCreateLoading(false); // ローディング終了
+
+    if (contentRef.current) {
+      contentRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // ディスカッションの保存
+  const handleInsertDisCussion = async () => {
     const { data, error } = await supabase
       .from("discussions")
       .insert({
         board_id: id,
         name: name,
-        content: OpenAiData.content,
+        content: discussion,
       })
-      .select()
+      .select("id")
       .single();
 
     if (error) {
@@ -78,17 +99,15 @@ const BoardDiscussionNew = () => {
       return;
     }
 
-    const { error: mainNoteRelationError } = await supabase.from("discussion_notes").insert({
+    await supabase.from("discussion_notes").insert({
       discussion_id: data.id,
       note_id: mainNoteId,
     });
 
-    const { error: subNoteRelationError } = await supabase.from("discussion_notes").insert({
+    await supabase.from("discussion_notes").insert({
       discussion_id: data.id,
       note_id: subNoteId,
     });
-
-    setCreateLoading(false);
 
     router.push(`/discussion/${data.id}`);
   };
@@ -105,28 +124,33 @@ const BoardDiscussionNew = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-2 p-2 w-full max-w-[600px] border border-[#D0D7DE] rounded outline-none"
+              className="mt-2 p-2 w-full max-w-[500px] border border-[#D0D7DE] rounded outline-none"
             />
           </div>
           <div className="mt-5">
             <label className="pl-[2px] w-full inline-block font-medium">AIへの指示</label>
-            <TextareaAutosize
-              minRows={1}
-              value={command}
-              onChange={(e) => setCommand(e.target.value)}
-              className="mt-1 p-2 w-full resize-none border border-[#D0D7DE] rounded outline-none"
-            />
+            <div className="mt-1 relative max-w-[500px]">
+              <select
+                defaultValue={command}
+                onChange={(e) => setCommand(e.target.value)}
+                className="p-2 w-full resize-none border border-[#D0D7DE] rounded outline-none appearance-none cursor-pointer"
+              >
+                <option value="下記のノートを結合してください。">ノートの結合</option>
+                <option value="下記のノートを比較してください。">ノートの比較</option>
+              </select>
+              <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
+            </div>
           </div>
           <div className="mt-5">
-            <p className="font-medium">ノート1の選択</p>
-            <div className="mt-2 flex gap-4">
+            <p className="font-medium">ノートの選択</p>
+            <div className="mt-2 space-y-2">
               <div className="relative">
                 <select
-                  className="pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
-                  value={mainNoteId}
+                  className="w-full pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
+                  defaultValue={mainNoteId}
                   onChange={(e) => setMainNoteId(e.target.value)}
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     ---
                   </option>
                   {data?.map((note: Note) => (
@@ -139,11 +163,11 @@ const BoardDiscussionNew = () => {
               </div>
               <div className="relative">
                 <select
-                  className="pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
-                  value={subNoteId}
+                  className="w-full pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
+                  defaultValue={subNoteId}
                   onChange={(e) => setSubNoteId(e.target.value)}
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     ---
                   </option>
                   {data?.map((note: Note) => (
@@ -168,6 +192,30 @@ const BoardDiscussionNew = () => {
             >
               ディスカッションを作成
             </button>
+          </div>
+
+          <div
+            className={`${
+              !isShowDiscussion ? "overflow-hidden h-0" : "min-h-[calc(100vh_-_140px)] h-auto pt-12"
+            }`}
+            ref={contentRef}
+          >
+            <TextareaAutosize
+              className="mt-1 p-6 w-full resize-none border border-[#D0D7DE] rounded outline-none leading-8"
+              value={discussion}
+              minRows={2}
+            />
+            <div className="text-right">
+              <button
+                onClick={handleInsertDisCussion}
+                className={`text-white bg-[#222] py-2 px-5 rounded ${
+                  !discussion ? "bg-[#888] cursor-not-allowed" : "hover:opacity-75"
+                }`}
+                disabled={!discussion}
+              >
+                保存する
+              </button>
+            </div>
           </div>
         </div>
       </LayoutContainer>

@@ -11,23 +11,30 @@ import { useNoteInBoard } from "@/hooks/useNoteInBoard";
 
 const NoteId: NextPage = () => {
   const router = useRouter();
-  const { data, isLoading } = useSWR(router.query.id ? `/api/notes/${router.query.id}` : null);
-  const setNote = useStore((state) => state.setEditNote);
-  const { isAuthor, isLoading: isAuthorLoading } = useNoteAuthor(data?.folder_id);
-  const { isInBoard, isLoading: isInBoardLoading } = useNoteInBoard(data?.id);
+  const { data: NoteData, isLoading } = useSWR(
+    router.query.id ? `/api/notes/${router.query.id}` : null
+  );
+  const setNote = useStore((state) => state.setNote);
+  const restNote = useStore((state) => state.resetNote);
+  const { isAuthor, isLoading: isAuthorLoading } = useNoteAuthor(NoteData?.folder_id);
+  const { isInBoard, isLoading: isInBoardLoading } = useNoteInBoard(NoteData?.id);
 
   useEffect(() => {
     setNote({
-      id: data?.id,
-      name: data?.name,
-      content: data?.content,
+      id: NoteData?.id,
+      name: NoteData?.name,
+      content: NoteData?.content,
     });
 
     // 論理削除されてアクセスされた場合
-    if (data?.id && data.deleted_flag) {
+    if (NoteData?.id && NoteData.deleted_flag) {
       router.push(`/dashboard`);
     }
-  }, [data]);
+
+    return () => {
+      restNote();
+    };
+  }, [NoteData]);
 
   useEffect(() => {
     if (!isAuthorLoading && !isInBoardLoading) {

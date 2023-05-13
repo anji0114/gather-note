@@ -12,7 +12,7 @@ type Props = {
 export const NoteHeader: FC<Props> = ({ isAuthor }) => {
   const router = useRouter();
   const supabase = useSupabaseClient();
-  const note = useStore((state) => state.editNote);
+  const note = useStore((state) => state.note);
 
   const handleNoteUpdate = async () => {
     if (!note.name) {

@@ -9,7 +9,7 @@ import { useStore } from "@/store";
 export const NoteMenu: FC = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-  const note = useStore((state) => state.editNote);
+  const note = useStore((state) => state.note);
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
 
   const handleNoteDelete = async () => {
