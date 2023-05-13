@@ -3,19 +3,20 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useStore } from "@/store";
+import { useNoteAuthor } from "@/hooks/useNoteAuthor";
+import { useNoteInBoard } from "@/hooks/useNoteInBoard";
 import { Loading } from "@/components/Common/Loading";
 import { NoteHeader } from "@/components/Note/NoteHeader";
-import { useNoteAuthor } from "@/hooks/useNoteAuthor";
-import { NoteContent } from "@/components/Note/NoteContent";
-import { useNoteInBoard } from "@/hooks/useNoteInBoard";
+import { Editor } from "@/components/Common/Editor";
 
 const NoteId: NextPage = () => {
   const router = useRouter();
-  const { data: NoteData, isLoading } = useSWR(
-    router.query.id ? `/api/notes/${router.query.id}` : null
-  );
+  const note = useStore((state) => state.note);
   const setNote = useStore((state) => state.setNote);
   const restNote = useStore((state) => state.resetNote);
+  const { data: NoteData, isLoading } = useSWR(
+    router.query.id ? `/api/notes/${router.query.id}` : null
+  ); // note詳細の取得
   const { isAuthor, isLoading: isAuthorLoading } = useNoteAuthor(NoteData?.folder_id);
   const { isInBoard, isLoading: isInBoardLoading } = useNoteInBoard(NoteData?.id);
 
@@ -49,7 +50,7 @@ const NoteId: NextPage = () => {
   return (
     <>
       <NoteHeader isAuthor={isAuthor} />
-      <NoteContent isAuthor={isAuthor} />
+      <Editor isEditor={isAuthor} post={note} setPost={setNote} />
     </>
   );
 };

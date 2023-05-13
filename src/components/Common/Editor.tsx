@@ -1,35 +1,39 @@
-import { useStore } from "@/store";
+import { Discussion, Note } from "@/types";
+import { FC } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
-export const NoteContent = ({ isAuthor }: { isAuthor: boolean }) => {
-  const note = useStore((state) => state.note);
-  const setNote = useStore((state) => state.setNote);
+type Props = {
+  isEditor: boolean;
+  post: Note | Discussion;
+  setPost: (payload: Note | Discussion) => void;
+};
 
+export const Editor: FC<Props> = ({ isEditor, post, setPost }) => {
   return (
     <div className="max-w-[700px] mx-auto py-16 px-5">
       <h1 className="text-2xl sm:text-4xl">
-        {isAuthor ? (
+        {isEditor ? (
           <TextareaAutosize
-            value={note.name}
+            value={post.name}
             minRows={1}
             placeholder="タイトル"
             className="w-full leading-snug font-bold outline-none resize-none"
             onChange={(e) => {
-              setNote({ ...note, name: e.target.value });
+              setPost({ ...post, name: e.target.value });
             }}
           />
         ) : (
-          <span className="w-full leading-snug font-bold">{note.name}</span>
+          <span className="w-full leading-snug font-bold">{post.name}</span>
         )}
       </h1>
       <p className="mt-10">
         <TextareaAutosize
-          value={note.content}
+          value={post.content}
           minRows={6}
-          placeholder={`${isAuthor ? "内容を入力してください" : ""}`}
+          placeholder={`${isEditor ? "内容を入力してください" : ""}`}
           className="w-full outline-none resize-none px-1 leading-8"
           onChange={(e) => {
-            isAuthor ? setNote({ ...note, content: e.target.value }) : null;
+            isEditor ? setPost({ ...post, content: e.target.value }) : null;
           }}
         />
       </p>
