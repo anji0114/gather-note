@@ -34,7 +34,7 @@ const DiscussionIdPage = () => {
   return (
     <Layout>
       <LayoutContainer>
-        <TextareaAutosize className="w-full leading-8" value={content} />
+        <TextareaAutosize className="w-full leading-8 outline-none resize-none" value={content} />
       </LayoutContainer>
     </Layout>
   );
