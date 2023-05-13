@@ -1,3 +1,4 @@
+import { Board } from "@/types";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -9,8 +10,9 @@ const BoardIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { data: boardData, error: boardError } = await supabase
       .from("boards")
-      .select("*")
+      .select("id, name, description, group_id, created_at")
       .eq("id", boardId)
+      .returns<Board>()
       .single();
 
     if (boardError) {

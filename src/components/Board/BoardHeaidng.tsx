@@ -6,6 +6,7 @@ import { DocumentTextIcon, Square3Stack3DIcon } from "@heroicons/react/24/outlin
 import { useStore } from "@/store";
 import { BoardEdit } from "@/components/Board/BoardEdit";
 import { BoardDelete } from "@/components/Board/BoardDelete";
+import { Board } from "@/types";
 
 export const BoardHeading = () => {
   const router = useRouter();
@@ -13,7 +14,11 @@ export const BoardHeading = () => {
   const asPath = router.asPath;
   const board = useStore((state) => state.board);
   const setBoard = useStore((state) => state.setBoard);
-  const { data: boardData, error, isLoading } = useSWR(id ? `/api/boards/${id}` : null); //ボード詳細のapi
+  const {
+    data: boardData,
+    error,
+    isLoading,
+  } = useSWR<Board, Error>(id ? `/api/boards/${id}` : null); //ボード詳細のapi
   const { data: groupData, error: groupError } = useSWR(
     board?.group_id ? `/api/groups/${board.group_id}` : null
   );

@@ -7,11 +7,15 @@ import { BoardCreate } from "@/components/Board/BoardCreate";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { GroupRegister } from "@/components/Group/GroupRegister";
 import { PostItem } from "@/components/Common/PostItem";
+import { Board } from "@/types";
+import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 
 const GroupBoardPage = () => {
   const group = useStore((state) => state.group);
 
-  const { data, error, isLoading } = useSWR(group.id ? `/api/groups/${group.id}/boards` : null);
+  const { data, error, isLoading } = useSWR<Board[], Error>(
+    group.id ? `/api/groups/${group.id}/boards` : null
+  );
   const { isMember, isLoading: isMemberLoading } = useGroupMembership(group.id);
 
   return (
@@ -20,13 +24,15 @@ const GroupBoardPage = () => {
         {isMember && <BoardCreate />}
       </DashboardHeading>
 
-      {isMemberLoading ? (
-        <></>
+      {isMemberLoading || isLoading ? (
+        <div className=" relative w-full min-h-[300px]">
+          <LoadingBlock />
+        </div>
       ) : isMember ? (
         <ul className="mt-8 space-y-[1px]">
           {data?.map((board: any) => (
             <PostItem
-              key={board.key}
+              key={board.id}
               id={board.id}
               name={board.name}
               description={board.description}
