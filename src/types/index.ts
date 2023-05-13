@@ -40,3 +40,10 @@ export type Profile = {
   avatar_url: string;
   updated_at?: string;
 };
+
+export type Discussion = {
+  id: string;
+  name: string;
+  content: string;
+  created_at?: string;
+};

@@ -8,7 +8,7 @@ export const GroupDashboard: FC = () => {
   const router = useRouter();
 
   const { data, error, isLoading } = useSWR(
-    router.query.id ? `/api/groups/${router.query.id}/boards` : null
+    router.query.id ? `/api/groups/${router.query.id}/latest-boards` : null
   );
 
   return (

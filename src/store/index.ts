@@ -1,4 +1,4 @@
-import { Board, Folder, Group, Note, Profile } from "@/types";
+import { Board, Discussion, Folder, Group, Note, Profile } from "@/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -7,9 +7,9 @@ type State = {
   setFolder: (payload: Folder) => void;
   resetFolder: () => void;
 
-  editNote: Note;
-  setEditNote: (payload: Note) => void;
-  resetEditNote: () => void;
+  note: Note;
+  setNote: (payload: Note) => void;
+  resetNote: () => void;
 
   group: Group;
   setGroup: (payload: Group) => void;
@@ -21,6 +21,9 @@ type State = {
 
   board: Board;
   setBoard: (payload: Board) => void;
+
+  discussion: Discussion;
+  setDiscussion: (payload: Discussion) => void;
 };
 
 export const useStore = create<State>()(
@@ -46,19 +49,19 @@ export const useStore = create<State>()(
     },
 
     // Note
-    editNote: { id: "", name: "", content: "" },
-    setEditNote: (payload) => {
+    note: { id: "", name: "", content: "" },
+    setNote: (payload) => {
       set({
-        editNote: {
+        note: {
           id: payload.id,
           name: payload.name,
           content: payload.content,
         },
       });
     },
-    resetEditNote: () => {
+    resetNote: () => {
       set({
-        editNote: {
+        note: {
           id: "",
           name: "",
           content: "",
@@ -121,6 +124,19 @@ export const useStore = create<State>()(
           name: payload.name,
           description: payload.description,
           group_id: payload.group_id,
+          created_at: payload.created_at,
+        },
+      });
+    },
+
+    // discussion
+    discussion: { id: "", name: "", content: "", created_at: "" },
+    setDiscussion: (payload) => {
+      set({
+        discussion: {
+          id: payload.id,
+          name: payload.name,
+          content: payload.content,
           created_at: payload.created_at,
         },
       });

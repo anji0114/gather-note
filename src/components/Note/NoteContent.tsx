@@ -2,24 +2,24 @@ import { useStore } from "@/store";
 import TextareaAutosize from "react-textarea-autosize";
 
 export const NoteContent = ({ isAuthor }: { isAuthor: boolean }) => {
-  const note = useStore((state) => state.editNote);
-  const setNote = useStore((state) => state.setEditNote);
+  const note = useStore((state) => state.note);
+  const setNote = useStore((state) => state.setNote);
 
   return (
-    <div className="max-w-[660px] mx-auto mt-16">
-      <h1>
+    <div className="max-w-[700px] mx-auto py-16 px-5">
+      <h1 className="text-2xl sm:text-4xl">
         {isAuthor ? (
           <TextareaAutosize
             value={note.name}
             minRows={1}
             placeholder="タイトル"
-            className="w-full text-4xl font-bold outline-none resize-none"
+            className="w-full leading-snug font-bold outline-none resize-none"
             onChange={(e) => {
               setNote({ ...note, name: e.target.value });
             }}
           />
         ) : (
-          <span className="w-full text-4xl font-bold">{note.name}</span>
+          <span className="w-full leading-snug font-bold">{note.name}</span>
         )}
       </h1>
       <p className="mt-10">
