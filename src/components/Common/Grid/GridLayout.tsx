@@ -6,7 +6,7 @@ type Item = {
   title: string;
   href: string;
   icon: ReactNode;
-  isPage: boolean;
+  isPage?: boolean;
 };
 
 type Props = {
