@@ -11,11 +11,11 @@ import { GridLayout } from "@/components/Common/Grid/GridLayout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { useStore } from "@/store";
 import useSWR from "swr";
-import { Loading } from "../Common/Loading";
 
 export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
   const { id } = router.query;
+  const asPath = router.asPath;
   const { data, error, isLoading } = useSWR(id ? `/api/groups/${id}` : null);
   const setGroup = useStore((state) => state.setGroup);
 
@@ -24,50 +24,59 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
       title: "ホーム",
       href: "",
       icon: <HomeIcon className="w-[22px]" />,
+      isPage: false,
     },
     {
       title: "ボード",
       href: "",
       icon: <ClipboardDocumentListIcon className="w-[22px]" />,
+      isPage: false,
     },
     {
       title: "メンバー",
       href: "",
       icon: <UsersIcon className="w-[22px]" />,
+      isPage: false,
     },
     {
       title: "設定",
       href: "",
       icon: <Cog8ToothIcon className="w-[22px]" />,
+      isPage: false,
     },
   ]);
 
   useEffect(() => {
-    if (id) {
+    if (id && asPath) {
+      const lastSegment = asPath.substring(asPath.lastIndexOf("/") + 1);
       setNavItems([
         {
           title: "ホーム",
           href: `/group/${id}`,
           icon: <HomeIcon className="w-[22px]" />,
+          isPage: lastSegment === id,
         },
         {
           title: "ボード",
           href: `/group/${id}/board`,
           icon: <ClipboardDocumentListIcon className="w-[22px]" />,
+          isPage: lastSegment === "board",
         },
         {
           title: "メンバー",
           href: `/group/${id}/member`,
           icon: <UsersIcon className="w-[22px]" />,
+          isPage: lastSegment === "member",
         },
         {
           title: "設定",
           href: `/group/${id}/setting`,
           icon: <Cog8ToothIcon className="w-[22px]" />,
+          isPage: lastSegment === "setting",
         },
       ]);
     }
-  }, [id]);
+  }, [id, asPath]);
 
   useEffect(() => {
     if (data) {
@@ -85,7 +94,7 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <Layout classes="py-20 sm:py-24">
       <LayoutContainer>
-        <GridLayout items={navItems}>{isLoading ? <Loading /> : <>{children}</>}</GridLayout>
+        <GridLayout items={navItems}>{children}</GridLayout>
       </LayoutContainer>
     </Layout>
   );

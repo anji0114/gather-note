@@ -6,6 +6,7 @@ type Item = {
   title: string;
   href: string;
   icon: ReactNode;
+  isPage?: boolean;
 };
 
 type Props = {
@@ -25,10 +26,10 @@ export const GridLayout: FC<Props> = ({ items, children }) => {
               <li key={item.title}>
                 <Link
                   href={item.href}
-                  className={`py-2.5 px-4 w-full flex gap-2 items-center rounded-md font-medium ${
-                    router.pathname === item.href
-                      ? "text-white bg-[#9DAEBF] pointer-events-none"
-                      : "bg-white border border-[#d0d7de] hover:bg-[#fafafa]"
+                  className={`py-2.5 px-4 w-full flex gap-2 items-center rounded-md font-medium border ${
+                    item.isPage
+                      ? "text-white bg-[#9DAEBF] border-[#9DAEBF] pointer-events-none"
+                      : "bg-white border-[#d0d7de] hover:bg-[#fafafa]"
                   }`}
                 >
                   {item.icon}

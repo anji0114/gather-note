@@ -1,24 +1,24 @@
+import { useRouter } from "next/router";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useStore } from "@/store";
+import { Cog8ToothIcon } from "@heroicons/react/24/outline";
+import { useCheckGroupOwnership } from "@/hooks/useCheckGroupOwnership";
+import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { DashboardHeading } from "@/components/Common/Heading";
 import { GroupEdit } from "@/components/Group/GroupEdit";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { GroupRegister } from "@/components/Group/GroupRegister";
-import { useCheckGroupOwnership } from "@/hooks/useCheckGroupOwnership";
-import { useGroupMembership } from "@/hooks/useGroupMembership";
-import { useStore } from "@/store";
-import { Cog8ToothIcon } from "@heroicons/react/24/outline";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
 
 const GroupSettingPage = () => {
   const user = useUser();
   const supabase = useSupabaseClient();
-  const group = useStore((state) => state.group);
   const router = useRouter();
+  const group = useStore((state) => state.group);
   const { isOwnership, isLoading } = useCheckGroupOwnership(group.id);
   const { isMember, isLoading: isMemberLoading } = useGroupMembership(group.id);
 
   const handleUnregisterGroup = async () => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("group_members")
       .delete()
       .eq("group_id", group.id)
@@ -28,6 +28,7 @@ const GroupSettingPage = () => {
       alert(error.message);
       return;
     }
+
     router.reload();
   };
 
@@ -52,6 +53,7 @@ const GroupSettingPage = () => {
           )}
         </div>
       ) : (
+        // グループ未加入の場合
         <GroupRegister groupId={group.id} />
       )}
     </GroupLayout>

@@ -1,11 +1,9 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import useSWR from "swr";
-import { DocumentTextIcon } from "@heroicons/react/24/outline";
-import { DateFns } from "@/components/Common/DateFns";
 import { Loading } from "@/components/Common/Loading";
 import { Note } from "@/types";
+import { NoteItem } from "@/components/Common/NoteItem";
 
 export const FolderNoteList: FC = () => {
   const router = useRouter();
@@ -22,21 +20,13 @@ export const FolderNoteList: FC = () => {
       {data?.length > 0 ? (
         <ul className="mt-8 space-y-4">
           {data?.map((note: Note) => (
-            <li
+            <NoteItem
               key={note.id}
-              className="flex justify-between w-full pb-4 border-b border-[#d0d7de]"
-            >
-              <Link
-                href={`/note/${note.id}`}
-                className="relative inline-block pl-7 text-[#4e6bb4] text-sm font-medium underline-offset-3 hover:underline"
-              >
-                <DocumentTextIcon className="absolute left-0 top-1/2 translate-y-[-50%] w-6" />
-                <span>{note.name}</span>
-              </Link>
-              <p className="text-sm">
-                <DateFns time={note.updated_at!} />
-              </p>
-            </li>
+              id={note.id}
+              name={note.name}
+              created_at={note.created_at!}
+              postName="note"
+            />
           ))}
         </ul>
       ) : (
