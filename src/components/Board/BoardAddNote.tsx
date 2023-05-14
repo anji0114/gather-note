@@ -8,8 +8,9 @@ import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 export const BoardAddNote = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
+  const { id } = router.query;
   const [noteId, setNoteId] = useState("");
-  const { data: notesData, error: notesError } = useSWR(`/api/notes`);
+  const { data: notesData, error: notesError } = useSWR(id ? `/api/boards/${id}/add-notes` : null);
 
   const handleAddNoteToBoard = async () => {
     const { data, error } = await supabase
