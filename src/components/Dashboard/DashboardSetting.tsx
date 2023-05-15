@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import useSWR from "swr";
-import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { PencilIcon, PencilSquareIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import useSWR from "swr";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { v4 as uuidv4 } from "uuid";
+import { PencilIcon } from "@heroicons/react/24/outline";
 
 export const DashboardSetting: FC = () => {
   const router = useRouter();
   const supabase = useSupabaseClient();
   const user = useUser();
-  const { data, error, isLoading } = useSWR(user ? "/api/profile" : null);
+  const { data } = useSWR(user ? "/api/profile" : null);
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
