@@ -10,15 +10,29 @@ export const FolderDelete = () => {
   const folder = useStore((state) => state.folder);
 
   const handleDeleteFolder = async () => {
-    const { error } = await supabase
+    const { data: foldersData, error: foldersError } = await supabase
       .from("folders")
       .update({
         deleted_flag: true,
       })
-      .eq("id", folder.id);
+      .eq("id", folder.id)
+      .select("id")
+      .single();
 
-    if (error) {
-      alert(error.message);
+    if (foldersError) {
+      alert(foldersError.message);
+      return;
+    }
+
+    const { error: folderNotesError } = await supabase
+      .from("notes")
+      .update({
+        deleted_flag: true,
+      })
+      .eq("folder_id", foldersData.id);
+
+    if (folderNotesError) {
+      alert(folderNotesError.message);
       return;
     }
 

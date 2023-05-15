@@ -10,7 +10,7 @@ type Props = {
 
 export const Editor: FC<Props> = ({ isEditor, post, setPost }) => {
   return (
-    <div className="max-w-[700px] mx-auto py-16 px-5">
+    <div className="max-w-[700px] mx-auto pt-16 pb-48 px-5">
       <h1 className="text-2xl sm:text-4xl">
         {isEditor ? (
           <TextareaAutosize
