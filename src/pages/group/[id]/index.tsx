@@ -18,7 +18,6 @@ const GroupId: NextPage = () => {
     group.id ? `/api/groups/${group.id}/members` : null
   );
 
-
   const handleCopyURL = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
@@ -55,14 +54,10 @@ const GroupId: NextPage = () => {
                 <span className="w-[100px] font-medium">メンバー数:</span>
                 <span>{MembersData?.length}名</span>
               </li>
-              <li className="flex">
-                <span className="w-[100px] font-medium">ボード数:</span>
-                <span>5個</span>
-              </li>
             </ul>
             <button
               onClick={handleCopyURL}
-              className={`mt-3 py-1 w-[160px] flex items-center justify-center gap-2 border border-[#4e6bb4] rounded-lg   ${
+              className={`mt-5 py-1 w-[160px] flex items-center justify-center gap-2 border border-[#4e6bb4] rounded-lg   ${
                 !isCopied
                   ? "bg-white text-[#4e6bb4]"
                   : "bg-[#4e6bb4] text-white pointer-events-none"

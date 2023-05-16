@@ -3,10 +3,10 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { GroupDelete } from "./GroupDelete";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
-import { PhotoIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { GroupDelete } from "@/components/Group/GroupDelete";
 
 export const GroupEdit = () => {
   const router = useRouter();
@@ -15,6 +15,7 @@ export const GroupEdit = () => {
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
   const group = useStore((state) => state.group);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export const GroupEdit = () => {
       return;
     }
 
+    setCreateObjectURL(URL.createObjectURL(files[0]));
     setThumbnail(files[0]);
   }, []);
 
@@ -105,13 +107,13 @@ export const GroupEdit = () => {
           className="overflow-hidden relative cursor-pointer block max-w-[360px] rounded-lg"
         >
           <Image
-            src={thumbnailUrl ? thumbnailUrl : "/no-image.jpg"}
+            src={createObjectURL ? createObjectURL : thumbnailUrl ? thumbnailUrl : "/no-image.jpg"}
             className="w-full h-[240px] object-cover block rounded-lg"
             width={600}
             height={400}
             alt="グループサムネイル"
           />
-          <PhotoIcon className="w-7 absolute top-1/2 left-1/2 translate-x-[-50%]  text-white z-10 opacity-90" />
+          <PencilSquareIcon className="w-7 absolute top-1/2 left-1/2 translate-x-[-50%]  text-white z-10" />
           <span className=" absolute inset-0 bg-black bg-opacity-20"></span>
         </label>
         <label htmlFor="thumbnail" className="text-sm mt-1 pl-1 text-[#555] cursor-pointer">

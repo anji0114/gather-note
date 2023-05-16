@@ -14,6 +14,7 @@ export const DashboardSetting: FC = () => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
 
   useEffect(() => {
     if (data) {
@@ -29,6 +30,7 @@ export const DashboardSetting: FC = () => {
       return;
     }
 
+    setCreateObjectURL(URL.createObjectURL(files[0]));
     setAvatar(files[0]);
   }, []);
 
@@ -81,7 +83,13 @@ export const DashboardSetting: FC = () => {
         <label htmlFor="avatar" className="block w-[200px] h-[200px] relative cursor-pointer">
           <Image
             className="w-full h-full object-cover rounded-full"
-            src={data?.avatar_url ? data.avatar_url : "/no-image/jpg"}
+            src={
+              createObjectURL
+                ? createObjectURL
+                : data?.avatar_url
+                ? data.avatar_url
+                : "/no-image/jpg"
+            }
             alt=""
             width={200}
             height={200}
