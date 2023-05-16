@@ -46,17 +46,13 @@ export const LayoutHeaderMenu: FC = () => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button className="w-12 h-12">
-          {data?.avatar_url ? (
-            <Image
-              src={data.avatar_url}
-              alt="ユーザーアバター"
-              className="w-full h-full object-cover rounded-full"
-              width={150}
-              height={150}
-            />
-          ) : (
-            <UserCircleIcon className="w-full text-[#777]" />
-          )}
+          <Image
+            src={data?.avatar_url ? data.avatar_url : "/no-avatar.png"}
+            alt="ユーザーアバター"
+            className="w-full h-full object-cover rounded-full"
+            width={150}
+            height={150}
+          />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>

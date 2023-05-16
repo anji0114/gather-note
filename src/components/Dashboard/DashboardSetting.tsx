@@ -88,7 +88,7 @@ export const DashboardSetting: FC = () => {
                 ? createObjectURL
                 : data?.avatar_url
                 ? data.avatar_url
-                : "/no-image/jpg"
+                : "/no-avatar.png"
             }
             alt=""
             width={200}

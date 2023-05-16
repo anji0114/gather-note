@@ -29,17 +29,13 @@ const GroupMemberPage = () => {
             className="flex items-center gap-4 p-3 pr-5 border-t border-[#d0d7de]"
           >
             <div className="w-10 h-10">
-              {member.avatar_url ? (
-                <Image
-                  src={member.avatar_url}
-                  alt="アバター"
-                  width={60}
-                  height={60}
-                  className="w-full h-full object-cover rounded-full"
-                />
-              ) : (
-                <UserCircleIcon className="text-[#777] w-full h-full" />
-              )}
+              <Image
+                src={member.avatar_url ? member.avatar_url : "/no-avatar.png"}
+                alt="アバター"
+                width={60}
+                height={60}
+                className="w-full h-full object-cover rounded-full"
+              />
             </div>
             <span className="text-sm font-medium">{member.name}</span>
             {member.id === group.owner_id ? (
