@@ -61,7 +61,7 @@ const GroupNewPage = () => {
       .insert({
         group_id: groupData.id,
         user_id: user!.id,
-        role: "manager",
+        role: "admin",
       })
       .select();
 

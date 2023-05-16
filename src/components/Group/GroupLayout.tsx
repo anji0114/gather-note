@@ -4,6 +4,7 @@ import {
   ClipboardDocumentListIcon,
   UsersIcon,
   Cog8ToothIcon,
+  ArrowUturnLeftIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
@@ -44,6 +45,12 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
       icon: <Cog8ToothIcon className="w-[22px]" />,
       isPage: false,
     },
+    {
+      title: "グループ一覧",
+      href: "/dashboard/group",
+      icon: <ArrowUturnLeftIcon className="w-[22px]" />,
+      isPage: false,
+    },
   ]);
 
   useEffect(() => {
@@ -73,6 +80,12 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
           href: `/group/${id}/setting`,
           icon: <Cog8ToothIcon className="w-[22px]" />,
           isPage: lastSegment === "setting",
+        },
+        {
+          title: "グループ一覧",
+          href: "/dashboard/group",
+          icon: <ArrowUturnLeftIcon className="w-[22px]" />,
+          isPage: false,
         },
       ]);
     }

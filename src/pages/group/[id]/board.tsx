@@ -1,14 +1,14 @@
 import { useStore } from "@/store";
 import useSWR from "swr";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
+import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { DashboardHeading } from "@/components/Common/Heading";
 import { BoardCreate } from "@/components/Board/BoardCreate";
-import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { GroupRegister } from "@/components/Group/GroupRegister";
 import { PostItem } from "@/components/Common/PostItem";
-import { Board } from "@/types";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
+import { Board } from "@/types";
 
 const GroupBoardPage = () => {
   const group = useStore((state) => state.group);
