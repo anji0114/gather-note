@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 
-export const AuthRegister:FC = () => {
+export const AuthRegister: FC = () => {
   const supabase = useSupabaseClient();
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -34,7 +34,7 @@ export const AuthRegister:FC = () => {
       return;
     }
 
-    router.push("/dashboard");
+    router.push("/dashboard/setting");
   };
 
   return (

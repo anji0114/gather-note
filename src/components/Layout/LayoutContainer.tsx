@@ -6,5 +6,5 @@ type Props = {
 };
 
 export const LayoutContainer: FC<Props> = ({ children, classes }) => {
-  return <div className={`max-w-[1140px] w-full mx-auto px-5 sm:px-7 ${classes}`}>{children}</div>;
+  return <div className={`max-w-[1140px] w-full mx-auto px-5 md:px-7 ${classes}`}>{children}</div>;
 };

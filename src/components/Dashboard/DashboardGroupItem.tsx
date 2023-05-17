@@ -5,7 +5,7 @@ import { Group } from "@/types";
 
 export const DashboardGroupItem: FC<Group> = ({ id, name, description, thumbnail_url }) => {
   return (
-    <li className="p-5 pb-6 bg-white border border-[#d0d7de] rounded w-[calc((100%_-_20px)_/_2)]">
+    <li className="p-5 pb-6 bg-white border border-[#d0d7de] rounded w-full  md:w-[calc((100%_-_20px)_/_2)]">
       <Link
         className="relative inline-block w-full overflow-hidden pb-[60%] rounded hover:opacity-80 "
         href={`/group/${id}`}

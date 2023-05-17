@@ -12,6 +12,7 @@ export const GroupRegister: FC<{ groupId: string }> = ({ groupId }) => {
     const { error } = await supabase.from("group_members").insert({
       group_id: groupId,
       user_id: user!.id,
+      role: "member",
     });
 
     if (error) {
