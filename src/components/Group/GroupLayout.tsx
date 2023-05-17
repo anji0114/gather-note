@@ -17,7 +17,7 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
   const { id } = router.query;
   const asPath = router.asPath;
-  const { data, error, isLoading } = useSWR(id ? `/api/groups/${id}` : null);
+  const { data } = useSWR(id ? `/api/groups/${id}` : null);
   const setGroup = useStore((state) => state.setGroup);
 
   const [navItems, setNavItems] = useState([
@@ -105,7 +105,7 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   }, [data]);
 
   return (
-    <Layout classes="py-20 sm:py-24">
+    <Layout classes="py-10 md:py-24">
       <LayoutContainer>
         <GridLayout items={navItems}>{children}</GridLayout>
       </LayoutContainer>

@@ -5,24 +5,6 @@ import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { useRouter } from "next/router";
 
-// const NAV_ITEMS = [
-//   {
-//     title: "フォルダ",
-//     href: "/dashboard",
-//     icon: <FolderOpenIcon className="w-[22px]" />,
-//   },
-//   {
-//     title: "グループ",
-//     href: "/dashboard/group",
-//     icon: <UserGroupIcon className="w-[22px]" />,
-//   },
-//   {
-//     title: "設定",
-//     href: "/dashboard/setting",
-//     icon: <Cog8ToothIcon className="w-[22px]" />,
-//   },
-// ];
-
 export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
   const asPath = router.asPath;
@@ -49,7 +31,7 @@ export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
   ];
 
   return (
-    <Layout classes="py-20 sm:py-24">
+    <Layout classes="py-20 md:py-24">
       <LayoutContainer>
         <GridLayout items={navItems}>{children}</GridLayout>
       </LayoutContainer>

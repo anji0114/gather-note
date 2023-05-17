@@ -31,17 +31,17 @@ const GroupId: NextPage = () => {
   return (
     <GroupLayout>
       <div className="bg-[#FCFCFC] px-5 py-7 border border-[#e2e7ed] rounded">
-        <div className="flex gap-10">
-          <div className="text-center w-[300px] h-[200px]">
+        <div className="gap-10 sm:flex">
+          <div className="relative w-full pb-[66%] sm:w-[300px] sm:h-[200px] sm:pb-0">
             <Image
               src={group.thumbnail_url ? group.thumbnail_url : "/no-image.jpg"}
               alt="グループサムネイル"
               width={600}
               height={400}
-              className="inline-block rounded-lg max-w-[600px] object-cover w-full h-full"
+              className="absolute inset-0 inline-block rounded-lg max-w-[600px] object-cover w-full h-full"
             />
           </div>
-          <div className="w-[calc(100%_-_300px_-_40px)]">
+          <div className="mt-5 sm:w-[calc(100%_-_300px_-_40px)] sm:mt-0">
             <p className="font-bold text-xl">{group.name}</p>
             <p className="mt-3">{group.description}</p>
 

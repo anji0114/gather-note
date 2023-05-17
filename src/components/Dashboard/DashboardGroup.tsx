@@ -29,7 +29,7 @@ export const DashboardGroup: FC = () => {
         ) : error ? (
           <p className="text-center text-red-400">エラーが発生しました</p>
         ) : (
-          <ul className="flex justify-between flex-wrap gap-5">
+          <ul className="flex justify-between flex-wrap gap-4 md:gap-5">
             {data?.map((group: Group) => (
               <DashboardGroupItem
                 key={group.id}

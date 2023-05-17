@@ -57,10 +57,10 @@ export const BoardHeading = () => {
 
   return (
     <div className="pt-12 bg-[#FCFCFC] border-b border-[#f0f0f0]">
-      <div className="max-w-[1140px] w-full mx-auto px-5 sm:px-7">
+      <div className="max-w-[1140px] w-full mx-auto px-5 md:px-7">
         <div className="max-w-[1000px] mx-auto">
           <div className="flex justify-between">
-            <h1 className="text-lg sm:text-xl font-bold leading-tight w-[calc(100%_-_150px)]">
+            <h1 className="text-lg md:text-xl font-bold leading-tight w-[calc(100%_-_150px)]">
               <Link href={`/group/${groupData?.id}`} className="text-[#4E6BB4] hover:underline">
                 {groupData?.name}
               </Link>

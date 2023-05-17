@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { FC, ReactNode } from "react";
 
 type Item = {
@@ -15,15 +14,13 @@ type Props = {
 };
 
 export const GridLayout: FC<Props> = ({ items, children }) => {
-  const router = useRouter();
-
   return (
-    <div className="sm:flex sm:justify-between items-start relative gap-12">
-      <aside className="sticky top-3 left-0 w-[200px] hidden sm:block">
+    <div className="relative md:flex md:justify-between md:items-start">
+      <aside className="top-3 left-0 w-full md:w-[170px] md:sticky lg:w-[200px]">
         <nav>
-          <ul className="space-y-[6px]">
+          <ul className="flex flex-wrap justify-between gap-1 md:space-y-[6px] md:gap-0">
             {items.map((item) => (
-              <li key={item.title}>
+              <li key={item.title} className="w-[calc(50%_-_2px)] md:w-full">
                 <Link
                   href={item.href}
                   className={`py-2.5 px-4 w-full flex gap-2 items-center rounded-md font-medium border ${
@@ -40,7 +37,9 @@ export const GridLayout: FC<Props> = ({ items, children }) => {
           </ul>
         </nav>
       </aside>
-      <main className="w-full">{children}</main>
+      <main className="mt-8  md:mt-0 md:w-[calc(100%_-_170px_-_30px)] lg:w-[calc(100%_-_200px_-_48px)] ">
+        {children}
+      </main>
     </div>
   );
 };

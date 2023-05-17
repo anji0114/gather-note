@@ -77,10 +77,13 @@ export const DashboardSetting: FC = () => {
   };
 
   return (
-    <div className="mt-8 py-10 px-16 border border-[#d0d7de] rounded-md space-y-7">
-      <p className=" font-bold text-xl">プロフィール編集</p>
+    <div className="mt-8 p-8 border border-[#d0d7de] rounded-md space-y-7 md:py-10 md:px-16  ">
+      <p className="font-bold text-center text-xl md:text-left">プロフィール編集</p>
       <div>
-        <label htmlFor="avatar" className="block w-[200px] h-[200px] relative cursor-pointer">
+        <label
+          htmlFor="avatar"
+          className="block mx-auto w-[200px] h-[200px] relative cursor-pointer md:mx-0"
+        >
           <Image
             className="w-full h-full object-cover rounded-full"
             src={
@@ -115,11 +118,11 @@ export const DashboardSetting: FC = () => {
           onChange={(e) => {
             setName(e.target.value);
           }}
-          className="mt-2.5 px-4 py-3 w-full max-w-[400px] text-sm border border-[#d0d7de] rounded"
+          className="mt-2.5 px-4 py-3 w-full  text-sm border border-[#d0d7de] rounded md:max-w-[400px]"
           placeholder="Font Developer"
         />
       </div>
-      <div>
+      <div className="text-center md:text-left">
         <button
           className="py-2 px-8 text-sm text-white bg-[#222] rounded hover:bg-[#555]"
           onClick={handleProfileUpdate}

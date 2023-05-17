@@ -30,7 +30,7 @@ const GroupMemberPage = () => {
             key={member.id}
             className="flex items-center gap-4 p-3 pr-5 border-t border-[#d0d7de]"
           >
-            <div className="w-10 h-10">
+            <div className="w-8 h-8 md:w-10 md:h-10">
               <Image
                 src={member.avatar_url ? member.avatar_url : "/no-avatar.png"}
                 alt="アバター"

@@ -41,7 +41,7 @@ export const BoardEdit = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <button className="bg-white border border-[#D0D7DE] rounded py-1 px-3 sm:px-4 text-[10px] sm:text-[12px] hover:bg-[#fafafa]">
+        <button className="bg-white border border-[#D0D7DE] rounded py-1 px-3 md:px-4 text-[10px] md:text-[12px] hover:bg-[#fafafa]">
           編集する
         </button>
       </Dialog.Trigger>
