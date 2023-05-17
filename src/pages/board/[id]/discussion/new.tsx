@@ -13,9 +13,7 @@ const BoardDiscussionNew = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
   const { id } = router.query;
-  const { data, error, isLoading } = useSWR(
-    router.query.id ? `/api/boards/${router.query.id}/notes` : null
-  );
+  const { data } = useSWR(id ? `/api/boards/${id}/notes` : null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [name, setName] = useState("");
   const [command, setCommand] = useState("下記のノートをまとめてください。");
@@ -27,13 +25,13 @@ const BoardDiscussionNew = () => {
 
   // プロンプトの作成
   const handleCreatePrompt = async () => {
-    const { data: mainNoteData, error: mainNoteError } = await supabase
+    const { data: mainNoteData } = await supabase
       .from("notes")
       .select("content")
       .eq("id", mainNoteId)
       .single();
 
-    const { data: subNoteData, error: subNoteError } = await supabase
+    const { data: subNoteData } = await supabase
       .from("notes")
       .select("content")
       .eq("id", subNoteId)
@@ -109,7 +107,7 @@ const BoardDiscussionNew = () => {
       note_id: subNoteId,
     });
 
-    router.push(`/discussion/${data.id}`);
+    router.push(`/board/${id}/discussion`);
   };
 
   return (

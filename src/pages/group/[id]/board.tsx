@@ -12,16 +12,15 @@ import { Board } from "@/types";
 
 const GroupBoardPage = () => {
   const group = useStore((state) => state.group);
-
-  const { data, error, isLoading } = useSWR<Board[], Error>(
+  const { data, isLoading } = useSWR<Board[], Error>(
     group.id ? `/api/groups/${group.id}/boards` : null
   );
-  const { isMember, isLoading: isMemberLoading } = useGroupMembership(group.id);
+  const { isMember, isAdmin, isLoading: isMemberLoading } = useGroupMembership(group.id);
 
   return (
     <GroupLayout>
       <DashboardHeading text="ボード一覧" icon={<ClipboardDocumentListIcon />}>
-        {isMember && <BoardCreate />}
+        {isAdmin && <BoardCreate />}
       </DashboardHeading>
 
       {isMemberLoading || isLoading ? (
