@@ -49,7 +49,7 @@ const GroupMemberPage = () => {
               <span className="ml-auto text-sm text-blue-900 font-medium">グループ代表</span>
             ) : group.owner_id === user?.id ? (
               <div className="ml-auto">
-                <GroupMemberMenu userId={member.id} />
+                <GroupMemberMenu userId={member.id} userName={member.name} role={member.role} />
               </div>
             ) : null}
           </li>

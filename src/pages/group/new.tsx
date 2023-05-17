@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { ChangeEvent, useState } from "react";
+import Image from "next/image";
+import { PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 const GroupNewPage = () => {
   const supabase = useSupabaseClient();
@@ -14,6 +16,7 @@ const GroupNewPage = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -22,6 +25,7 @@ const GroupNewPage = () => {
       return;
     }
     setThumbnail(files[0]);
+    setCreateObjectURL(URL.createObjectURL(files[0]));
   };
 
   const handleCreateGroup = async () => {
@@ -97,8 +101,22 @@ const GroupNewPage = () => {
             />
           </div>
           <div className="mt-5">
-            <label className="pl-[2px] w-full inline-block font-medium">グループイメージ</label>
-            <input type="file" className="mt-1" onChange={handleImageChange} />
+            <p className="pl-[2px] w-full inline-block font-medium">グループイメージ</p>
+            <label
+              htmlFor="thumbnail"
+              className="overflow-hidden relative cursor-pointer block max-w-[360px] rounded-lg mt-1"
+            >
+              <Image
+                src={createObjectURL ? createObjectURL : "/no-image.jpg"}
+                className="w-full h-[220px] object-cover block rounded-lg "
+                width={600}
+                height={400}
+                alt="グループサムネイル"
+              />
+              <PlusCircleIcon className="w-7 absolute top-1/2 left-1/2 translate-x-[-50%]  text-white z-10" />
+              <span className=" absolute inset-0 bg-black bg-opacity-20"></span>
+            </label>
+            <input type="file" id="thumbnail" className="hidden" onChange={handleImageChange} />
           </div>
           <div className="pt-5 mt-5 text-right border-t border-[#D0D7DE] ">
             <button
