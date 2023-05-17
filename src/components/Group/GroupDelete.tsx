@@ -11,12 +11,7 @@ export const GroupDelete = () => {
   const restGroup = useStore((state) => state.resetGroup);
 
   const handleDeleteGroup = async () => {
-    const { error } = await supabase
-      .from("groups")
-      .update({
-        deleted_flag: true,
-      })
-      .eq("id", group.id);
+    const { error } = await supabase.from("groups").delete().eq("id", group.id);
 
     if (error) {
       alert(error.message);

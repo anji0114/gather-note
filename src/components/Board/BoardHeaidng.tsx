@@ -61,7 +61,10 @@ export const BoardHeading = () => {
         <div className="max-w-[1000px] mx-auto">
           <div className="flex justify-between">
             <h1 className="text-lg md:text-xl font-bold leading-tight w-[calc(100%_-_150px)]">
-              <Link href={`/group/${groupData?.id}`} className="text-[#4E6BB4] hover:underline">
+              <Link
+                href={`/group/${groupData?.id}`}
+                className="text-[#4E6BB4] underline-offset-2 underline hover:opacity-80"
+              >
                 {groupData?.name}
               </Link>
               <span className="text-black inline-block mx-1.5 translate-y-[-1px] ">/</span>
