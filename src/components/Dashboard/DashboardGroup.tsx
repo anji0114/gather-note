@@ -11,6 +11,10 @@ import { DashboardHeading } from "@/components/Common/Heading";
 export const DashboardGroup: FC = () => {
   const { data, error, isLoading } = useSWR("/api/groups");
 
+  if (error) {
+    return <p>{error.message}</p>;
+  }
+
   return (
     <>
       <DashboardHeading text="グループ管理" icon={<UserGroupIcon />}>

@@ -31,6 +31,10 @@ const GroupsApi = async (req: NextApiRequest, res: NextApiResponse) => {
         groupIds.map((id) => id.group_id)
       );
 
+    if (error) {
+      return res.status(401).json({ message: error });
+    }
+
     return res.status(200).json(groupsData);
   }
 };
