@@ -9,8 +9,8 @@ export const BoardDelete = () => {
   const router = useRouter();
   const board = useStore((state) => state.board);
 
-  const handleDeleteboard = async () => {
-    const { error } = await supabase.from("boards").delete().eq("id", board.id);
+  const handleDeleteBoard = async () => {
+    const { data, error } = await supabase.from("boards").delete().eq("id", board.id).select();
 
     if (error) {
       alert(error.message);
@@ -43,7 +43,7 @@ export const BoardDelete = () => {
               </Dialog.Close>
               <button
                 className="py-1.5 px-6 text-sm text-[#DE6868] border border-[#DE6868] bg-white rounded hover:bg-red-50"
-                onClick={handleDeleteboard}
+                onClick={handleDeleteBoard}
               >
                 削除する
               </button>

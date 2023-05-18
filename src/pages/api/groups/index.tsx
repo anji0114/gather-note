@@ -29,8 +29,11 @@ const GroupsApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .in(
         "id",
         groupIds.map((id) => id.group_id)
-      )
-      .eq("deleted_flag", false);
+      );
+
+    if (error) {
+      return res.status(401).json({ message: error });
+    }
 
     return res.status(200).json(groupsData);
   }
