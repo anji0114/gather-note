@@ -10,6 +10,7 @@ import { FolderContent } from "@/components/Folder/FolderContent";
 import { Layout } from "@/components/Layout";
 import { Folder } from "@/types";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import { Meta } from "@/components/Common/Meta";
 
 const FolderId: NextPage = () => {
   const user = useUser();
@@ -38,24 +39,27 @@ const FolderId: NextPage = () => {
   if (isLoading || !user?.id) return <Loading />;
 
   return (
-    <Layout>
-      {!data?.deleted_flag ? (
-        <>
-          <FolderTop />
-          <LayoutContainer classes="mt-14">
-            <div className="max-w-[800px] mx-auto">
-              {!error ? (
-                <FolderContent />
-              ) : (
-                <p className=" text-center text-red-500">{error.message}</p>
-              )}
-            </div>
-          </LayoutContainer>
-        </>
-      ) : (
-        <p className="text-center mt-10">このフォルダーは削除されました</p>
-      )}
-    </Layout>
+    <>
+      <Meta />
+      <Layout>
+        {!data?.deleted_flag ? (
+          <>
+            <FolderTop />
+            <LayoutContainer classes="mt-14">
+              <div className="max-w-[800px] mx-auto">
+                {!error ? (
+                  <FolderContent />
+                ) : (
+                  <p className=" text-center text-red-500">{error.message}</p>
+                )}
+              </div>
+            </LayoutContainer>
+          </>
+        ) : (
+          <p className="text-center mt-10">このフォルダーは削除されました</p>
+        )}
+      </Layout>
+    </>
   );
 };
 

@@ -3,20 +3,25 @@ import { BoardNotes } from "@/components/Board/BoardNotes";
 import { BoardHeading } from "@/components/Board/BoardHeaidng";
 import { BoardAddNote } from "@/components/Board/BoardAddNote";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import { Meta } from "@/components/Common/Meta";
 
 const BoardId = () => {
+  
   return (
-    <Layout>
-      <BoardHeading />
-      <LayoutContainer classes="py-14">
-        <div className=" max-w-[800px] mx-auto">
-          <BoardNotes />
-          <div className="mt-5">
-            <BoardAddNote />
+    <>
+      <Meta />
+      <Layout>
+        <BoardHeading />
+        <LayoutContainer classes="py-14">
+          <div className=" max-w-[800px] mx-auto">
+            <BoardNotes />
+            <div className="mt-5">
+              <BoardAddNote />
+            </div>
           </div>
-        </div>
-      </LayoutContainer>
-    </Layout>
+        </LayoutContainer>
+      </Layout>
+    </>
   );
 };
 

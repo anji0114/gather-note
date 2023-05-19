@@ -14,7 +14,7 @@ export const DashboardSetting: FC = () => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
+  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null); //ユーザーのアップロード画像のURL
 
   useEffect(() => {
     if (data) {
@@ -61,6 +61,7 @@ export const DashboardSetting: FC = () => {
       avatar_url = urlData.publicUrl;
     }
 
+    // プロフィールを更新
     const { error } = await supabase
       .from("profiles")
       .update({
