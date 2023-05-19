@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useStore } from "@/store";
 import { DiscussionHeader } from "@/components/Discussion/DiscussionHeader";
 import { Editor } from "@/components/Common/Editor";
+import { Meta } from "@/components/Common/Meta";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const DiscussionIdPage = () => {
 
   return (
     <>
+      <Meta />
       <DiscussionHeader />
       <Editor isEditor={true} post={discussion} setPost={setDiscussion} />
     </>

@@ -8,6 +8,7 @@ import { Layout } from "@/components/Layout";
 import { LoadingCircle } from "@/components/Common/Loading/LoadingCircle";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { Note } from "@/types";
+import { Meta } from "@/components/Common/Meta";
 
 const BoardDiscussionNew = () => {
   const supabase = useSupabaseClient();
@@ -111,121 +112,126 @@ const BoardDiscussionNew = () => {
   };
 
   return (
-    <Layout classes="py-20">
-      <LayoutContainer>
-        <div className="max-w-[700px] mx-auto">
-          <h2 className="text-xl font-bold">新しいディスカッションを作成する</h2>
-          <p className="mt-2">ボードのノートを元に新しいディスカッションを作成する</p>
-          <div className="mt-5 pt-5 border-t border-[#eee]">
-            <label className="pl- w-full inline-block font-medium">ディスカッション名</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-2 p-2 w-full max-w-[500px] border border-[#D0D7DE] rounded outline-none"
-            />
-          </div>
-          <div className="mt-5">
-            <label className="pl-[2px] w-full inline-block font-medium">AIへの指示</label>
-            <div className="mt-1 relative max-w-[500px]">
-              <select
-                defaultValue={command}
-                onChange={(e) => setCommand(e.target.value)}
-                className="p-2 w-full resize-none border border-[#D0D7DE] rounded outline-none appearance-none cursor-pointer"
-              >
-                <option value="下記のノートを結合してください。">ノートの結合</option>
-                <option value="下記のノートを比較してください。">ノートの比較</option>
-              </select>
-              <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
+    <>
+      <Meta />
+      <Layout classes="py-20">
+        <LayoutContainer>
+          <div className="max-w-[700px] mx-auto">
+            <h2 className="text-xl font-bold">新しいディスカッションを作成する</h2>
+            <p className="mt-2">ボードのノートを元に新しいディスカッションを作成する</p>
+            <div className="mt-5 pt-5 border-t border-[#eee]">
+              <label className="pl- w-full inline-block font-medium">ディスカッション名</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="mt-2 p-2 w-full max-w-[500px] border border-[#D0D7DE] rounded outline-none"
+              />
             </div>
-          </div>
-          <div className="mt-5">
-            <p className="font-medium">ノートの選択</p>
-            <div className="mt-2 space-y-2">
-              <div className="relative">
+            <div className="mt-5">
+              <label className="pl-[2px] w-full inline-block font-medium">AIへの指示</label>
+              <div className="mt-1 relative max-w-[500px]">
                 <select
-                  className="w-full pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
-                  defaultValue={mainNoteId}
-                  onChange={(e) => setMainNoteId(e.target.value)}
+                  defaultValue={command}
+                  onChange={(e) => setCommand(e.target.value)}
+                  className="p-2 w-full resize-none border border-[#D0D7DE] rounded outline-none appearance-none cursor-pointer"
                 >
-                  <option value="" disabled>
-                    ---
-                  </option>
-                  {data?.map((note: Note) => (
-                    <option value={note.id} key={note.id}>
-                      {note.name}
-                    </option>
-                  ))}
-                </select>
-                <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
-              </div>
-              <div className="relative">
-                <select
-                  className="w-full pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
-                  defaultValue={subNoteId}
-                  onChange={(e) => setSubNoteId(e.target.value)}
-                >
-                  <option value="" disabled>
-                    ---
-                  </option>
-                  {data?.map((note: Note) => (
-                    <option value={note.id} key={note.id}>
-                      {note.name}
-                    </option>
-                  ))}
+                  <option value="下記のノートを結合してください。">ノートの結合</option>
+                  <option value="下記のノートを比較してください。">ノートの比較</option>
                 </select>
                 <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
               </div>
             </div>
-          </div>
-          <div className="pt-5 mt-5 text-right border-t border-[#D0D7DE] ">
-            <button
-              className={`px-4 py-2.5 rounded text-sm font-medium text-white bg-[#4e6bb4]  ${
-                !name || !command || !mainNoteId
-                  ? "bg-[#888] cursor-not-allowed"
-                  : "hover:opacity-75"
-              }`}
-              disabled={!name || !command || !mainNoteId ? true : false}
-              onClick={handleCreateDiscussion}
-            >
-              ディスカッションを作成
-            </button>
-          </div>
-
-          <div
-            className={`${
-              !isShowDiscussion ? "overflow-hidden h-0" : "min-h-[calc(100vh_-_140px)] h-auto pt-12"
-            }`}
-            ref={contentRef}
-          >
-            <TextareaAutosize
-              className="mt-1 p-6 w-full resize-none border border-[#D0D7DE] rounded outline-none leading-8"
-              value={discussion}
-              minRows={2}
-            />
-            <div className="text-right">
+            <div className="mt-5">
+              <p className="font-medium">ノートの選択</p>
+              <div className="mt-2 space-y-2">
+                <div className="relative">
+                  <select
+                    className="w-full pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
+                    defaultValue={mainNoteId}
+                    onChange={(e) => setMainNoteId(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      ---
+                    </option>
+                    {data?.map((note: Note) => (
+                      <option value={note.id} key={note.id}>
+                        {note.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
+                </div>
+                <div className="relative">
+                  <select
+                    className="w-full pl-4 pr-8 py-3 rounded border border-[#D0D7DE] appearance-none cursor-pointer"
+                    defaultValue={subNoteId}
+                    onChange={(e) => setSubNoteId(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      ---
+                    </option>
+                    {data?.map((note: Note) => (
+                      <option value={note.id} key={note.id}>
+                        {note.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronUpDownIcon className="w-5 absolute right-2 top-1/2 translate-y-[calc(-50%_+_1px)] pointer-events-none" />
+                </div>
+              </div>
+            </div>
+            <div className="pt-5 mt-5 text-right border-t border-[#D0D7DE] ">
               <button
-                onClick={handleInsertDisCussion}
-                className={`text-white bg-[#222] py-2 px-5 rounded ${
-                  !discussion ? "bg-[#888] cursor-not-allowed" : "hover:opacity-75"
+                className={`px-4 py-2.5 rounded text-sm font-medium text-white bg-[#4e6bb4]  ${
+                  !name || !command || !mainNoteId
+                    ? "bg-[#888] cursor-not-allowed"
+                    : "hover:opacity-75"
                 }`}
-                disabled={!discussion}
+                disabled={!name || !command || !mainNoteId ? true : false}
+                onClick={handleCreateDiscussion}
               >
-                保存する
+                ディスカッションを作成
               </button>
             </div>
-          </div>
-        </div>
-      </LayoutContainer>
 
-      {createLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-10">
-          <div className="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ">
-            <LoadingCircle />
+            <div
+              className={`${
+                !isShowDiscussion
+                  ? "overflow-hidden h-0"
+                  : "min-h-[calc(100vh_-_140px)] h-auto pt-12"
+              }`}
+              ref={contentRef}
+            >
+              <TextareaAutosize
+                className="mt-1 p-6 w-full resize-none border border-[#D0D7DE] rounded outline-none leading-8"
+                value={discussion}
+                minRows={2}
+              />
+              <div className="text-right">
+                <button
+                  onClick={handleInsertDisCussion}
+                  className={`text-white bg-[#222] py-2 px-5 rounded ${
+                    !discussion ? "bg-[#888] cursor-not-allowed" : "hover:opacity-75"
+                  }`}
+                  disabled={!discussion}
+                >
+                  保存する
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </Layout>
+        </LayoutContainer>
+
+        {createLoading && (
+          <div className="fixed inset-0 bg-black bg-opacity-10">
+            <div className="fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] ">
+              <LoadingCircle />
+            </div>
+          </div>
+        )}
+      </Layout>
+    </>
   );
 };
 

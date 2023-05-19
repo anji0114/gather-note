@@ -8,6 +8,7 @@ import { DashboardHeading } from "@/components/Common/Heading";
 import { GroupEdit } from "@/components/Group/GroupEdit";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { GroupRegister } from "@/components/Group/GroupRegister";
+import { Meta } from "@/components/Common/Meta";
 
 const GroupSettingPage = () => {
   const user = useUser();
@@ -33,30 +34,33 @@ const GroupSettingPage = () => {
   };
 
   return (
-    <GroupLayout>
-      <DashboardHeading icon={<Cog8ToothIcon />} text="設定" />
-      {isMemberLoading ? (
-        <></>
-      ) : isMember ? (
-        <div className="mt-8">
-          {isLoading ? (
-            <></>
-          ) : isOwnership ? (
-            <GroupEdit />
-          ) : (
-            <button
-              className="py-2 px-7 text-sm text-[#DE6868] border border-[#DE6868] bg-white rounded-sm hover:bg-red-50"
-              onClick={handleUnregisterGroup}
-            >
-              このグループを脱退する
-            </button>
-          )}
-        </div>
-      ) : (
-        // グループ未加入の場合
-        <GroupRegister groupId={group.id} />
-      )}
-    </GroupLayout>
+    <>
+    <Meta />
+      <GroupLayout>
+        <DashboardHeading icon={<Cog8ToothIcon />} text="設定" />
+        {isMemberLoading ? (
+          <></>
+        ) : isMember ? (
+          <div className="mt-8">
+            {isLoading ? (
+              <></>
+            ) : isOwnership ? (
+              <GroupEdit />
+            ) : (
+              <button
+                className="py-2 px-7 text-sm text-[#DE6868] border border-[#DE6868] bg-white rounded-sm hover:bg-red-50"
+                onClick={handleUnregisterGroup}
+              >
+                このグループを脱退する
+              </button>
+            )}
+          </div>
+        ) : (
+          // グループ未加入の場合
+          <GroupRegister groupId={group.id} />
+        )}
+      </GroupLayout>
+    </>
   );
 };
 
