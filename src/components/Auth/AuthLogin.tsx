@@ -58,11 +58,11 @@ export const AuthLogin: FC = () => {
           </button>
         </div>
       </form>
-      <div className="mt-5 text-center">
+      {/* <div className="mt-5 text-center">
         <Link href="/auth/login" className="text-[12px] text-[#555] hover:underline">
           パスワードを忘れた方はこちら
         </Link>
-      </div>
+      </div> */}
       <div className="text-center mt-10">
         <Link
           href="/auth/register"
