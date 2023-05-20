@@ -1,7 +1,8 @@
-import { FlagIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
 import { FC } from "react";
+
+import { FlagIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
 
 export const GroupRegister: FC<{ groupId: string }> = ({ groupId }) => {
   const supabase = useSupabaseClient();
@@ -20,7 +21,7 @@ export const GroupRegister: FC<{ groupId: string }> = ({ groupId }) => {
       return;
     }
 
-    router.reload();
+    router.push(`/group/${groupId}`);
   };
 
   return (

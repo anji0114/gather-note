@@ -4,19 +4,20 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { useStore } from "@/store";
 
 export const BoardAddNote = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-  const { id } = router.query;
+  const board = useStore((state) => state.board);
   const [noteId, setNoteId] = useState("");
-  const { data: notesData, error: notesError } = useSWR(id ? `/api/boards/${id}/add-notes` : null);
+  const { data: notesData } = useSWR(board.id ? `/api/boards/${board.id}/add-notes` : null);
 
   const handleAddNoteToBoard = async () => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("board_notes")
       .insert({
-        board_id: router.query.id,
+        board_id: board.id,
         note_id: noteId,
       })
       .select("*");
@@ -25,12 +26,12 @@ export const BoardAddNote = () => {
       return;
     }
 
-    alert("success");
+    router.reload();
   };
 
   return (
-    <div className="flex gap-5">
-      <div className="max-w-[400px] w-full relative ">
+    <div className="md:flex md:justify-between">
+      <div className="relative w-full md:w-[calc(100%_-_180px)]  ">
         <select
           defaultValue={noteId}
           onChange={(e) => setNoteId(e.target.value)}
@@ -47,15 +48,17 @@ export const BoardAddNote = () => {
         </select>
         <ChevronUpDownIcon className="w-5 absolute right-3 top-1/2 translate-y-[calc(-50%_+_2px)] pointer-events-none" />
       </div>
-      <button
-        className={`py-1 px-5 rounded text-sm text-white bg-[#222] ${
-          !noteId ? "bg-[#888] cursor-not-allowed" : "hover:bg-[#555]"
-        }`}
-        onClick={handleAddNoteToBoard}
-        disabled={!noteId ? true : false}
-      >
-        ノートを追加する
-      </button>
+      <div className="text-right mt-4 md:text-left md:mt-0">
+        <button
+          className={`py-3 px-5 h-full rounded text-sm text-white bg-[#222] ${
+            !noteId ? "bg-[#888] cursor-not-allowed" : "hover:bg-[#555]"
+          }`}
+          onClick={handleAddNoteToBoard}
+          disabled={!noteId ? true : false}
+        >
+          ノートを追加する
+        </button>
+      </div>
     </div>
   );
 };

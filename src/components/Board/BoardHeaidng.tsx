@@ -6,36 +6,20 @@ import { DocumentTextIcon, Square3Stack3DIcon } from "@heroicons/react/24/outlin
 import { useStore } from "@/store";
 import { BoardEdit } from "@/components/Board/BoardEdit";
 import { BoardDelete } from "@/components/Board/BoardDelete";
-import { Board } from "@/types";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
-import { Loading } from "../Common/Loading";
 
 export const BoardHeading = () => {
   const router = useRouter();
   const asPath = router.asPath;
-  const { id } = router.query;
 
   const board = useStore((state) => state.board);
-  const setBoard = useStore((state) => state.setBoard);
-  const { data: boardData, isLoading } = useSWR<Board, Error>(id ? `/api/boards/${id}` : null); //ボード詳細のapi
   const { data: groupData } = useSWR(board?.group_id ? `/api/groups/${board.group_id}` : null);
   const { isMember, isAdmin, isLoading: membershipLoading } = useGroupMembership(board.group_id);
   const [isDiscussion, setIsDiscussion] = useState(false);
 
   useEffect(() => {
-    if (boardData && !isLoading) {
-      setBoard({
-        id: boardData.id,
-        name: boardData.name,
-        description: boardData.description,
-        group_id: boardData.group_id,
-      });
-    }
-  }, [boardData, id]);
-
-  useEffect(() => {
     // urlからDiscussionページか判定
-    if (id && asPath) {
+    if (asPath) {
       const pathSegments = asPath.split("/");
       const lastSegment = pathSegments[pathSegments.length - 1];
 
@@ -43,7 +27,7 @@ export const BoardHeading = () => {
         setIsDiscussion(true);
       }
     }
-  }, [id, asPath]);
+  }, [asPath]);
 
   useEffect(() => {
     if (!membershipLoading && !isMember) {
@@ -51,16 +35,12 @@ export const BoardHeading = () => {
     }
   }, [membershipLoading, isMember]);
 
-  if (membershipLoading) {
-    return <Loading />;
-  }
-
   return (
     <div className="pt-12 bg-[#FCFCFC] border-b border-[#f0f0f0]">
       <div className="max-w-[1140px] w-full mx-auto px-5 md:px-7">
         <div className="max-w-[1000px] mx-auto">
-          <div className="flex justify-between">
-            <h1 className="text-lg md:text-xl font-bold leading-tight w-[calc(100%_-_150px)]">
+          <div className="relative">
+            <h1 className="text-lg md:text-xl font-bold leading-tight sm:w-[calc(100%_-_140px)]">
               <Link
                 href={`/group/${groupData?.id}`}
                 className="text-[#4E6BB4] underline-offset-2 underline hover:opacity-80"
@@ -70,14 +50,16 @@ export const BoardHeading = () => {
               <span className="text-black inline-block mx-1.5 translate-y-[-1px] ">/</span>
               {board.name}
             </h1>
+            {board.description && (
+              <p className="mt-3 text-[15px] leading-7 sm:mt-7">{board.description}</p>
+            )}
             {isAdmin && (
-              <div className="flex gap-2.5 h-[30px] mt-1">
+              <div className="flex gap-1 mt-3 sm:absolute sm:top-0 sm:right-0 sm:mt-0 sm:h-[30px]">
                 <BoardEdit />
                 <BoardDelete />
               </div>
             )}
           </div>
-          {board.description && <p className="mt-7 text-[15px] leading-7">{board.description}</p>}
           <div className="flex gap-10 mt-10 translate-y-[1px]">
             <Link
               href={`/board/${router.query.id}`}

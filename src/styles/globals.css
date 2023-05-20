@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* animation */
+
 /*============================
 基本設定
 ============================*/
@@ -20,27 +22,3 @@ body {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-
-.menu-list {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  top: calc(100% + 6px);
-  width: 140px;
-  overflow: hidden;
-  background-color: #fff;
-  border: 1px solid #ebeef2;
-  border-radius: 3px;
-  transition: all 0.3s;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-2px);
-}
-
-.menu-list.is--open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-/* animation */
