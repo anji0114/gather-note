@@ -19,7 +19,7 @@ const FolderIdNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .select("*")
       .eq("folder_id", id)
       .eq("deleted_flag", false)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false });
     if (error) {
       return res.status(401).json({ message: error });
     }

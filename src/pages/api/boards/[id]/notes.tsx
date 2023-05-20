@@ -6,6 +6,7 @@ const BoardNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "GET") {
     const boardId = req.query.id;
+    // ボードとノートの中間テーブルの取得
     const { data: idData, error: idError } = await supabase
       .from("board_notes")
       .select("note_id")
@@ -15,6 +16,7 @@ const BoardNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(401).json({ message: idError });
     }
 
+    //　中間テーブルをもとにノートを取得
     const { data: notesData, error: notesError } = await supabase
       .from("notes")
       .select("*")
@@ -24,7 +26,35 @@ const BoardNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
       )
       .eq("deleted_flag", false);
 
-    return res.status(200).json(notesData);
+    if (notesError) {
+      return res.status(401).json({ message: notesError });
+    }
+
+    // フォルダーの取得
+    const folderIds = notesData.map((note) => note.folder_id);
+    const { data: foldersData, error: foldersError } = await supabase
+      .from("folders")
+      .select("user_id, id")
+      .in(
+        "id",
+        folderIds.map((id) => id)
+      )
+      .eq("deleted_flag", false);
+
+    if (foldersError) {
+      return res.status(401).json({ message: foldersError });
+    }
+
+    // noteにユーザーIDを持たせる
+    const notesWithFoldersData = notesData.map((note) => {
+      const folderId = note.folder_id;
+      const folder = foldersData.find((folder) => folder.id === folderId);
+      const user_id = folder ? folder.user_id : null;
+
+      return { ...note, user_id };
+    });
+
+    return res.status(200).json(notesWithFoldersData);
   }
 };
 

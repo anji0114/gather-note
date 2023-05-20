@@ -4,19 +4,22 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { useStore } from "@/store";
 
 export const BoardAddNote = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-  const { id } = router.query;
+  const board = useStore((state) => state.board);
   const [noteId, setNoteId] = useState("");
-  const { data: notesData, error: notesError } = useSWR(id ? `/api/boards/${id}/add-notes` : null);
+  const { data: notesData, error: notesError } = useSWR(
+    board.id ? `/api/boards/${board.id}/add-notes` : null
+  );
 
   const handleAddNoteToBoard = async () => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("board_notes")
       .insert({
-        board_id: router.query.id,
+        board_id: board.id,
         note_id: noteId,
       })
       .select("*");
@@ -25,12 +28,12 @@ export const BoardAddNote = () => {
       return;
     }
 
-    alert("success");
+    router.reload();
   };
 
   return (
-    <div className="flex gap-5">
-      <div className="max-w-[400px] w-full relative ">
+    <div className="flex justify-between">
+      <div className="w-[calc(100%_-_180px)] relative ">
         <select
           defaultValue={noteId}
           onChange={(e) => setNoteId(e.target.value)}
