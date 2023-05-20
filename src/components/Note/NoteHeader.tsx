@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useStore } from "@/store";
 import { NoteMenu } from "@/components/Note/NoteMenu";
+import { ToastComponent } from "../Common/Toast";
 
 type Props = {
   isAuthor: boolean;
@@ -13,13 +14,14 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
   const router = useRouter();
   const supabase = useSupabaseClient();
   const note = useStore((state) => state.note);
+  const [toastOpen, setToastOpen] = useState(false);
 
   const handleNoteUpdate = async () => {
     if (!note.name) {
       return;
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("notes")
       .update({
         name: note.name,
@@ -33,7 +35,7 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
       alert(error);
     }
 
-    router.reload();
+    setToastOpen(true);
   };
 
   return (
@@ -56,6 +58,12 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
                 >
                   保存する
                 </button>
+                <ToastComponent
+                  text="ノートを保存しました。"
+                  color="text-green-700"
+                  open={toastOpen}
+                  setOpen={setToastOpen}
+                />
                 <NoteMenu />
               </>
             )}
