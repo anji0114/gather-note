@@ -12,6 +12,12 @@ const BoardDiscussion = () => {
   const { id } = router.query;
 
   return (
+    <div className=" h-screen flex items-center justify-center">
+      <p>coming soon</p>
+    </div>
+  );
+
+  return (
     <>
       <Meta />
       <Layout>

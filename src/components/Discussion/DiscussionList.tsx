@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { Loading } from "@/components/Common/Loading";
-import { NoteItem } from "../Common/NoteItem";
+import { NoteItem } from "@/components/Common/NoteItem";
+import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 
 export const DiscussionList = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ export const DiscussionList = () => {
           name={discussion.name}
           created_at={discussion.created_at!}
           postName="discussion"
+          icon={<Square3Stack3DIcon />}
         />
       ))}
     </ul>
