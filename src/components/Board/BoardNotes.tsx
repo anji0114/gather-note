@@ -1,33 +1,17 @@
 import Link from "next/link";
 import useSWR from "swr";
-import { DocumentTextIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { DocumentTextIcon } from "@heroicons/react/24/outline";
+import { useUser } from "@supabase/auth-helpers-react";
 import { Note } from "@/types";
-import { DateFns } from "@/components/Common/DateFns";
 import { useStore } from "@/store";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
+import { BoardNoteMenu } from "@/components/Board/BoardNoteMenu";
+import { DateFns } from "@/components/Common/DateFns";
 
 export const BoardNotes = () => {
-  const supabase = useSupabaseClient();
-  const router = useRouter();
   const user = useUser();
   const board = useStore((state) => state.board);
 
-  const { data, error, isLoading } = useSWR(board.id ? `/api/boards/${board.id}/notes` : null);
-
-  const handleDeleteNote = async (noteId: string) => {
-    const { error } = await supabase
-      .from("board_notes")
-      .delete()
-      .eq("note_id", noteId)
-      .eq("board_id", board.id);
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.reload();
-  };
+  const { data } = useSWR(board.id ? `/api/boards/${board.id}/notes` : null);
 
   return (
     <ul className="mt-8 space-y-4">
@@ -38,11 +22,7 @@ export const BoardNotes = () => {
         >
           <p className="flex items-center justify-between gap-2 px-1 text-[12px] md:px-0">
             <DateFns time={note.updated_at!} />
-            {user?.id === note.user_id && (
-              <button className="w-5 cursor-pointer" onClick={() => handleDeleteNote(note.id)}>
-                <EllipsisVerticalIcon />
-              </button>
-            )}
+            {user?.id === note.user_id && <BoardNoteMenu noteId={note.id} />}
           </p>
           <Link
             href={`/note/${note.id}`}

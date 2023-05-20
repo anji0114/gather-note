@@ -11,9 +11,7 @@ export const BoardAddNote = () => {
   const router = useRouter();
   const board = useStore((state) => state.board);
   const [noteId, setNoteId] = useState("");
-  const { data: notesData, error: notesError } = useSWR(
-    board.id ? `/api/boards/${board.id}/add-notes` : null
-  );
+  const { data: notesData } = useSWR(board.id ? `/api/boards/${board.id}/add-notes` : null);
 
   const handleAddNoteToBoard = async () => {
     const { error } = await supabase
@@ -32,8 +30,8 @@ export const BoardAddNote = () => {
   };
 
   return (
-    <div className="flex justify-between">
-      <div className="w-[calc(100%_-_180px)] relative ">
+    <div className="md:flex md:justify-between">
+      <div className="relative w-full md:w-[calc(100%_-_180px)]  ">
         <select
           defaultValue={noteId}
           onChange={(e) => setNoteId(e.target.value)}
@@ -50,15 +48,17 @@ export const BoardAddNote = () => {
         </select>
         <ChevronUpDownIcon className="w-5 absolute right-3 top-1/2 translate-y-[calc(-50%_+_2px)] pointer-events-none" />
       </div>
-      <button
-        className={`py-1 px-5 rounded text-sm text-white bg-[#222] ${
-          !noteId ? "bg-[#888] cursor-not-allowed" : "hover:bg-[#555]"
-        }`}
-        onClick={handleAddNoteToBoard}
-        disabled={!noteId ? true : false}
-      >
-        ノートを追加する
-      </button>
+      <div className="text-right mt-4 md:text-left md:mt-0">
+        <button
+          className={`py-3 px-5 h-full rounded text-sm text-white bg-[#222] ${
+            !noteId ? "bg-[#888] cursor-not-allowed" : "hover:bg-[#555]"
+          }`}
+          onClick={handleAddNoteToBoard}
+          disabled={!noteId ? true : false}
+        >
+          ノートを追加する
+        </button>
+      </div>
     </div>
   );
 };
