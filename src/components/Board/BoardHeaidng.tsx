@@ -88,7 +88,7 @@ export const BoardHeading = () => {
               <DocumentTextIcon className="w-6 text-[#555]" />
               <span className="text-sm">ノート</span>
             </Link>
-            <Link
+            {/* <Link
               href={`/board/${router.query.id}/discussion`}
               className={`flex items-center gap-1 pb-4 px-2 border-b-2 ${
                 isDiscussion ? "border-[#DE6868]" : "border-transparent"
@@ -96,7 +96,7 @@ export const BoardHeading = () => {
             >
               <Square3Stack3DIcon className="w-6 text-[#555]" />
               <span className="text-sm">ディスカッション</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

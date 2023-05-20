@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { Loading } from "@/components/Common/Loading";
 import { Note } from "@/types";
 import { NoteItem } from "@/components/Common/NoteItem";
+import { DocumentTextIcon } from "@heroicons/react/24/outline";
 
 export const FolderNoteList: FC = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ export const FolderNoteList: FC = () => {
               name={note.name}
               created_at={note.created_at!}
               postName="note"
+              icon={<DocumentTextIcon />}
             />
           ))}
         </ul>
