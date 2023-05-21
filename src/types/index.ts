@@ -47,3 +47,13 @@ export type Discussion = {
   description: string;
   created_at?: string;
 };
+
+export type Comment = {
+  id: string;
+  group_id?: string;
+  user_id: string;
+  comment: string;
+  user_name: string;
+  avatar_url: string;
+  created_at: string;
+};

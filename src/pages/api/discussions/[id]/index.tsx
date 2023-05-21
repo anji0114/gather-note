@@ -12,6 +12,10 @@ const DiscussionsIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
       .eq("id", discussionId)
       .single();
 
+    if (!data) {
+      return res.status(404).json({ message: "note not fond" });
+    }
+
     if (error) {
       return res.status(401).json({ message: error });
     }

@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
-import { GridLayout } from "@/components/Common/Grid/GridLayout";
+import { GridLayout } from "@/components/Common/GridLayout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { useStore } from "@/store";
 import useSWR from "swr";
@@ -20,8 +20,6 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const asPath = router.asPath;
   const { data, error } = useSWR(id ? `/api/groups/${id}` : null);
   const setGroup = useStore((state) => state.setGroup);
-
-  console.log(data);
 
   const [navItems, setNavItems] = useState([
     {
