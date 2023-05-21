@@ -35,7 +35,9 @@ const DiscussionIdPage = () => {
       <Meta />
       <Layout>
         <DiscussionHeading />
-        <LayoutContainer classes="py-14"></LayoutContainer>
+        <LayoutContainer classes="py-14">
+          <div></div>
+        </LayoutContainer>
       </Layout>
     </>
   );
