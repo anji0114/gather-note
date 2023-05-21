@@ -3,8 +3,8 @@ import useSWR from "swr";
 import { useEffect } from "react";
 import { useStore } from "@/store";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-
 import { Loading } from "@/components/Common/Loading";
+
 import { DiscussionHeading } from "@/components/Discussion/DiscussionHeading";
 import { Meta } from "@/components/Common/Meta";
 import { Layout } from "@/components/Layout";

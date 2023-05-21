@@ -53,7 +53,7 @@ export const DiscussionNewComment = () => {
       </div>
       <div className="mt-2 min-h-[186px]">
         {isPreview ? (
-          <ReactMarkdown className="markDownContent px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[186px]">
+          <ReactMarkdown className="markDownContent text-sm px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[186px]">
             {comment}
           </ReactMarkdown>
         ) : (
@@ -64,7 +64,7 @@ export const DiscussionNewComment = () => {
             onChange={(e) => {
               setComment(e.target.value);
             }}
-            className="p-2 w-full border border-[#d0d7de] bg-[#f6f8fa] rounded resize-none outline-none leading-7"
+            className="text-sm p-2 w-full border border-[#d0d7de] bg-[#f6f8fa] rounded resize-none outline-none leading-7"
           />
         )}
       </div>

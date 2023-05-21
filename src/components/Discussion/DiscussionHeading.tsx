@@ -26,7 +26,7 @@ export const DiscussionHeading: FC = () => {
               {discussion.name}
             </h1>
             <div className="mt-10 bg-white border border-[#f0f0f0] p-5">
-              <ReactMarkdown className="markDownContent">{discussion.description}</ReactMarkdown>
+              <ReactMarkdown className="markDownContent text-base">{discussion.description}</ReactMarkdown>
             </div>
           </div>
         </div>

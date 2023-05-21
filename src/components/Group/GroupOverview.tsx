@@ -61,7 +61,7 @@ export const GroupOverview = () => {
         </div>
       </div>
       <div className="mt-3 border border-[#f0f0f0] bg-white p-4 rounded">
-        <ReactMarkdown className="markDownContent isSmall">{group.description}</ReactMarkdown>
+        <ReactMarkdown className="markDownContent text-sm">{group.description}</ReactMarkdown>
       </div>
     </div>
   );

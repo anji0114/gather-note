@@ -98,7 +98,7 @@ const BoardDiscussionNew = () => {
                 </div>
                 <div className="mt-2 min-h-[210px]">
                   {isPreview ? (
-                    <ReactMarkdown className="markDownContent px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[210px]">
+                    <ReactMarkdown className="markDownContent text-base text-base px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[210px]">
                       {description}
                     </ReactMarkdown>
                   ) : (

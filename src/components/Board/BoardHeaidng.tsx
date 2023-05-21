@@ -51,7 +51,9 @@ export const BoardHeading = () => {
               {board.name}
             </h1>
             <div className="mt-10 bg-white border border-[#f0f0f0] p-5">
-              <ReactMarkdown className="markDownContent">{board.description}</ReactMarkdown>
+              <ReactMarkdown className="markDownContent text-base">
+                {board.description}
+              </ReactMarkdown>
             </div>
             {isAdmin && (
               <div className="flex gap-1 mt-3 sm:absolute sm:top-0 sm:right-0 sm:mt-0 sm:h-[30px]">
