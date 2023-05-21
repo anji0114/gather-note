@@ -7,7 +7,7 @@ import { DashboardHeading } from "@/components/Common/Heading";
 import { Meta } from "@/components/Common/Meta";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
-import { PostItem } from "@/components/Common/PostItem";
+import { PostItem } from "@/components/Common/Post/PostItem";
 import { GroupRegister } from "@/components/Group/GroupRegister";
 
 const GroupDiscussionPage = () => {
