@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* animation */
+
+/*============================
+基本設定
+============================*/
+body {
+  font-size: 16px;
+  font-family: "Noto Sans JP", sans-serif;
+  color: #222;
+  background-color: #fdfeff;
+}
+
+.dashboard-item01:first-of-type {
+  border-radius: 8px 8px 0 0;
+}
+
+.dashboard-item01:last-of-type {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* markDownContent */
+.markDownContent {
+  color: #333;
+  font-size: 16px;
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 1.1em 0 0.8em;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 1.75em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid #e0d7de;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    padding-bottom: 0.5em;
+    border-bottom: 3px double #e0d7de;
+  }
+
+  h3 {
+    font-size: 1.25em;
+    padding: 0.25em 0.1em;
+    border-top: 1px solid #e0d7de;
+    border-bottom: 1px solid #e0d7de;
+  }
+
+  h4 {
+    font-size: 1.125em;
+  }
+
+  ul,
+  ol {
+    margin: 1.25em 0;
+    padding-left: 0.675em;
+
+    li {
+      line-height: 2;
+      list-style-position: inside;
+    }
+  }
+
+  ul li {
+    list-style-type: disc;
+  }
+
+  ol li {
+    list-style-type: decimal;
+  }
+
+  p {
+    line-height: 2;
+    margin: 0.675em 0;
+  }
+
+  pre {
+    margin: 0.7em 0;
+    font-size: 0.875em;
+    line-height: 1.85;
+    padding: 0.675em;
+    background-color: #f6f8fa;
+  }
+}
+
+.markDownContent.isSmall {
+  font-size: 14px;
+}

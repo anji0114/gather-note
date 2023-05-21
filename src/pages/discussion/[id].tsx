@@ -8,12 +8,17 @@ import { DiscussionHeading } from "@/components/Discussion/DiscussionHeading";
 import { Meta } from "@/components/Common/Meta";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import { DiscussionNewComment } from "@/components/Discussion/DiscussionNewComment";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data, error, isLoading } = useSWR(id ? `/api/discussions/${id}` : null);
+  const { data, isLoading } = useSWR(id ? `/api/discussions/${id}` : null);
+  const { data: CommentsData } = useSWR(id ? `/api/discussions/${id}/comments` : null);
+
   const setDiscussion = useStore((state) => state.setDiscussion);
+  console.log(CommentsData);
 
   useEffect(() => {
     if (data?.id) {
@@ -36,7 +41,19 @@ const DiscussionIdPage = () => {
       <Layout>
         <DiscussionHeading />
         <LayoutContainer classes="py-14">
-          <div></div>
+          <div className="max-w-[1000px] mx-auto">
+            <h2 className="font-bold text-lg">コメント一覧</h2>
+            <ul className="space-y-5 mt-10">
+              {CommentsData?.map((comment: any) => (
+                <li key={comment.id} className="border border-[#d0d7de] p-4 rounded">
+                  <ReactMarkdown className="markDownContent isSmall">{comment.comment}</ReactMarkdown>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 pt-8 border-t-2 border-[#d0d7de]">
+              <DiscussionNewComment />
+            </div>
+          </div>
         </LayoutContainer>
       </Layout>
     </>

@@ -39,7 +39,7 @@ export const BoardHeading = () => {
   }, [membershipLoading, isMember]);
 
   return (
-    <div className="pt-12 bg-[#FCFCFC] border-b border-[#f0f0f0]">
+    <div className="pt-12 bg-[#fcfcfc] border-b border-[#f0f0f0]">
       <div className="max-w-[1140px] w-full mx-auto px-5 md:px-7">
         <div className="max-w-[1000px] mx-auto">
           <div className="relative">
