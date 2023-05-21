@@ -1,21 +1,35 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import useSWR from "swr";
+import Link from "next/link";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { BoardHeading } from "@/components/Board/BoardHeaidng";
+import { Loading } from "@/components/Common/Loading";
 import { Meta } from "@/components/Common/Meta";
 import { DiscussionList } from "@/components/Discussion/DiscussionList";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useStore } from "@/store";
+import { Board } from "@/types";
 
 const BoardDiscussion = () => {
   const router = useRouter();
   const { id } = router.query;
+  const setBoard = useStore((state) => state.setBoard);
+  const { data: boardData, isLoading } = useSWR<Board, Error>(id ? `/api/boards/${id}` : null); //ボード詳細のapi
 
-  return (
-    <div className=" h-screen flex items-center justify-center">
-      <p>coming soon</p>
-    </div>
-  );
+  useEffect(() => {
+    if (boardData && !isLoading) {
+      setBoard({
+        id: boardData.id,
+        name: boardData.name,
+        description: boardData.description,
+        group_id: boardData.group_id,
+      });
+    }
+  }, [boardData, id]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <>

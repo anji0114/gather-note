@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { DocumentTextIcon, Square3Stack3DIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentTextIcon,
+  Square2StackIcon,
+  Square3Stack3DIcon,
+} from "@heroicons/react/24/outline";
 import { useStore } from "@/store";
 import { BoardEdit } from "@/components/Board/BoardEdit";
 import { BoardDelete } from "@/components/Board/BoardDelete";
@@ -11,7 +15,6 @@ import { useGroupMembership } from "@/hooks/useGroupMembership";
 export const BoardHeading = () => {
   const router = useRouter();
   const asPath = router.asPath;
-
   const board = useStore((state) => state.board);
   const { data: groupData } = useSWR(board?.group_id ? `/api/groups/${board.group_id}` : null);
   const { isMember, isAdmin, isLoading: membershipLoading } = useGroupMembership(board.group_id);
@@ -70,15 +73,15 @@ export const BoardHeading = () => {
               <DocumentTextIcon className="w-6 text-[#555]" />
               <span className="text-sm">ノート</span>
             </Link>
-            {/* <Link
+            <Link
               href={`/board/${router.query.id}/discussion`}
               className={`flex items-center gap-1 pb-4 px-2 border-b-2 ${
                 isDiscussion ? "border-[#DE6868]" : "border-transparent"
               }`}
             >
-              <Square3Stack3DIcon className="w-6 text-[#555]" />
+              <Square2StackIcon className="w-6 text-[#555]" />
               <span className="text-sm">ディスカッション</span>
-            </Link> */}
+            </Link>
           </div>
         </div>
       </div>

@@ -42,7 +42,8 @@ export type Profile = {
 
 export type Discussion = {
   id: string;
+  board_id: string;
   name: string;
-  content: string;
+  description: string;
   created_at?: string;
 };

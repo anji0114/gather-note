@@ -3,23 +3,25 @@ import useSWR from "swr";
 import { Loading } from "@/components/Common/Loading";
 import { useEffect } from "react";
 import { useStore } from "@/store";
-import { DiscussionHeader } from "@/components/Discussion/DiscussionHeader";
-import { Editor } from "@/components/Common/Editor";
+import { DiscussionHeading } from "@/components/Discussion/DiscussionHeading";
+
 import { Meta } from "@/components/Common/Meta";
+import { Layout } from "@/components/Layout";
+import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error, isLoading } = useSWR(id ? `/api/discussions/${id}` : null);
-  const discussion = useStore((state) => state.discussion);
   const setDiscussion = useStore((state) => state.setDiscussion);
 
   useEffect(() => {
     if (data?.id) {
       setDiscussion({
         id: data.id,
+        board_id: data.board_id,
         name: data.name,
-        content: data.content,
+        description: data.description,
       });
     }
   }, [data]);
@@ -31,8 +33,10 @@ const DiscussionIdPage = () => {
   return (
     <>
       <Meta />
-      <DiscussionHeader />
-      <Editor isEditor={true} post={discussion} setPost={setDiscussion} />
+      <Layout>
+        <DiscussionHeading />
+        <LayoutContainer classes="py-14"></LayoutContainer>
+      </Layout>
     </>
   );
 };
