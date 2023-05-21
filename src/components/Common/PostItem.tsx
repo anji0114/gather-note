@@ -5,7 +5,7 @@ import { DateFns } from "@/components/Common/DateFns";
 type Props = {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   created_at: string;
   postName: string;
 };

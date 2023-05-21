@@ -130,12 +130,12 @@ export const useStore = create<State>()(
     },
 
     // discussion
-    discussion: { id: "", board_id: "", name: "", description: "", created_at: "" },
+    discussion: { id: "", group_id: "", name: "", description: "", created_at: "" },
     setDiscussion: (payload) => {
       set({
         discussion: {
           id: payload.id,
-          board_id: payload.board_id,
+          group_id: payload.group_id,
           name: payload.name,
           description: payload.description,
           created_at: payload.created_at,

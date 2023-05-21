@@ -42,7 +42,7 @@ export type Profile = {
 
 export type Discussion = {
   id: string;
-  board_id: string;
+  group_id: string;
   name: string;
   description: string;
   created_at?: string;

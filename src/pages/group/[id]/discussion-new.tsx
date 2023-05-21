@@ -24,9 +24,9 @@ const BoardDiscussionNew = () => {
       .insert({
         name: name,
         description: description,
-        board_id: id,
+        group_id: id,
       })
-      .select("id")
+      .select("*")
       .single();
 
     if (error) {
@@ -42,7 +42,7 @@ const BoardDiscussionNew = () => {
       <Layout>
         <LayoutContainer classes="py-14">
           <Link
-            href={`/board/${id}/discussion`}
+            href={`/group/${id}/discussion`}
             className="flex items-center gap-1 hover:opacity-75"
           >
             <ChevronLeftIcon className="w-5" />

@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { Loading } from "@/components/Common/Loading";
 import { useEffect } from "react";
 import { useStore } from "@/store";
-import { DiscussionHeading } from "@/components/Discussion/DiscussionHeading";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
+import { Loading } from "@/components/Common/Loading";
+import { DiscussionHeading } from "@/components/Discussion/DiscussionHeading";
 import { Meta } from "@/components/Common/Meta";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { DiscussionNewComment } from "@/components/Discussion/DiscussionNewComment";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
@@ -18,13 +18,12 @@ const DiscussionIdPage = () => {
   const { data: CommentsData } = useSWR(id ? `/api/discussions/${id}/comments` : null);
 
   const setDiscussion = useStore((state) => state.setDiscussion);
-  console.log(CommentsData);
 
   useEffect(() => {
     if (data?.id) {
       setDiscussion({
         id: data.id,
-        board_id: data.board_id,
+        group_id: data.group_id,
         name: data.name,
         description: data.description,
       });
@@ -46,7 +45,9 @@ const DiscussionIdPage = () => {
             <ul className="space-y-5 mt-10">
               {CommentsData?.map((comment: any) => (
                 <li key={comment.id} className="border border-[#d0d7de] p-4 rounded">
-                  <ReactMarkdown className="markDownContent isSmall">{comment.comment}</ReactMarkdown>
+                  <ReactMarkdown className="markDownContent isSmall">
+                    {comment.comment}
+                  </ReactMarkdown>
                 </li>
               ))}
             </ul>
