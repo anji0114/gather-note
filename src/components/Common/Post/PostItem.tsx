@@ -5,12 +5,11 @@ import { DateFns } from "@/components/Common/DateFns";
 type Props = {
   id: string;
   name: string;
-  description: string;
   created_at: string;
   postName: string;
 };
 
-export const PostItem: FC<Props> = ({ id, name, description, created_at, postName }) => {
+export const PostItem: FC<Props> = ({ id, name, created_at, postName }) => {
   return (
     <li className="dashboard-item01 py-5 px-7 bg-white border border-[#d0d7de]">
       <p className="pl-[2px] text-[#555] text-[12px]">
@@ -24,7 +23,6 @@ export const PostItem: FC<Props> = ({ id, name, description, created_at, postNam
           {name}
         </Link>
       </p>
-      {description && <p className="mt-2 text-sm text-[#444] line-clamp-1">{description}</p>}
     </li>
   );
 };

@@ -6,7 +6,7 @@ import { GroupLayout } from "@/components/Group/GroupLayout";
 import { DashboardHeading } from "@/components/Common/Heading";
 import { BoardCreate } from "@/components/Board/BoardCreate";
 import { GroupRegister } from "@/components/Group/GroupRegister";
-import { PostItem } from "@/components/Common/PostItem";
+import { PostItem } from "@/components/Common/Post/PostItem";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { Board } from "@/types";
 import { Meta } from "@/components/Common/Meta";
@@ -37,7 +37,6 @@ const GroupBoardPage = () => {
                 key={board.id}
                 id={board.id}
                 name={board.name}
-                description={board.description}
                 created_at={board.created_at}
                 postName="board"
               />

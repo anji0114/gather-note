@@ -7,6 +7,7 @@ import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { GroupDelete } from "@/components/Group/GroupDelete";
+import { EditMarkdown } from "../Common/EditMarkdown";
 
 export const GroupEdit = () => {
   const router = useRouter();
@@ -76,7 +77,7 @@ export const GroupEdit = () => {
   };
 
   return (
-    <div className="py-8 px-5 border border-[#d0d7de] rounded-md md:py-10 md:px-16">
+    <div className="py-8 px-5 border border-[#d0d7de] rounded-md md:py-10 md:px-12">
       <p className=" font-bold text-xl">グループ情報編集</p>
       <div className="mt-6">
         <p className="pl-1 text-sm font-medium">グループ名</p>
@@ -92,15 +93,9 @@ export const GroupEdit = () => {
       </div>
       <div className="mt-6">
         <p className="pl-1 text-sm font-medium">グループ概要</p>
-        <TextareaAutosize
-          minRows={2}
-          value={description}
-          onChange={(e) => {
-            setDescription(e.target.value);
-          }}
-          className="mt-2.5 px-4 py-3 w-full  text-sm border border-[#d0d7de] rounded outline-none resize-none"
-        />
+        <EditMarkdown description={description} setDescription={setDescription} />
       </div>
+
       <div className="mt-5">
         <label
           htmlFor="thumbnail"

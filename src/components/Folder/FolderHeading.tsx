@@ -3,7 +3,7 @@ import { useStore } from "@/store";
 import { FolderEdit } from "@/components/Folder/FolderEdit";
 import { FolderDelete } from "@/components/Folder/FolderDelete";
 
-export const FolderTop: FC = () => {
+export const FolderHeading: FC = () => {
   const folder = useStore((state) => state.folder);
 
   return (

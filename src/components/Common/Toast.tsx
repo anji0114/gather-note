@@ -5,11 +5,12 @@ import * as Toast from "@radix-ui/react-toast";
 type Props = {
   text: string;
   color: string;
+  isTop?: boolean;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export const ToastComponent: FC<Props> = ({ text, color, open, setOpen }) => {
+export const ToastComponent: FC<Props> = ({ text, color, open, setOpen, isTop = false }) => {
   return (
     <Toast.Provider swipeDirection="left" duration={3000}>
       <Toast.Root
@@ -22,7 +23,9 @@ export const ToastComponent: FC<Props> = ({ text, color, open, setOpen }) => {
           <span>{text}</span>
         </Toast.Title>
       </Toast.Root>
-      <Toast.Viewport className={`fixed transition z-50 bottom-2 right-0 p-5`} />
+      <Toast.Viewport
+        className={`fixed transition z-50 ${isTop ? "top-2" : "bottom-2"} right-0 p-5`}
+      />
     </Toast.Provider>
   );
 };

@@ -5,6 +5,7 @@ import {
   UsersIcon,
   Cog8ToothIcon,
   ArrowUturnLeftIcon,
+  Square2StackIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
@@ -17,8 +18,10 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
   const { id } = router.query;
   const asPath = router.asPath;
-  const { data } = useSWR(id ? `/api/groups/${id}` : null);
+  const { data, error } = useSWR(id ? `/api/groups/${id}` : null);
   const setGroup = useStore((state) => state.setGroup);
+
+  console.log(data);
 
   const [navItems, setNavItems] = useState([
     {
@@ -31,6 +34,12 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
       title: "ボード",
       href: "",
       icon: <ClipboardDocumentListIcon className="w-[22px]" />,
+      isPage: false,
+    },
+    {
+      title: "ディスカッション",
+      href: "",
+      icon: <Square2StackIcon className="w-[22px]" />,
       isPage: false,
     },
     {
@@ -68,6 +77,12 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
           href: `/group/${id}/board`,
           icon: <ClipboardDocumentListIcon className="w-[22px]" />,
           isPage: lastSegment === "board",
+        },
+        {
+          title: "ディスカッション",
+          href: `/group/${id}/discussion`,
+          icon: <Square2StackIcon className="w-[22px]" />,
+          isPage: lastSegment === "discussion",
         },
         {
           title: "メンバー",

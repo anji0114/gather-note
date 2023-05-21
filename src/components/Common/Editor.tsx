@@ -4,8 +4,8 @@ import TextareaAutosize from "react-textarea-autosize";
 
 type Props = {
   isEditor: boolean;
-  post: Note | Discussion;
-  setPost: (payload: Note | Discussion) => void;
+  post: Note;
+  setPost: (payload: Note) => void;
 };
 
 export const Editor: FC<Props> = ({ isEditor, post, setPost }) => {

@@ -1,13 +1,15 @@
-import { FC, FormEvent, useRef } from "react";
+import { FC, FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
+import { ToastComponent } from "../Common/Toast";
 
 export const AuthLogin: FC = () => {
   const supabase = useSupabaseClient();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const [toastOpen, setToastOpen] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ export const AuthLogin: FC = () => {
     });
 
     if (error) {
-      alert(error.message);
+      setToastOpen(true);
       return;
     }
 
@@ -36,7 +38,7 @@ export const AuthLogin: FC = () => {
                 placeholder="mail@example.com"
                 required
                 ref={emailRef}
-                className="w-full py-2.5 px-3 border border-[#d0d7de] rounded bg-white"
+                className="w-full py-2.5 px-3 border border-[#d0d7de] rounded bg-white outline-none"
               />
             </dd>
           </dl>
@@ -47,7 +49,7 @@ export const AuthLogin: FC = () => {
                 type="password"
                 required
                 ref={passwordRef}
-                className="w-full py-2.5 px-3 border border-[#d0d7de] rounded bg-white"
+                className="w-full py-2.5 px-3 border border-[#d0d7de] rounded bg-white outline-none"
               />
             </dd>
           </dl>
@@ -71,6 +73,14 @@ export const AuthLogin: FC = () => {
           ユーザー登録はこちらから
         </Link>
       </div>
+
+      <ToastComponent
+        text="ログインに失敗しました。"
+        open={toastOpen}
+        setOpen={setToastOpen}
+        color="text-[#DE6868]"
+        isTop={true}
+      />
     </>
   );
 };

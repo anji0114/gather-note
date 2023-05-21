@@ -5,7 +5,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { NextPage } from "next";
 import { useStore } from "@/store";
 import { Loading } from "@/components/Common/Loading";
-import { FolderTop } from "@/components/Folder/FolderTop";
+import { FolderHeading } from "@/components/Folder/FolderHeading";
 import { FolderContent } from "@/components/Folder/FolderContent";
 import { Layout } from "@/components/Layout";
 import { Folder } from "@/types";
@@ -44,7 +44,7 @@ const FolderId: NextPage = () => {
       <Layout>
         {!data?.deleted_flag ? (
           <>
-            <FolderTop />
+            <FolderHeading />
             <LayoutContainer classes="mt-14">
               <div className="max-w-[800px] mx-auto">
                 {!error ? (

@@ -4,7 +4,7 @@ import { FolderOpenIcon } from "@heroicons/react/24/outline";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { FolderCreate } from "@/components/Folder/FolderCreate";
 import { DashboardHeading } from "@/components/Common/Heading";
-import { PostItem } from "@/components/Common/PostItem";
+import { PostItem } from "@/components/Common/Post/PostItem";
 import { Folder } from "@/types";
 
 export const DashboardFolder: FC = () => {
@@ -27,7 +27,6 @@ export const DashboardFolder: FC = () => {
                 key={folder.id}
                 id={folder.id}
                 name={folder.name}
-                description={folder.description}
                 created_at={folder.created_at!}
                 postName="folder"
               />

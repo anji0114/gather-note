@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
-import { PostItem } from "@/components/Common/PostItem";
+import { PostItem } from "@/components/Common/Post/PostItem";
 
 export const GroupDashboard: FC = () => {
   const router = useRouter();
@@ -23,7 +23,6 @@ export const GroupDashboard: FC = () => {
             key={board.id}
             id={board.id}
             name={board.name}
-            description={board.description}
             created_at={board.created_at}
             postName="board"
           />
