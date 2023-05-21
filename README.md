@@ -13,7 +13,7 @@
 5. zustand
 
 ## ER 図
-![ER](https://github.com/anji0114/gather-note/assets/72867978/c4a0ac4c-3479-40e3-b05f-aa7593270063)
+![ER](https://github.com/anji0114/gather-note/assets/72867978/0654578e-c04e-4429-bf4c-32b038d09324)
 
 ## 機能説明
 
