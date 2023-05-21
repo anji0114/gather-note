@@ -5,7 +5,7 @@ import { useStore } from "@/store";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { PostHeading } from "@/components/Common/Post/PostHeading";
 import { PostDelete } from "@/components/Common/Post/PostDelete";
-import { PostEditMarkdown } from "@/components/Common/Post/PostEditMarkdown";
+import { EditMarkdown } from "@/components/Common/EditMarkdown";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 
@@ -33,7 +33,6 @@ export const DiscussionHeading: FC = () => {
     const { error } = await supabase.from("discussions").delete().eq("id", discussion.id);
 
     if (error) {
-      alert(error.message);
       return;
     }
 
@@ -51,7 +50,6 @@ export const DiscussionHeading: FC = () => {
       .eq("id", discussion.id);
 
     if (error) {
-      alert(error.message);
       return;
     }
 
@@ -102,34 +100,33 @@ export const DiscussionHeading: FC = () => {
 
       <div className="mt-10 bg-white border border-[#f0f0f0] p-5 rounded-sm">
         {isEdit ? (
-          <PostEditMarkdown description={description} setDescription={setDescription} />
+          <>
+            <EditMarkdown description={description} setDescription={setDescription} />
+            <div className="flex justify-between mt-2">
+              <PostDelete
+                title="ディスカッションの削除"
+                description="ディスカッション削除すると、コメントも削除されます。"
+                handleDelete={handleDiscussionDelete}
+              />
+              <button
+                className={`text-sm text-white py-2 px-5 rounded ${
+                  name && description
+                    ? "bg-[#4e6bb4] hover:opacity-75"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
+                onClick={handleDiscussionUpdate}
+                disabled={!name || !description}
+              >
+                保存する
+              </button>
+            </div>
+          </>
         ) : (
           <ReactMarkdown className="markDownContent text-sm">
             {discussion.description}
           </ReactMarkdown>
         )}
       </div>
-
-      {isEdit && (
-        <div className="flex justify-between mt-2">
-          <PostDelete
-            title="ディスカッションの削除"
-            description="ディスカッション削除すると、コメントも削除されます。"
-            handleDelete={handleDiscussionDelete}
-          />
-          <button
-            className={`text-sm text-white py-2 px-5 rounded ${
-              name && description
-                ? "bg-[#4e6bb4] hover:opacity-75"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            onClick={handleDiscussionUpdate}
-            disabled={!name || !description}
-          >
-            保存する
-          </button>
-        </div>
-      )}
     </PostHeading>
   );
 };

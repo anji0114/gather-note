@@ -25,7 +25,6 @@ export const DashboardGroupItem: FC<Group> = ({ id, name, description, thumbnail
         >
           {name}
         </Link>
-        {description && <p className="mt-2 text-sm text-[#444] line-clamp-1">{description}</p>}
       </div>
     </li>
   );

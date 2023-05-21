@@ -7,7 +7,7 @@ type Props = {
   setDescription: any;
 };
 
-export const PostEditMarkdown: FC<Props> = ({ description, setDescription }) => {
+export const EditMarkdown: FC<Props> = ({ description, setDescription }) => {
   const [isPreview, setIsPreview] = useState(false);
 
   return (
