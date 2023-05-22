@@ -1,6 +1,9 @@
 import React, { FC, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
 
 type Props = {
   description: string;
@@ -18,7 +21,7 @@ export const EditMarkdown: FC<Props> = ({ description, setDescription }) => {
             e.preventDefault();
             setIsPreview(false);
           }}
-          className={`py-2 px-3 ${isPreview ? "bg-white" : "bg-[#f6f8fa] pointer-events-none"}`}
+          className={`py-2 px-3 ${isPreview ? "bg-white" : "bg-[#ebf1f7] pointer-events-none"}`}
         >
           書く
         </button>
@@ -34,7 +37,11 @@ export const EditMarkdown: FC<Props> = ({ description, setDescription }) => {
       </div>
       <div className="mt-2 min-h-[186px]">
         {isPreview ? (
-          <ReactMarkdown className="markDownContent text-sm px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[186px]">
+          <ReactMarkdown
+            className="markdownContent text-sm px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[186px]"
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          >
             {description}
           </ReactMarkdown>
         ) : (

@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 import { useNoteAuthor } from "@/hooks/useNoteAuthor";
 import { useNoteInBoard } from "@/hooks/useNoteInBoard";
@@ -72,8 +72,8 @@ const NoteId: NextPage = () => {
   return (
     <>
       <Meta pageTitle={note.name} />
-      <NoteHeader isAuthor={isAuthor} />
-      <Editor isEditor={isAuthor} post={note} setPost={setNote} />
+      <NoteHeader isAuthor={isAuthor}  />
+      <Editor isAuthor={isAuthor} post={note} setPost={setNote}  />
     </>
   );
 };

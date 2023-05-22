@@ -6,6 +6,9 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { DateFns } from "../Common/DateFns";
 import { DiscussionCommentMenu } from "./DiscussionCommentMenu";
 import { EditMarkdown } from "../Common/EditMarkdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 export const DiscussionCommentItem: FC<Comment> = ({
   id,
@@ -84,7 +87,13 @@ export const DiscussionCommentItem: FC<Comment> = ({
             </div>
           </>
         ) : (
-          <ReactMarkdown className="markDownContent text-sm">{editComment}</ReactMarkdown>
+          <ReactMarkdown
+            className="markdownContent text-sm"
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          >
+            {editComment}
+          </ReactMarkdown>
         )}
       </div>
     </li>

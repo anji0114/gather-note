@@ -4,6 +4,9 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useStore } from "@/store";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 export const DiscussionNewComment = () => {
   const user = useUser();
@@ -53,7 +56,11 @@ export const DiscussionNewComment = () => {
       </div>
       <div className="mt-2 min-h-[186px]">
         {isPreview ? (
-          <ReactMarkdown className="markDownContent text-sm px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[186px]">
+          <ReactMarkdown
+            className="markdownContent text-sm px-2 py-5 w-full border-y border-[#d0d7de] bg-[#fff] min-h-[186px]"
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          >
             {comment}
           </ReactMarkdown>
         ) : (

@@ -1,8 +1,11 @@
-import { Dispatch, FC, ReactNode, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { EditMarkdown } from "../EditMarkdown";
-import { PostDelete } from "./PostDelete";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import Link from "next/link";
+import { DeleteDialog } from "../DeleteDialog";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 type Post = {
   name: string;
@@ -19,6 +22,8 @@ type Props = {
   setDescription: Dispatch<SetStateAction<string>>;
   handleDelete: () => void;
   handleUpdate: () => void;
+  deleteDialogTitle?: string;
+  deleteDialogDescription?: string;
 };
 
 export const PostHeading: FC<Props> = ({
@@ -31,8 +36,11 @@ export const PostHeading: FC<Props> = ({
   setDescription,
   handleDelete,
   handleUpdate,
+  deleteDialogTitle,
+  deleteDialogDescription,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   return (
     <div className="pt-12 pb-10 bg-[#fcfcfc] border-b border-[#f0f0f0]">
@@ -81,11 +89,12 @@ export const PostHeading: FC<Props> = ({
                 <>
                   <EditMarkdown description={description} setDescription={setDescription} />
                   <div className="flex justify-between mt-2">
-                    <PostDelete
-                      title="ディスカッションの削除"
-                      description="ディスカッション削除すると、コメントも削除されます。"
-                      handleDelete={handleDelete}
-                    />
+                    <button
+                      className="text-sm py-2 px-5 text-[#DE6868] bg-white border border-[#DE6868] rounded hover:bg-red-50"
+                      onClick={() => setShowDialog(true)}
+                    >
+                      削除する
+                    </button>
                     <button
                       className={`text-sm text-white py-2 px-5 rounded ${
                         name && description
@@ -103,7 +112,11 @@ export const PostHeading: FC<Props> = ({
                   </div>
                 </>
               ) : (
-                <ReactMarkdown className="markDownContent text-sm">
+                <ReactMarkdown
+                  className="markdownContent text-sm"
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                >
                   {post.description}
                 </ReactMarkdown>
               )}
@@ -111,6 +124,13 @@ export const PostHeading: FC<Props> = ({
           </div>
         </div>
       </div>
+      <DeleteDialog
+        title={deleteDialogTitle ? deleteDialogTitle : `「${post.name}」を削除する`}
+        description={deleteDialogDescription}
+        showDialog={showDialog}
+        setShowDialog={setShowDialog}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 };

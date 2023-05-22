@@ -13,7 +13,9 @@ import { GroupRegister } from "@/components/Group/GroupRegister";
 const GroupDiscussionPage = () => {
   const group = useStore((state) => state.group);
   const { isMember, isAdmin, isLoading: isMemberLoading } = useGroupMembership(group.id);
-  const { data, isLoading } = useSWR(`/api/groups/36f89666-279b-4080-b1e7-2894f2bf32ef/discussion`);
+  const { data, isLoading } = useSWR(`/api/groups/${group.id}/discussion`);
+
+  console.log(data);
 
   return (
     <>

@@ -45,7 +45,7 @@ const FolderId: NextPage = () => {
         {!data?.deleted_flag ? (
           <>
             <FolderHeading />
-            <LayoutContainer classes="mt-14">
+            <LayoutContainer classes="py-14">
               <div className="max-w-[800px] mx-auto">
                 {!error ? (
                   <FolderContent />

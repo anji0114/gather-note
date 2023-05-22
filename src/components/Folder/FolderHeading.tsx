@@ -34,6 +34,8 @@ export const FolderHeading: FC = () => {
       return;
     }
 
+    console.log(foldersData);
+
     const { error: folderNotesError } = await supabase
       .from("notes")
       .update({
@@ -68,12 +70,15 @@ export const FolderHeading: FC = () => {
   return (
     <PostHeading
       post={folder}
+      parentHref="/dashboard"
+      parentName="フォルダ一覧"
       name={name}
       setName={setName}
       description={description}
       setDescription={setDescription}
       handleDelete={handleFolderDelete}
       handleUpdate={handleFolderUpdate}
+      deleteDialogDescription="フォルダを削除すると、フォルダ内のノートも削除されます。このアクションは元に戻せません。"
     />
   );
 };
