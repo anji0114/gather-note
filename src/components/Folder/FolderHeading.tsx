@@ -79,6 +79,7 @@ export const FolderHeading: FC = () => {
       handleDelete={handleFolderDelete}
       handleUpdate={handleFolderUpdate}
       deleteDialogDescription="フォルダを削除すると、フォルダ内のノートも削除されます。このアクションは元に戻せません。"
+      isAdmin={true}
     />
   );
 };

@@ -10,6 +10,7 @@ import { PostItem } from "@/components/Common/Post/PostItem";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { Board } from "@/types";
 import { Meta } from "@/components/Common/Meta";
+import { ButtonNew } from "@/components/Common/Buttons";
 
 const GroupBoardPage = () => {
   const group = useStore((state) => state.group);
@@ -23,7 +24,7 @@ const GroupBoardPage = () => {
       <Meta />
       <GroupLayout>
         <DashboardHeading text="ボード一覧" icon={<ClipboardDocumentListIcon />}>
-          {isAdmin && <BoardCreate />}
+          {isAdmin && <ButtonNew href={`/group/${group.id}/board-new`} />}
         </DashboardHeading>
 
         {isMemberLoading || isLoading ? (
