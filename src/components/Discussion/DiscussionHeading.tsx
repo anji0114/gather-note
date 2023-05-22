@@ -4,11 +4,11 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import { PostHeading } from "@/components/Common/Post/PostHeading";
+import { useGroupMembership } from "@/hooks/useGroupMembership";
 
 export const DiscussionHeading: FC = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const discussion = useStore((state) => state.discussion);
@@ -16,6 +16,7 @@ export const DiscussionHeading: FC = () => {
   const { data: groupData } = useSWR(
     discussion.group_id ? `/api/groups/${discussion.group_id}` : null
   );
+  const { isAdmin } = useGroupMembership(discussion.group_id);
 
   useEffect(() => {
     if (discussion.id) {
@@ -66,6 +67,7 @@ export const DiscussionHeading: FC = () => {
       setDescription={setDescription}
       handleDelete={handleDiscussionDelete}
       handleUpdate={handleDiscussionUpdate}
+      isAdmin={isAdmin}
     />
   );
 };

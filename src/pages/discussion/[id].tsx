@@ -12,14 +12,15 @@ import { DiscussionNewComment } from "@/components/Discussion/DiscussionNewComme
 import { DiscussionCommentItem } from "@/components/Discussion/DiscussionCommentItem";
 import { Error404 } from "@/components/Common/Error/Error404";
 import { Comment } from "@/types";
+import { useGroupMembership } from "@/hooks/useGroupMembership";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, error, isLoading } = useSWR(id ? `/api/discussions/${id}` : null);
   const { data: CommentsData } = useSWR(id ? `/api/discussions/${id}/comments` : null);
-
   const setDiscussion = useStore((state) => state.setDiscussion);
+  const { isMember, isLoading: membershipLoading } = useGroupMembership(data?.group_id);
 
   useEffect(() => {
     if (data?.id) {
@@ -31,6 +32,13 @@ const DiscussionIdPage = () => {
       });
     }
   }, [data]);
+
+  // メンバーかどうか判定
+  useEffect(() => {
+    if (!membershipLoading && !isMember) {
+      router.push("/dashboard");
+    }
+  }, [membershipLoading, isMember]);
 
   if (isLoading) {
     return <Loading />;

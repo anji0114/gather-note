@@ -24,6 +24,7 @@ type Props = {
   handleUpdate: () => void;
   deleteDialogTitle?: string;
   deleteDialogDescription?: string;
+  isAdmin: boolean;
 };
 
 export const PostHeading: FC<Props> = ({
@@ -38,6 +39,7 @@ export const PostHeading: FC<Props> = ({
   handleUpdate,
   deleteDialogTitle,
   deleteDialogDescription,
+  isAdmin,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -48,7 +50,7 @@ export const PostHeading: FC<Props> = ({
         <div className="max-w-[1000px] mx-auto">
           <div className="relative">
             <div className="sm:w-[calc(100%_-_120px)]">
-              {isEdit ? (
+              {isEdit && isAdmin ? (
                 <input
                   type="text"
                   value={name}
@@ -73,19 +75,21 @@ export const PostHeading: FC<Props> = ({
                 </h1>
               )}
             </div>
-            <button
-              className={`mt-2 py-1 px-3 text-sm rounded border ${
-                isEdit ? "border-[#222] bg-gray-50" : "border-[#D0D7DE] bg-white"
-              } sm:absolute sm:right-0 sm:top-0 sm:mt-0`}
-              onClick={() => {
-                setIsEdit((prevState) => !prevState);
-              }}
-            >
-              {isEdit ? "キャンセル" : "編集する"}
-            </button>
+            {isAdmin && (
+              <button
+                className={`mt-2 py-1 px-3 text-sm rounded border ${
+                  isEdit ? "border-[#222] bg-gray-50" : "border-[#D0D7DE] bg-white"
+                } sm:absolute sm:right-0 sm:top-0 sm:mt-0`}
+                onClick={() => {
+                  setIsEdit((prevState) => !prevState);
+                }}
+              >
+                {isEdit ? "キャンセル" : "編集する"}
+              </button>
+            )}
 
             <div className="mt-10 bg-white border border-[#f0f0f0] p-5 rounded-sm">
-              {isEdit ? (
+              {isEdit && isAdmin ? (
                 <>
                   <EditMarkdown description={description} setDescription={setDescription} />
                   <div className="flex justify-between mt-2">
