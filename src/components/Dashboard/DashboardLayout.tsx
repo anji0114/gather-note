@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from "react";
 import { FolderOpenIcon, UserGroupIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
-import { GridLayout } from "@/components/Common/Grid/GridLayout";
+import { GridLayout } from "@/components/Common/GridLayout";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { useRouter } from "next/router";

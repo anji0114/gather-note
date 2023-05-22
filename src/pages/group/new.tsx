@@ -9,6 +9,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { Meta } from "@/components/Common/Meta";
+import { EditMarkdown } from "@/components/Common/EditMarkdown";
 
 const GroupNewPage = () => {
   const supabase = useSupabaseClient();
@@ -61,7 +62,7 @@ const GroupNewPage = () => {
       return;
     }
 
-    const { data: memberData, error: memberError } = await supabase
+    const { error: memberError } = await supabase
       .from("group_members")
       .insert({
         group_id: groupData.id,
@@ -96,12 +97,7 @@ const GroupNewPage = () => {
             </div>
             <div className="mt-5">
               <label className="pl-[2px] w-full inline-block font-medium">グループ説明文</label>
-              <TextareaAutosize
-                minRows={2}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="mt-1 p-2 w-full resize-none border border-[#D0D7DE] rounded outline-none"
-              />
+              <EditMarkdown description={description} setDescription={setDescription} />
             </div>
             <div className="mt-5">
               <p className="pl-[2px] w-full inline-block font-medium">グループイメージ</p>
@@ -124,10 +120,12 @@ const GroupNewPage = () => {
             <div className="pt-5 mt-5 text-right border-t border-[#D0D7DE] ">
               <button
                 className={`px-4 py-2.5 rounded text-sm font-medium text-white  ${
-                  name ? "bg-[#4e6bb4] hover:opacity-75" : "bg-gray-400 cursor-not-allowed"
+                  name && description
+                    ? "bg-[#4e6bb4] hover:opacity-75"
+                    : "bg-gray-400 cursor-not-allowed"
                 }`}
                 onClick={handleCreateGroup}
-                disabled={name ? false : true}
+                disabled={!name || !description}
               >
                 グループを作成
               </button>

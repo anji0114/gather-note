@@ -1,27 +1,84 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useStore } from "@/store";
-import { FolderEdit } from "@/components/Folder/FolderEdit";
-import { FolderDelete } from "@/components/Folder/FolderDelete";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { PostHeading } from "@/components/Common/Post/PostHeading";
 
 export const FolderHeading: FC = () => {
   const folder = useStore((state) => state.folder);
+  const setFolder = useStore((state) => state.setFolder);
+  const router = useRouter();
+  const supabase = useSupabaseClient();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (folder.id) {
+      setName(folder.name);
+      setDescription(folder.description);
+    }
+  }, [folder]);
+
+  const handleFolderDelete = async () => {
+    const { data: foldersData, error: foldersError } = await supabase
+      .from("folders")
+      .update({
+        deleted_flag: true,
+      })
+      .eq("id", folder.id)
+      .select("id")
+      .single();
+
+    if (foldersError) {
+      alert(foldersError.message);
+      return;
+    }
+
+    console.log(foldersData);
+
+    const { error: folderNotesError } = await supabase
+      .from("notes")
+      .update({
+        deleted_flag: true,
+      })
+      .eq("folder_id", foldersData.id);
+
+    if (folderNotesError) {
+      alert(folderNotesError.message);
+      return;
+    }
+
+    router.push("/dashboard");
+  };
+
+  const handleFolderUpdate = async () => {
+    const { error } = await supabase
+      .from("folders")
+      .update({
+        name: name,
+        description: description,
+      })
+      .eq("id", folder.id);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    setFolder({ ...folder, name: name, description: description });
+  };
 
   return (
-    <div className="pt-12 pb-5 bg-[#FCFCFC] border-b border-[#f0f0f0]">
-      <div className="max-w-[1140px] w-full mx-auto px-5 md:px-7">
-        <div className="max-w-[800px] mx-auto">
-          <div className="flex justify-between">
-            <h1 className="text-2xl md:text-3xl font-bold leading-tight w-[calc(100%_-_150px)]">
-              {folder?.name}
-            </h1>
-            <div className="flex gap-2.5 h-[30px] mt-1">
-              <FolderEdit />
-              <FolderDelete />
-            </div>
-          </div>
-          {folder?.description && <p className="mt-7">{folder.description}</p>}
-        </div>
-      </div>
-    </div>
+    <PostHeading
+      post={folder}
+      parentHref="/dashboard"
+      parentName="フォルダ一覧"
+      name={name}
+      setName={setName}
+      description={description}
+      setDescription={setDescription}
+      handleDelete={handleFolderDelete}
+      handleUpdate={handleFolderUpdate}
+      deleteDialogDescription="フォルダを削除すると、フォルダ内のノートも削除されます。このアクションは元に戻せません。"
+    />
   );
 };

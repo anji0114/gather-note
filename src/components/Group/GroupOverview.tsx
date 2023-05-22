@@ -5,6 +5,9 @@ import { DateFns } from "@/components/Common/DateFns";
 import { useState } from "react";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 export const GroupOverview = () => {
   const group = useStore((state) => state.group);
@@ -61,7 +64,13 @@ export const GroupOverview = () => {
         </div>
       </div>
       <div className="mt-3 border border-[#f0f0f0] bg-white p-4 rounded">
-        <ReactMarkdown className="markDownContent text-sm">{group.description}</ReactMarkdown>
+        <ReactMarkdown
+          className="markdownContent text-sm"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+        >
+          {group.description}
+        </ReactMarkdown>
       </div>
     </div>
   );

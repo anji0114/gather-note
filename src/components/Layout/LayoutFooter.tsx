@@ -13,7 +13,7 @@ export const LayoutFooter: FC = () => {
           開発者
         </Link>
         <Link
-          href="https://github.com/anji0114/mind-prompt"
+          href="https://github.com/anji0114/gather-note"
           target="_blank"
           className="text-sm hover:underline"
         >

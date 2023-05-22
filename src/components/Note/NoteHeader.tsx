@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
@@ -63,6 +63,7 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
                   color="text-green-700"
                   open={toastOpen}
                   setOpen={setToastOpen}
+                  isTop={true}
                 />
                 <NoteMenu />
               </>

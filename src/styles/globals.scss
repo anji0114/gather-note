@@ -23,8 +23,8 @@ body {
   border-bottom-right-radius: 8px;
 }
 
-/* markDownContent */
-.markDownContent {
+/* markdownContent */
+.markdownContent {
   color: #333;
 
   > *:first-child {
@@ -92,14 +92,37 @@ body {
 
   p {
     line-height: 2;
-    margin: 0.675em 0;
+    margin: 0.75em 0;
+  }
+
+  table {
+    th {
+      padding: 0.75em;
+      border: 1px solid #e0d7de;
+      background-color: #f6f8fa;
+    }
+
+    td {
+      padding: 0.75em;
+      border: 1px solid #e0d7de;
+    }
   }
 
   pre {
     margin: 0.7em 0;
     font-size: 0.875em;
     line-height: 1.85;
-    padding: 0.675em;
+    padding: 1em;
     background-color: #f6f8fa;
+    overflow-x: scroll;
+  }
+
+  hr {
+    border-top: 2px solid #e0d7de;
+  }
+
+  blockquote {
+    padding: 0.2em 0 0.2em 1.25em;
+    border-left: 3px solid #e0d7de;
   }
 }
