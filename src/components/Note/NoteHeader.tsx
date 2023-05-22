@@ -63,6 +63,7 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
                   color="text-green-700"
                   open={toastOpen}
                   setOpen={setToastOpen}
+                  isTop={true}
                 />
                 <NoteMenu />
               </>
