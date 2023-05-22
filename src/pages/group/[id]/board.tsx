@@ -4,7 +4,6 @@ import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { GroupLayout } from "@/components/Group/GroupLayout";
 import { DashboardHeading } from "@/components/Common/Heading";
-import { BoardCreate } from "@/components/Board/BoardCreate";
 import { GroupRegister } from "@/components/Group/GroupRegister";
 import { PostItem } from "@/components/Common/Post/PostItem";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
