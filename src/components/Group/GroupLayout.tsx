@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
 import { GridLayout } from "@/components/Common/GridLayout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
+import { Error404 } from "@/components/Common/Error/Error404";
 import { useStore } from "@/store";
 import useSWR from "swr";
 
@@ -116,6 +117,10 @@ export const GroupLayout: FC<{ children: ReactNode }> = ({ children }) => {
       });
     }
   }, [data]);
+
+  if (error) {
+    return <Error404 text="404 - グループは存在しません" />;
+  }
 
   return (
     <Layout classes="py-10 md:py-24">

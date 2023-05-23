@@ -3,11 +3,14 @@ import { FC } from "react";
 
 import { FlagIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { useStore } from "@/store";
 
 export const GroupRegister: FC<{ groupId: string }> = ({ groupId }) => {
   const supabase = useSupabaseClient();
   const router = useRouter();
   const user = useUser();
+  const asPath = router.asPath;
+  const group = useStore((state) => state.group);
 
   const handleRegisterGroup = async () => {
     const { error } = await supabase.from("group_members").insert({
@@ -21,7 +24,14 @@ export const GroupRegister: FC<{ groupId: string }> = ({ groupId }) => {
       return;
     }
 
-    router.push(`/group/${groupId}`);
+    const lastSegment = asPath.substring(asPath.lastIndexOf("/") + 1);
+
+    if (lastSegment === "setting") {
+      router.push(`/group/${group.id}`);
+      return;
+    }
+
+    router.reload();
   };
 
   return (
