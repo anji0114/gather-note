@@ -6,15 +6,24 @@ import { Note } from "@/types";
 import { useStore } from "@/store";
 import { BoardNoteMenu } from "@/components/Board/BoardNoteMenu";
 import { DateFns } from "@/components/Common/DateFns";
+import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 
 export const BoardNotes = () => {
   const user = useUser();
   const board = useStore((state) => state.board);
 
-  const { data } = useSWR(board.id ? `/api/boards/${board.id}/notes` : null);
+  const { data, isLoading } = useSWR(board.id ? `/api/boards/${board.id}/notes` : null);
+
+  if (isLoading) {
+    return (
+      <div className="relative min-h-[100px]">
+        <LoadingBlock />
+      </div>
+    );
+  }
 
   return (
-    <ul className="mt-8 space-y-4">
+    <ul className="space-y-4">
       {data?.map((note: Note & { user_id: string }) => (
         <li
           key={note.id}
