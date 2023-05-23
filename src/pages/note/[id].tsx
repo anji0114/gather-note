@@ -1,16 +1,15 @@
 import { NextPage } from "next";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useStore } from "@/store";
 import { useNoteAuthor } from "@/hooks/useNoteAuthor";
 import { useNoteInBoard } from "@/hooks/useNoteInBoard";
 import { Loading } from "@/components/Common/Loading";
 import { NoteHeader } from "@/components/Note/NoteHeader";
 import { Editor } from "@/components/Common/Editor";
-import { Error } from "@/components/Common/Error";
-import Link from "next/link";
 import { Meta } from "@/components/Common/Meta";
+import { Error404 } from "@/components/Common/Error/Error404";
 
 const NoteId: NextPage = () => {
   const router = useRouter();
@@ -52,28 +51,15 @@ const NoteId: NextPage = () => {
 
   if (isLoading) return <Loading />;
 
-  if (error)
-    return (
-      <Error>
-        <div className="text-center">
-          <p>エラーが発生しました。</p>
-          <Link
-            href="/dashboard"
-            className="inline-block border border-[#222] mt-2 px-8 py-2 rounded"
-          >
-            トップへ戻る
-          </Link>
-        </div>
-      </Error>
-    );
+  if (error) return <Error404 text="404 - ノートは存在しません" />;
 
   if (isAuthorLoading || isInBoardLoading) return <Loading />;
 
   return (
     <>
       <Meta pageTitle={note.name} />
-      <NoteHeader isAuthor={isAuthor}  />
-      <Editor isAuthor={isAuthor} post={note} setPost={setNote}  />
+      <NoteHeader isAuthor={isAuthor} />
+      <Editor isAuthor={isAuthor} post={note} setPost={setNote} />
     </>
   );
 };
