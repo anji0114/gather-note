@@ -15,7 +15,7 @@ const FoldersApi = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const { data, error } = await supabase
       .from("folders")
-      .select("*")
+      .select("id, name, created_at")
       .eq("user_id", user!.id)
       .eq("deleted_flag", false)
       .order("created_at", { ascending: false });

@@ -15,6 +15,7 @@ import { Meta } from "@/components/Common/Meta";
 const FolderId: NextPage = () => {
   const user = useUser();
   const router = useRouter();
+  const folder = useStore((state) => state.folder);
   const setFolder = useStore((state) => state.setFolder);
   const { data, error, isLoading } = useSWR<Folder, Error>(
     router.query.id ? `/api/folders/${router.query.id}` : null
@@ -40,7 +41,7 @@ const FolderId: NextPage = () => {
 
   return (
     <>
-      <Meta />
+      <Meta pageTitle={folder.name} />
       <Layout>
         {!data?.deleted_flag ? (
           <>

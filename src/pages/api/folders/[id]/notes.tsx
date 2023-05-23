@@ -16,7 +16,7 @@ const FolderIdNotesApi = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query;
     const { data, error } = await supabase
       .from("notes")
-      .select("*")
+      .select("id, name, created_at")
       .eq("folder_id", id)
       .eq("deleted_flag", false)
       .order("created_at", { ascending: false });
