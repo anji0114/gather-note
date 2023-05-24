@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
 import { ClipboardDocumentListIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastComponent } from "@/components/Common/Toast";
-
 import { PostCreate } from "@/components/Common/Post/PostCreate";
+import { useGroupMembership } from "@/hooks/useGroupMembership";
 
 const GroupBoardNew = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
   const { id } = router.query;
-
   const [toastOpen, setToastOpen] = useState(false);
+  const { isAdmin, isLoading } = useGroupMembership(String(id));
 
   const handleBoardCreate = async (name: string, description: string) => {
     const { data, error } = await supabase
@@ -31,6 +31,12 @@ const GroupBoardNew = () => {
 
     router.push(`/board/${data.id}`);
   };
+
+  useEffect(() => {
+    if (!isLoading && isAdmin) {
+      router.push(`/group/${id}/board`);
+    }
+  }, [id, isAdmin, isLoading]);
 
   return (
     <>

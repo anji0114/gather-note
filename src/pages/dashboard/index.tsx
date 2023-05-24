@@ -1,14 +1,13 @@
 import { NextPage } from "next";
 import useSWR from "swr";
-
+import { FolderOpenIcon } from "@heroicons/react/24/outline";
 import { DashboardLayout } from "@/components/Dashboard/DashboardLayout";
 import { Meta } from "@/components/Common/Meta";
 import { DashboardHeading } from "@/components/Common/Heading";
-import { FolderOpenIcon } from "@heroicons/react/24/outline";
 import { ButtonNew } from "@/components/Common/Buttons";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
-import { Folder } from "@/types";
 import { PostItem } from "@/components/Common/Post/PostItem";
+import { Folder } from "@/types";
 
 const DashboardPage: NextPage = () => {
   const { data, error, isLoading } = useSWR("/api/folders");

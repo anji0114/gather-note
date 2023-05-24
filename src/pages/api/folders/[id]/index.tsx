@@ -13,7 +13,11 @@ const FoldersIdApi = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "GET") {
     const noteId = req.query.id;
-    const { data, error } = await supabase.from("folders").select("*").eq("id", noteId).single();
+    const { data, error } = await supabase
+      .from("folders")
+      .select("id, user_id, name, description")
+      .eq("id", noteId)
+      .single();
 
     if (error) {
       return res.status(401).json({ message: error });

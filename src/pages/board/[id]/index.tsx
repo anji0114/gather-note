@@ -18,7 +18,7 @@ const BoardId = () => {
   const board = useStore((state) => state.board);
   const setBoard = useStore((state) => state.setBoard);
   const { data: boardData, isLoading } = useSWR<Board, Error>(id ? `/api/boards/${id}` : null); //ボード詳細のapi
-  const { isMember, isAdmin, isLoading: membershipLoading } = useGroupMembership(board.group_id);
+  const { isMember, isLoading: membershipLoading } = useGroupMembership(board.group_id);
 
   useEffect(() => {
     if (boardData && !isLoading) {
@@ -47,7 +47,9 @@ const BoardId = () => {
         <BoardHeading />
         <LayoutContainer classes="py-14">
           <div className=" max-w-[800px] mx-auto">
-            <BoardNotes />
+            <div className="mt-8">
+              <BoardNotes />
+            </div>
             <div className="mt-5">
               <BoardAddNote />
             </div>

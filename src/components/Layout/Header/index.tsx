@@ -16,7 +16,7 @@ export const LayoutHeader: FC = () => {
             href={!user ? "/" : "/dashboard"}
             className="inline-block pt-3 w-[140px] md:w-[180px]"
           >
-            <Image src="/logo.svg" alt="Prompt Note" width={187} height={36} />
+            <Image src="/logo.png" alt="Prompt Note" width={187} height={36} />
           </Link>
           <div className="flex items-center">
             {!user ? <LayoutHeaderAuth /> : <LayoutHeaderMenu />}
