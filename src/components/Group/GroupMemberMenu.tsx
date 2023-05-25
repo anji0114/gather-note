@@ -84,7 +84,7 @@ export const GroupMemberMenu: FC<Props> = ({ userId, userName, role }) => {
                 ) : (
                   <>
                     <AcademicCapIcon className="w-4 text-blue-900 " />
-                    <span className="text-[12px] text-blue-900 ">管理者にする</span>
+                    <span className="text-[12px] text-blue-900">管理者にする</span>
                   </>
                 )}
               </button>
