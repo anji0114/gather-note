@@ -7,20 +7,21 @@ import { Group } from "@/types";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 
 const GroupSearch = () => {
   const supabase = useSupabaseClient();
-  const [groupName, setGroupName] = useState("");
   const [groups, setGroups] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  const handleSearchGroup = async () => {
+  const handleSearchGroup = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
     const { data: groups, error } = await supabase
       .from("groups")
       .select("id, name, thumbnail_url")
-      .textSearch("name", groupName)
+      .textSearch("name", searchRef.current!.value)
       .returns<Group[]>();
 
     if (error) {
@@ -41,21 +42,15 @@ const GroupSearch = () => {
             <span className="text-sm font-medium pb-[1px]">前に戻る</span>
           </Link>
           <div className="max-w-[900px] mt-10 mx-auto">
-            <div className="flex gap-2 mt-5">
+            <form className="flex gap-2 mt-5" onSubmit={handleSearchGroup}>
               <input
                 type="text"
                 placeholder="グループ名を記入"
-                value={groupName}
-                onChange={(e) => setGroupName(e.target.value)}
+                ref={searchRef}
                 className="border border-[#d0d7de] w-[calc(100%_-_120px)] rounded bg-gray-100 outline-none px-3 py-1.5"
               />
-              <button
-                className="bg-[#222] text-white px-4 py-1.5 rounded"
-                onClick={handleSearchGroup}
-              >
-                検索する
-              </button>
-            </div>
+              <button className="bg-[#222] text-white px-4 py-1.5 rounded">検索する</button>
+            </form>
             <div className="min-h-[100px] relative mt-10">
               {isLoading ? (
                 <LoadingBlock />
