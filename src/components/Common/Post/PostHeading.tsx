@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import { EditMarkdown } from "../EditMarkdown";
+import { EditMarkdown } from "@/components/Common/EditMarkdown";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import Link from "next/link";
 import { DeleteDialog } from "../DeleteDialog";
