@@ -34,8 +34,6 @@ export const FolderHeading: FC = () => {
       return;
     }
 
-    console.log(foldersData);
-
     const { error: folderNotesError } = await supabase
       .from("notes")
       .update({

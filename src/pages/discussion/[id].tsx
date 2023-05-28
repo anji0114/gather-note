@@ -10,7 +10,7 @@ import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { DiscussionNewCommentMemo as DiscussionNewComment } from "@/components/Discussion/DiscussionNewComment";
 import { Error404 } from "@/components/Common/Error/Error404";
-import { DIscussionCommentWrap } from "@/components/Discussion/DIscussionCommentWrap";
+import { DIscussionComment } from "@/components/Discussion/DIscussionComment";
 
 const DiscussionIdPage = () => {
   const router = useRouter();
@@ -18,7 +18,6 @@ const DiscussionIdPage = () => {
   const { data, error, isLoading } = useSWR(id ? `/api/discussions/${id}` : null);
   const setDiscussion = useStore((state) => state.setDiscussion);
   const { isMember, isAdmin, isLoading: membershipLoading } = useGroupMembership(data?.group_id);
-  const [gptComment, setGptComment] = useState("");
 
   useEffect(() => {
     if (data?.id) {
@@ -53,9 +52,9 @@ const DiscussionIdPage = () => {
         <DiscussionHeading />
         <LayoutContainer classes="py-14">
           <div className="max-w-[1000px] mx-auto">
-            <DIscussionCommentWrap setGptComment={setGptComment} isAdmin={isAdmin} />
+            <DIscussionComment isAdmin={isAdmin} />
             <div className="mt-8 pt-8 border-t-2 border-[#d0d7de]">
-              <DiscussionNewComment gptComment={gptComment} />
+              <DiscussionNewComment />
             </div>
           </div>
         </LayoutContainer>
