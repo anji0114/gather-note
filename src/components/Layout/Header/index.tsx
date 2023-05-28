@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@supabase/auth-helpers-react";
 import { LayoutHeaderAuth } from "@/components/Layout/Header/LayoutHeaderAuth";
 import { LayoutHeaderMenu } from "@/components/Layout/Header/LayoutHeaderMenu";
 
-export const LayoutHeader: FC = () => {
+const LayoutHeader: FC = () => {
   const user = useUser();
 
   return (
@@ -26,3 +26,5 @@ export const LayoutHeader: FC = () => {
     </header>
   );
 };
+
+export const LayoutHeaderMemo = memo(LayoutHeader)

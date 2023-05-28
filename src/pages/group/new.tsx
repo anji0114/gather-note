@@ -1,21 +1,23 @@
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import TextareaAutosize from "react-textarea-autosize";
 import { v4 as uuidv4 } from "uuid";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { ChevronLeftIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { Meta } from "@/components/Common/Meta";
-import { EditMarkdown } from "@/components/Common/EditMarkdown";
+import { EditMarkdownMemo as EditMarkdown } from "@/components/Common/EditMarkdown";
+import Link from "next/link";
 
 const GroupNewPage = () => {
   const supabase = useSupabaseClient();
   const user = useUser();
   const router = useRouter();
   const [name, setName] = useState("");
+  const nameRef = useRef<HTMLInputElement>(null);
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
@@ -49,7 +51,7 @@ const GroupNewPage = () => {
     const { data: groupData, error: groupError } = await supabase
       .from("groups")
       .insert({
-        name: name,
+        name: nameRef.current?.value,
         description: description,
         owner_id: user!.id,
         thumbnail_url: thumbnail_url,
@@ -84,13 +86,16 @@ const GroupNewPage = () => {
       <Meta pageTitle="新規グループ作成" />
       <Layout classes="py-20">
         <LayoutContainer>
-          <div className="max-w-[700px] mx-auto">
+          <Link href="/dashboard/group" className="flex items-center gap-1 hover:opacity-75">
+            <ChevronLeftIcon className="w-5" />
+            <span className="text-sm font-medium pb-[1px]">前に戻る</span>
+          </Link>
+          <div className="max-w-[900px] mt-10 mx-auto">
             <h2 className="text-xl font-bold">新しいグループを作成する</h2>
             <div className="mt-5 pt-5 border-t border-[#eee]">
               <label className="pl- w-full inline-block font-medium">グループ名</label>
               <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                ref={nameRef}
                 type="text"
                 className="mt-2 p-2 w-full max-w-[600px] border border-[#D0D7DE] rounded outline-none"
               />
@@ -120,12 +125,12 @@ const GroupNewPage = () => {
             <div className="pt-5 mt-5 text-right border-t border-[#D0D7DE] ">
               <button
                 className={`px-4 py-2.5 rounded text-sm font-medium text-white  ${
-                  name && description
+                  nameRef.current?.value && description
                     ? "bg-[#4e6bb4] hover:opacity-75"
                     : "bg-gray-400 cursor-not-allowed"
                 }`}
                 onClick={handleCreateGroup}
-                disabled={!name || !description}
+                disabled={!nameRef.current?.value || !description}
               >
                 グループを作成
               </button>

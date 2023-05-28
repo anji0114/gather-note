@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import { useStore } from "@/store";
@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 
-export const DiscussionNewComment = () => {
+const DiscussionNewComment: FC<{ gptComment: string }> = ({ gptComment }) => {
   const user = useUser();
   const supabase = useSupabaseClient();
   const router = useRouter();
@@ -30,6 +30,10 @@ export const DiscussionNewComment = () => {
 
     router.reload();
   };
+
+  useEffect(() => {
+    setComment(gptComment);
+  }, [gptComment]);
 
   return (
     <div className="border border-[#d0d7de] p-4 rounded">
@@ -89,3 +93,5 @@ export const DiscussionNewComment = () => {
     </div>
   );
 };
+
+export const DiscussionNewCommentMemo = memo(DiscussionNewComment);
