@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 
-const DiscussionNewComment: FC<{ gptComment: string }> = ({ gptComment }) => {
+const DiscussionNewComment: FC = () => {
   const user = useUser();
   const supabase = useSupabaseClient();
   const router = useRouter();
@@ -30,10 +30,6 @@ const DiscussionNewComment: FC<{ gptComment: string }> = ({ gptComment }) => {
 
     router.reload();
   };
-
-  useEffect(() => {
-    setComment(gptComment);
-  }, [gptComment]);
 
   return (
     <div className="border border-[#d0d7de] p-4 rounded">

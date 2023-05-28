@@ -15,8 +15,6 @@ const GroupDiscussionPage = () => {
   const { isMember, isAdmin, isLoading: isMemberLoading } = useGroupMembership(group.id);
   const { data, isLoading } = useSWR(`/api/groups/${group.id}/discussion`);
 
-  console.log(data);
-
   return (
     <>
       <Meta pageTitle="ディスカッション一覧" />

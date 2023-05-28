@@ -1,15 +1,25 @@
-import openai from "@/utils/openai";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { OpenAIStream } from "@/utils/openai";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { message } = req.body;
+export const config = {
+  runtime: "edge",
+};
 
-  const completion = await openai.createChatCompletion({
+const handler = async (req: Request): Promise<Response> => {
+  const { message } = (await req.json()) as {
+    message?: any;
+  };
+
+  const payload = {
     model: "gpt-3.5-turbo",
     messages: message,
-  });
+    temperature: 0.9,
+    max_tokens: 300,
+    stream: true,
+    n: 1,
+  };
 
-  return res.status(200).json({ content: completion.data.choices[0].message?.content });
+  const stream = await OpenAIStream(payload);
+  return new Response(stream);
 };
 
 export default handler;

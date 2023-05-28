@@ -17,6 +17,16 @@ const DiscussionsIdComments = async (req: NextApiRequest, res: NextApiResponse) 
       return res.status(401).json({ message: commentsError });
     }
 
+    const { data: reportsData, error: reportsError } = await supabase
+      .from("discussion_reports")
+      .select("*")
+      .eq("discussion_id", discussionId)
+      .order("created_at", { ascending: true });
+
+    if (reportsError) {
+      return res.status(401).json({ message: reportsError });
+    }
+
     const { data: profileData, error: profileError } = await supabase
       .from("profiles")
       .select("id, name, avatar_url")
@@ -29,7 +39,7 @@ const DiscussionsIdComments = async (req: NextApiRequest, res: NextApiResponse) 
       return res.status(401).json({ message: profileError });
     }
 
-    const mergedArray = commentsData.map((comment) => {
+    const Comments = commentsData.map((comment) => {
       const matchingProfile = profileData.find((profile) => profile.id === comment.user_id);
 
       if (matchingProfile) {
@@ -42,6 +52,10 @@ const DiscussionsIdComments = async (req: NextApiRequest, res: NextApiResponse) 
 
       return comment;
     });
+
+    const mergedArray = Comments.concat(reportsData).sort(
+      (a, b) => parseInt(a.created_at) - parseInt(b.created_at)
+    );
 
     return res.status(200).json(mergedArray);
   }
