@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import { useStore } from "@/store";
 import { Loading } from "@/components/Common/Loading";
 import { FolderHeading } from "@/components/Folder/FolderHeading";
-import { FolderContent } from "@/components/Folder/FolderContent";
+import { FolderContentMemo as FolderContent } from "@/components/Folder/FolderContent";
 import { Layout } from "@/components/Layout";
 import { Folder } from "@/types";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";

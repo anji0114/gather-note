@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
-import { LayoutHeader } from "@/components/Layout/Header";
-import { LayoutFooter } from "@/components/Layout/LayoutFooter";
+import { LayoutHeaderMemo as LayoutHeader } from "@/components/Layout/Header";
+import { LayoutFooterMemo as LayoutFooter } from "@/components/Layout/LayoutFooter";
 
 type Props = {
   children: ReactNode;

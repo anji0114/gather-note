@@ -5,7 +5,7 @@ import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { DateFns } from "../Common/DateFns";
 import { DiscussionCommentMenu } from "./DiscussionCommentMenu";
-import { EditMarkdown } from "../Common/EditMarkdown";
+import { EditMarkdownMemo as EditMarkdown } from "../Common/EditMarkdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";

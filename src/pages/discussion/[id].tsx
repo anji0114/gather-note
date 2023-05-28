@@ -8,7 +8,7 @@ import { DiscussionHeading } from "@/components/Discussion/DiscussionHeading";
 import { Meta } from "@/components/Common/Meta";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
-import { DiscussionNewComment } from "@/components/Discussion/DiscussionNewComment";
+import { DiscussionNewCommentMemo as DiscussionNewComment } from "@/components/Discussion/DiscussionNewComment";
 import { Error404 } from "@/components/Common/Error/Error404";
 import { DIscussionCommentWrap } from "@/components/Discussion/DIscussionCommentWrap";
 

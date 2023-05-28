@@ -4,7 +4,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { ButtonNew } from "@/components/Common/Buttons";
 import { FolderNoteList } from "@/components/Folder/FolderNoteList";
 
-export const FolderContent: FC = memo(() => {
+const FolderContent: FC = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
 
@@ -35,4 +35,6 @@ export const FolderContent: FC = memo(() => {
       </div>
     </>
   );
-});
+};
+
+export const FolderContentMemo = memo(FolderContent);

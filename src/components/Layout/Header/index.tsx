@@ -5,7 +5,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { LayoutHeaderAuth } from "@/components/Layout/Header/LayoutHeaderAuth";
 import { LayoutHeaderMenu } from "@/components/Layout/Header/LayoutHeaderMenu";
 
-export const LayoutHeader: FC = memo(() => {
+const LayoutHeader: FC = () => {
   const user = useUser();
 
   return (
@@ -25,4 +25,6 @@ export const LayoutHeader: FC = memo(() => {
       </div>
     </header>
   );
-});
+};
+
+export const LayoutHeaderMemo = memo(LayoutHeader)

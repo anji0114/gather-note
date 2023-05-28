@@ -9,7 +9,7 @@ import { ChevronLeftIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { Meta } from "@/components/Common/Meta";
-import { EditMarkdown } from "@/components/Common/EditMarkdown";
+import { EditMarkdownMemo as EditMarkdown } from "@/components/Common/EditMarkdown";
 import Link from "next/link";
 
 const GroupNewPage = () => {

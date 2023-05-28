@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 
-export const DiscussionNewComment: FC<{ gptComment: string }> = memo(({ gptComment }) => {
+const DiscussionNewComment: FC<{ gptComment: string }> = ({ gptComment }) => {
   const user = useUser();
   const supabase = useSupabaseClient();
   const router = useRouter();
@@ -92,4 +92,6 @@ export const DiscussionNewComment: FC<{ gptComment: string }> = memo(({ gptComme
       </div>
     </div>
   );
-});
+};
+
+export const DiscussionNewCommentMemo = memo(DiscussionNewComment);

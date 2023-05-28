@@ -7,7 +7,7 @@ import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { GroupDelete } from "@/components/Group/GroupDelete";
-import { EditMarkdown } from "../Common/EditMarkdown";
+import { EditMarkdownMemo as EditMarkdown } from "@/components/Common/EditMarkdown";
 
 export const GroupEdit = () => {
   const router = useRouter();
