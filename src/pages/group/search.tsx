@@ -1,15 +1,16 @@
+import { NextPage } from "next";
+import Link from "next/link";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { FormEvent, useRef, useState } from "react";
 import { LoadingBlock } from "@/components/Common/Loading/LoadingBlock";
 import { Meta } from "@/components/Common/Meta";
 import { DashboardGroupItem } from "@/components/Dashboard/DashboardGroupItem";
 import { Layout } from "@/components/Layout";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
-import { Group } from "@/types";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Link from "next/link";
-import React, { FormEvent, useRef, useState } from "react";
+import { Group } from "@/types";
 
-const GroupSearch = () => {
+const GroupSearch: NextPage = () => {
   const supabase = useSupabaseClient();
   const [groups, setGroups] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +55,7 @@ const GroupSearch = () => {
             <div className="min-h-[100px] relative mt-10">
               {isLoading ? (
                 <LoadingBlock />
-              ) : (
+              ) : groups?.length > 0 ? (
                 <ul className="space-y-2">
                   {groups?.map((group: Group) => (
                     <DashboardGroupItem
@@ -66,6 +67,11 @@ const GroupSearch = () => {
                     />
                   ))}
                 </ul>
+              ) : (
+                <p className="text-center">
+                  {searchRef.current?.value && `${searchRef.current?.value}で`}
+                  検索されたグループはありません
+                </p>
               )}
             </div>
           </div>

@@ -5,11 +5,9 @@ import Link from "next/link";
 export const DashboardGroupMenu = () => {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <button className="flex items-center py-2.5 px-5 gap-2 rounded bg-[#222] text-white hover:bg-[#555]">
-          <ChevronDownIcon className="w-[18px] translate-y-[1px]" />
-          <span className="text-sm inline-block"> メニュー</span>
-        </button>
+      <DropdownMenu.Trigger className="flex items-center py-2.5 px-5 gap-2 rounded bg-[#222] text-white hover:bg-[#555]">
+        <ChevronDownIcon className="w-[18px] translate-y-[1px]" />
+        <span className="text-sm inline-block"> メニュー</span>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
