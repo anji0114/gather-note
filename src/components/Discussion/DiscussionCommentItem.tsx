@@ -1,7 +1,7 @@
 import { Comment } from "@/types";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Image from "next/image";
-import { FC, useState } from "react";
+import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { DateFns } from "../Common/DateFns";
 import { DiscussionCommentMenu } from "./DiscussionCommentMenu";
@@ -10,13 +10,22 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 
-export const DiscussionCommentItem: FC<Comment> = ({
+type Props = Comment & {
+  isCheckOpen: boolean;
+  promptComments: string[];
+  setPromptComments: Dispatch<SetStateAction<string[]>>;
+};
+
+export const DiscussionCommentItem: FC<Props> = ({
   id,
   user_id,
   comment,
   user_name,
   avatar_url,
   created_at,
+  isCheckOpen,
+  promptComments,
+  setPromptComments,
 }) => {
   const supabase = useSupabaseClient();
   const user = useUser();
@@ -41,6 +50,15 @@ export const DiscussionCommentItem: FC<Comment> = ({
     setIsEdit(false);
   };
 
+  const handlePushComment = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      setPromptComments([...promptComments, comment]);
+    } else {
+      const updatedComments = promptComments.filter((promptComment) => promptComment !== comment);
+      setPromptComments(updatedComments);
+    }
+  };
+
   return (
     <li className="relative border border-[#d0d7de] py-4 px-5 rounded">
       <div className="flex items-center gap-2">
@@ -56,10 +74,23 @@ export const DiscussionCommentItem: FC<Comment> = ({
           <DateFns time={created_at} />
         </span>
       </div>
-      {user?.id === user_id && (
-        <div className="absolute top-5 right-5">
-          <DiscussionCommentMenu id={id} setIsEdit={setIsEdit} />
-        </div>
+
+      {isCheckOpen ? (
+        <>
+          <input
+            type="checkbox"
+            className="absolute top-5 right-5 w-5 h-5"
+            id={`check${id}`}
+            onChange={handlePushComment}
+          />
+          <label htmlFor={`check${id}`} className="absolute inset-0 cursor-pointer"></label>
+        </>
+      ) : (
+        user?.id === user_id && (
+          <div className="absolute top-5 right-5">
+            <DiscussionCommentMenu id={id} setIsEdit={setIsEdit} />
+          </div>
+        )
       )}
       <div className="mt-4">
         {isEdit ? (

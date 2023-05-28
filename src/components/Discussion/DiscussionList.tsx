@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { Loading } from "@/components/Common/Loading";
 import { NoteItem } from "@/components/Common/NoteItem";
 import { Square2StackIcon } from "@heroicons/react/24/outline";
+import { Discussion } from "@/types";
 
 export const DiscussionList = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ export const DiscussionList = () => {
 
   return (
     <ul className="mt-8 space-y-4">
-      {data?.map((discussion: any) => (
+      {data?.map((discussion: Discussion) => (
         <NoteItem
           key={discussion.id}
           id={discussion.id}

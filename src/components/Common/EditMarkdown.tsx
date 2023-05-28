@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import rehypeRaw from "rehype-raw";
@@ -10,7 +10,7 @@ type Props = {
   setDescription: any;
 };
 
-export const EditMarkdown: FC<Props> = ({ description, setDescription }) => {
+export const EditMarkdown: FC<Props> = memo(({ description, setDescription }) => {
   const [isPreview, setIsPreview] = useState(false);
 
   return (
@@ -58,4 +58,4 @@ export const EditMarkdown: FC<Props> = ({ description, setDescription }) => {
       </div>
     </>
   );
-};
+});
