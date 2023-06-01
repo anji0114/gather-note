@@ -1,6 +1,5 @@
 import { useStore } from "@/store";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { log } from "console";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
@@ -16,7 +15,6 @@ export const DiscussionGenerateReport: FC<Props> = ({
   handleChangeCheck,
   isCheckOpen,
 }) => {
-  const definitionText = "以降のディスカッションのコメントを、議論・整理してください。";
   const discussion = useStore((state) => state.discussion);
   const [generatedReport, setGeneratedReport] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,15 +22,21 @@ export const DiscussionGenerateReport: FC<Props> = ({
   const supabase = useSupabaseClient();
   const router = useRouter();
 
+  const definitionText = `### ディスカッションの要約:ディスカッションの要約を提供してください。参加者が達成したキーポイント、議論、結論などを含めてください。\n---\n---### コメントの整理:コメントを関連性や類似性などの基準に基づいて整理してください。\n---\n---### コメントの分析:コメントの分析、サポートや反対の論点、反論、追加の洞察などを含めてください。`;
+
   const handleGenerateReport = async () => {
     setGeneratedReport("");
     setIsLoading(true);
     setIsGenerate(true);
-    const promptComment = promptComments.join("---");
+    let promptComment = "";
+    promptComments.forEach((comment, index) => {
+      promptComment += `${index + 1}. コメント: [コメント ${index + 1}]\n内容: [${comment}]\n---\n`;
+    });
+
     const prompt = `
-    ディスカッションのタイトル: ${discussion.name}
+    ディスカションのタイトル: [${discussion.name}]
     ---
-    以下ディスカッションへの各コメント
+    ### コメント一覧:
     ${promptComment}`;
 
     const response = await fetch("/api/openai", {
@@ -62,6 +66,48 @@ export const DiscussionGenerateReport: FC<Props> = ({
     const decoder = new TextDecoder();
     let done = false;
 
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      setGeneratedReport((prev) => prev + chunkValue);
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleContinueGenerating = async () => {
+    setIsLoading(true);
+    setIsGenerate(true);
+
+    const response = await fetch("/api/openai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: [
+          {
+            role: "user",
+            content: `「${generatedReport}」から続けてください`,
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = response.body;
+    if (!data) {
+      setIsLoading(false);
+      return;
+    }
+
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
     while (!done) {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
@@ -123,7 +169,18 @@ export const DiscussionGenerateReport: FC<Props> = ({
             }}
             className="text-sm p-2 w-full border border-[#d0d7de] bg-[#f6f8fa] rounded resize-none outline-none leading-7"
           />
-          <div className="text-right mt-2">
+          <div className="text-right mt-2 flex gap-10 justify-end">
+            <button
+              className={`text-sm text-white py-2.5 px-5 rounded ${
+                !isLoading && generatedReport
+                  ? "bg-[#222] hover:opacity-75"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+              disabled={isLoading || !generatedReport}
+              onClick={handleContinueGenerating}
+            >
+              続けてもらう
+            </button>
             <button
               className={`text-sm text-white py-2.5 px-5 rounded ${
                 !isLoading && generatedReport

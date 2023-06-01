@@ -22,7 +22,7 @@ export const DiscussionReportItem: FC<Props> = ({ id, isAdmin, report, created_a
   const [editReport, setEditReport] = useState(report);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleUpdateComment = async () => {
+  const handleUpdateReport = async () => {
     const { error } = await supabase
       .from("discussion_reports")
       .update({
@@ -79,7 +79,7 @@ export const DiscussionReportItem: FC<Props> = ({ id, isAdmin, report, created_a
                   editReport ? "bg-[#4e6bb4] hover:opacity-75" : "bg-gray-400 cursor-not-allowed"
                 }`}
                 disabled={!editReport}
-                onClick={handleUpdateComment}
+                onClick={handleUpdateReport}
               >
                 保存する
               </button>

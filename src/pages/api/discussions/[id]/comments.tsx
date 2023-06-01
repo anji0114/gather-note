@@ -53,9 +53,11 @@ const DiscussionsIdComments = async (req: NextApiRequest, res: NextApiResponse) 
       return comment;
     });
 
-    const mergedArray = Comments.concat(reportsData).sort(
-      (a, b) => parseInt(a.created_at) - parseInt(b.created_at)
-    );
+    const mergedArray = Comments.concat(reportsData).sort((a, b) => {
+      const createdAtA: number = +new Date(a.created_at);
+      const createdAtB: number = +new Date(b.created_at);
+      return createdAtA - createdAtB;
+    });
 
     return res.status(200).json(mergedArray);
   }
