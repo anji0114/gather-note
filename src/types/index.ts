@@ -1,11 +1,23 @@
-export type Folder = {
+type CommonProps = {
   id: string;
-  user_id?: string;
   name: string;
   description: string;
   created_at?: string;
+};
+
+export type Folder = CommonProps & {
+  user_id?: string;
   updated_at?: string;
   deleted_flag?: boolean;
+};
+
+export type Board = CommonProps & {
+  group_id: string;
+};
+
+export type Group = CommonProps & {
+  owner_id?: string;
+  thumbnail_url?: string;
 };
 
 export type Note = {
@@ -17,35 +29,14 @@ export type Note = {
   deleted_flag?: boolean;
 };
 
-export type Board = {
-  id: string;
-  name: string;
-  description: string;
-  group_id: string;
-  created_at?: string;
-};
-
-export type Group = {
-  id: string;
-  name: string;
-  owner_id?: string;
-  thumbnail_url?: string;
-  description: string;
-  created_at?: string;
-};
-
 export type Profile = {
   id?: string;
   name: string;
   avatar_url: string;
 };
 
-export type Discussion = {
-  id: string;
+export type Discussion = CommonProps & {
   group_id: string;
-  name: string;
-  description: string;
-  created_at?: string;
 };
 
 export type Comment = {
