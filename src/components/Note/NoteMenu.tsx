@@ -1,15 +1,13 @@
-import { FC, useState } from "react";
+import { FC, memo, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { EllipsisHorizontalCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
-import { useStore } from "@/store";
 import { DeleteDialog } from "@/components/Common/DeleteDialog";
 
-export const NoteMenu: FC = () => {
+export const NoteMenuComponent: FC = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-  const note = useStore((state) => state.note);
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
 
   const handleNoteDelete = async () => {
@@ -18,7 +16,7 @@ export const NoteMenu: FC = () => {
       .update({
         deleted_flag: true,
       })
-      .eq("id", note.id);
+      .eq("id", router.query.id);
 
     if (error) {
       alert(error.message);
@@ -60,3 +58,5 @@ export const NoteMenu: FC = () => {
     </>
   );
 };
+
+export const NoteMenu = memo(NoteMenuComponent);

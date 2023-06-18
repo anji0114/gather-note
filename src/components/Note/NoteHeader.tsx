@@ -1,42 +1,41 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
-import { useRouter } from "next/router";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { NoteMenu } from "@/components/Note/NoteMenu";
-import { ToastComponent } from "../Common/Toast";
+import { ToastComponent } from "@/components/Common/Toast";
 
 type Props = {
   isAuthor: boolean;
 };
 
-export const NoteHeader: FC<Props> = ({ isAuthor }) => {
+export const NoteHeaderComponent: FC<Props> = ({ isAuthor }) => {
   const router = useRouter();
   const supabase = useSupabaseClient();
-  const note = useStore((state) => state.note);
+  const noteRef = useRef(useStore.getState().note);
   const [toastOpen, setToastOpen] = useState(false);
 
-  const handleNoteUpdate = async () => {
-    if (!note.name) {
+  useEffect(() => useStore.subscribe((state) => (noteRef.current = state.note)), []);
+
+  const handleNoteUpdate = useCallback(async () => {
+    if (!noteRef.current.name) {
       return;
     }
-
     const { error } = await supabase
       .from("notes")
       .update({
-        name: note.name,
-        content: note.content,
+        name: noteRef.current.name,
+        content: noteRef.current.content,
       })
-      .eq("id", note.id)
+      .eq("id", noteRef.current.id)
       .select()
       .single();
-
     if (error) {
       alert(error);
     }
-
     setToastOpen(true);
-  };
+  }, []);
 
   return (
     <header className="border-b border-[#d0d7de]">
@@ -51,10 +50,12 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
               <>
                 <button
                   className={`py-2 px-8 text-sm font-medium rounded text-white ${
-                    !note.name ? " cursor-not-allowed bg-[#888]" : "bg-[#222] hover:bg-[#555]"
+                    !noteRef.current.name
+                      ? " cursor-not-allowed bg-[#888]"
+                      : "bg-[#222] hover:bg-[#555]"
                   }`}
                   onClick={handleNoteUpdate}
-                  disabled={!note.name}
+                  disabled={!noteRef.current.name}
                 >
                   保存する
                 </button>
@@ -74,3 +75,5 @@ export const NoteHeader: FC<Props> = ({ isAuthor }) => {
     </header>
   );
 };
+
+export const NoteHeader = memo(NoteHeaderComponent);
