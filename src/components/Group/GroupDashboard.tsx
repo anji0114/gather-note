@@ -7,9 +7,7 @@ import { PostItem } from "@/components/Common/Post/PostItem";
 export const GroupDashboard: FC = () => {
   const router = useRouter();
 
-  const { data, error, isLoading } = useSWR(
-    router.query.id ? `/api/groups/${router.query.id}/latest-boards` : null
-  );
+  const { data } = useSWR(router.query.id ? `/api/groups/${router.query.id}/latest-boards` : null);
 
   return (
     <div className="mt-10">

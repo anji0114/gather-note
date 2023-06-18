@@ -2,18 +2,19 @@ import { useStore } from "@/store";
 import Image from "next/image";
 import useSWR from "swr";
 import { DateFns } from "@/components/Common/DateFns";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
+import { Group } from "@/types";
 
-export const GroupOverview = () => {
-  const group = useStore((state) => state.group);
+export const GroupOverview: FC<{ group: Group }> = ({ group }) => {
   const { data: MembersData, error: MembersError } = useSWR(
     group.id ? `/api/groups/${group.id}/members` : null
   );
+
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyURL = () => {
