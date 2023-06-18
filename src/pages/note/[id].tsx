@@ -7,13 +7,12 @@ import { useNoteAuthor } from "@/hooks/useNoteAuthor";
 import { useNoteInBoard } from "@/hooks/useNoteInBoard";
 import { Loading } from "@/components/Common/Loading";
 import { NoteHeader } from "@/components/Note/NoteHeader";
-import { Editor } from "@/components/Common/Editor";
+import { NoteEditor } from "@/components/Note/NoteEditor";
 import { Meta } from "@/components/Common/Meta";
 import { Error404 } from "@/components/Common/Error/Error404";
 
 const NoteId: NextPage = () => {
   const router = useRouter();
-  const note = useStore((state) => state.note);
   const setNote = useStore((state) => state.setNote);
   const restNote = useStore((state) => state.resetNote);
   const {
@@ -57,9 +56,9 @@ const NoteId: NextPage = () => {
 
   return (
     <>
-      <Meta pageTitle={note.name} />
+      <Meta pageTitle={NoteData?.name} />
       <NoteHeader isAuthor={isAuthor} />
-      <Editor isAuthor={isAuthor} post={note} setPost={setNote} />
+      <NoteEditor isAuthor={isAuthor} />
     </>
   );
 };

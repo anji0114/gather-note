@@ -5,7 +5,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { DeleteDialog } from "@/components/Common/DeleteDialog";
 
-export const NoteMenu: FC = memo(() => {
+export const NoteMenuComponent: FC = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
@@ -57,4 +57,6 @@ export const NoteMenu: FC = memo(() => {
       />
     </>
   );
-});
+};
+
+export const NoteMenu = memo(NoteMenuComponent);

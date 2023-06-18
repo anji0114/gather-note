@@ -1,5 +1,5 @@
-import { Note } from "@/types";
-import { FC, useState } from "react";
+import { useStore } from "@/store";
+import { FC, useRef, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import rehypeRaw from "rehype-raw";
@@ -8,11 +8,11 @@ import remarkGfm from "remark-gfm";
 
 type Props = {
   isAuthor: boolean;
-  post: Note;
-  setPost: (payload: Note) => void;
 };
 
-export const Editor: FC<Props> = ({ isAuthor, post, setPost }) => {
+export const NoteEditor: FC<Props> = ({ isAuthor }) => {
+  const note = useStore((state) => state.note);
+  const setNote = useStore((state) => state.setNote);
   const [isPreview, setIsPreview] = useState(false);
 
   return (
@@ -20,15 +20,15 @@ export const Editor: FC<Props> = ({ isAuthor, post, setPost }) => {
       <div className="max-w-[720px] mx-auto pt-16 pb-48 px-5">
         <h1 className="text-2xl md:text-4xl">
           {!isAuthor ? (
-            <span className="inline-block w-full leading-snug font-bold ">{post.name}</span>
+            <span className="inline-block w-full leading-snug font-bold ">{note.name}</span>
           ) : (
             <TextareaAutosize
-              value={post.name}
+              value={note.name}
               minRows={1}
               placeholder="タイトル"
               className="w-full leading-snug font-bold outline-none resize-none"
               onChange={(e) => {
-                setPost({ ...post, name: e.target.value });
+                setNote({ ...note, name: e.target.value });
               }}
             />
           )}
@@ -40,16 +40,16 @@ export const Editor: FC<Props> = ({ isAuthor, post, setPost }) => {
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw, rehypeSanitize]}
             >
-              {post.content}
+              {note.content}
             </ReactMarkdown>
           ) : (
             <TextareaAutosize
-              value={post.content}
+              value={note.content}
               minRows={6}
               placeholder={`${isAuthor ? "内容を入力してください" : ""}`}
               className="w-full outline-none resize-none px-1 leading-8"
               onChange={(e) => {
-                isAuthor ? setPost({ ...post, content: e.target.value }) : null;
+                isAuthor ? setNote({ ...note, content: e.target.value }) : null;
               }}
             />
           )}
