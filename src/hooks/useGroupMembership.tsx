@@ -7,7 +7,7 @@ type Hooks = {
   isLoading: boolean;
 };
 
-export const useGroupMembership = (groupId: string): Hooks => {
+export const useGroupMembership = (groupId?: string): Hooks => {
   const supabase = useSupabaseClient();
   const user = useUser();
   const [isMember, setIsMember] = useState(false);
@@ -15,6 +15,7 @@ export const useGroupMembership = (groupId: string): Hooks => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!groupId) return;
     const checkMembership = async () => {
       const { data: memberData, error } = await supabase
         .from("group_members")

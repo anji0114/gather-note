@@ -5,12 +5,11 @@ import { useStore } from "@/store";
 import { Board } from "@/types";
 import { useGroupMembership } from "@/hooks/useGroupMembership";
 import { Layout } from "@/components/Layout";
-import { BoardNotes } from "@/components/Board/BoardNotes";
 import { BoardHeading } from "@/components/Board/BoardHeaidng";
-import { BoardAddNote } from "@/components/Board/BoardAddNote";
 import { LayoutContainer } from "@/components/Layout/LayoutContainer";
 import { Meta } from "@/components/Common/Meta";
 import { Loading } from "@/components/Common/Loading";
+import BoardContent from "@/components/Board/BoardContent";
 
 const BoardId = () => {
   const router = useRouter();
@@ -46,13 +45,8 @@ const BoardId = () => {
       <Layout>
         <BoardHeading />
         <LayoutContainer classes="py-14">
-          <div className=" max-w-[800px] mx-auto">
-            <div className="mt-8">
-              <BoardNotes />
-            </div>
-            <div className="mt-5">
-              <BoardAddNote />
-            </div>
+          <div className="mt-8 max-w-[800px] mx-auto">
+            <BoardContent />
           </div>
         </LayoutContainer>
       </Layout>
