@@ -5,30 +5,35 @@ import { useRouter } from "next/router";
 import { useStore } from "@/store";
 
 import { EllipsisHorizontalIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Note } from "@/types";
 
 type Props = {
   noteId: string | undefined;
+  setNotes: Dispatch<SetStateAction<Note[]>>;
 };
 
-export const BoardNoteMenu: FC<Props> = ({ noteId }) => {
+export const BoardNoteMenu: FC<Props> = ({ noteId, setNotes }) => {
   const supabase = useSupabaseClient();
   const board = useStore((state) => state.board);
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
 
   const handleDeleteNote = async () => {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("board_notes")
       .delete()
       .eq("note_id", noteId)
-      .eq("board_id", board.id);
+      .eq("board_id", board.id)
+      .select("note_id")
+      .single();
+
     if (error) {
       alert(error.message);
       return;
     }
 
-    router.reload();
+    setNotes((prevState) => prevState.filter((note) => note.id !== data.note_id));
   };
 
   return (
