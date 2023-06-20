@@ -12,6 +12,7 @@
 3. supabase
 4. swr
 5. zustand
+6. OpenAi Api
 
 ## ER 図
 
